@@ -1,6 +1,6 @@
 Run SARAH models precompiled by the butler script of SARAH Toolbox.
 
-WARNING: Clone with `--recursive` option in order to download the Toolbox submodles:
+WARNING! Clone with `--recursive` option in order to download the Toolbox submodles:
 ```
 git clone --recursive git@github.com:restrepo/BSM-Submodules.git
 ```
