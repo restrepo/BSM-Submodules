@@ -1,0 +1,31 @@
+We depart from the SARAH standard and
+will install SARAH Toolbox directly in the primary
+directory.
+
+1) We need to explicitly execute the ./configure to have all the sources.
+   However note that some of them are disbled:
+
+ $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
+
+2) Symbolic links were removed and real directories were renamed
+ $ rm link
+ $ mv real_name link
+
+3) YOU NEED TO EXPLICTLY execute make after clone the repo
+
+ $ make
+
+To update to a new version X.X.X of some of tarballs, simply cd to the root dir where the tool is located
+
+  $ tar -zxvf tarball.X.X.X.tar.gz -C tool_DIR --strip-components=1
+
+Recompile the tool accordingly.
+
+commit with the new version in the message:
+
+ $ git commit -a -m "toolbox X.X.X"
+ $ git tag X.X.X COMMIT_HASH
+ 
+ Finally we push into the remote server including the tags:
+ 
+  $ git push origin master --tags
