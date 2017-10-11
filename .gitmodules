@@ -13,3 +13,6 @@
 [submodule "micromegas"]
 	path = micromegas
 	url = git@github.com:restrepo/micromegas.git
+[submodule "SSP"]
+	path = SSP
+	url = git@github.com:restrepo/SSP.git

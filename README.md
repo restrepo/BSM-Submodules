@@ -59,7 +59,19 @@ git add .
 git commit -am 'vN.N'
 git push origin master
 ```
-In addtion a tagged release is created in the SBM repo
+In addtion a tagged release is created in the SBM repo. One specific tagged version
+can be used after use:
+```
+git checkout -b vN.N
+```
+inside the specific submodule.
+
+
+To update all the submodles, use:
+```
+git submodule update --remote --merge
+```
+See: https://stackoverflow.com/a/21195182/2268280
 
 Installation
 ------------------------------------------------------------------------------
