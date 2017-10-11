@@ -1,0 +1,15 @@
+[submodule "SARAH"]
+	path = SARAH
+	url = git@github.com:restrepo/SARAH.git
+[submodule "SPHENO"]
+	path = SPHENO
+	url = git@github.com:restrepo/SPHENO.git
+[submodule "madgraph"]
+	path = madgraph
+	url = git@github.com:restrepo/madgraph.git
+[submodule "calchep"]
+	path = calchep
+	url = git@github.com:restrepo/calchep.git
+[submodule "micromegas"]
+	path = micromegas
+	url = git@github.com:restrepo/micromegas.git
