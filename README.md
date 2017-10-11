@@ -28,13 +28,13 @@ Implemened CATEGORY's:
 - SimplifiedDM: Simplified Dark Matter Models
 - radinert:  Models with radiative neutrino masses and dark matter candidates with SM + Z2-odd particles 
 
-Each implemented model have a notebook in tests dir:
+Each implemented model have a notebook in BSM dir:
 
- `tests/CATEGORY-MODEL.ipynb`
+ `BSM/CATEGORY-MODEL.ipynb`
 
 with examples to run and scan the parameter space.
 
-The module `hep` (in `tests/hep.py`) used there, have the objects to _automatically_ run the model in a similar way to the SSP SARAH-toolbox package.
+The module `hep` (in `BSM/hep.py`) used there, have the objects to _automatically_ run the model in a similar way to the SSP SARAH-toolbox package.
 
 See README_CREATES_NEW_MODEL.md to help with build new models. __Send the new models as a pull request__.
 
@@ -55,6 +55,14 @@ git commit -am 'vN.N'
 git push origin master
 ```
 In addtion a tagged release is created in the SBM repo
+
+Installation
+------------------------------------------------------------------------------
+Everything could be installed after the git clone. To choose an specific release version,
+e.g vN.N, of some submodule, go there and 
+```
+git checkout -b vN.N
+```
 
 Official README stars here
 -------------------------------------------------------------------------------
