@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
+source functions.sh
 cd SPHENO
 if [ "$(grep -E '\#\s*F90\s*=\s*gfortran' Makefile)" ];then
     sed -i 's/\# F90 = gfortran/F90 = gfortran/' Makefile
@@ -12,9 +14,13 @@ cd ../micromegas
 make
 make
 
-# Install generaed codes in several tools
-MODELp=$(git branch | sed -r 's/^\*\s+//')
-#TODO: Check against SARAH/Models DIRs
+# Install generated codes in several tools
+#get MODEL
+MDL #from functions.sh: fill global arrat mdl
+MODELDIR=mdl[MODELDIR]
+MODEL=mdl[MODEL]
+sep=mdl[sep]
+#TODO: Check against SARAH/Models DIRs 
 if [ "$MODELp" != master ];then
     MODELDIR=$(echo $MODELp | awk -F'+' '{print $1}' )
     MODEL=$(echo $MODELp | awk -F'+' '{print $2}' )
@@ -24,16 +30,23 @@ if [ "$MODELp" != master ];then
     fi
     sep='/'
     if [ ! $MODEL ];then
-	MODEL=MODELDIR
+	MODEL=$MODELDIR
 	MODELDIR=''
 	sep=''
     fi
     if [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d  BSM/SARAH/Models$MODELDIR$sep$MODEL ]; then
 	cp -r BSM/SARAH/Models/$MODELDIR  SARAH/Models
     fi
-    for tool in  SPHENO micromegas madgraph:
-        if [ ! -d $tool/$MODELDIR$MODEL ] && [ -d  BSM/SPHENO/$MODELDIR$MODEL ]; then
-	    cp -r BSM/SPHENO/$MODELDIR$MODEL $tool
+    declare -A ModelDir=( [SPHENO]="" [calchep]=""  [micromegas]="" [madgraph]=models )
+    declare -A ModelExec=( [SPHENO]="" [calchep]="./mkWORKdir"  [micromegas]="./newProject" [madgraph]=""  )
+    for tool in "${!ModelDir[@]}";do
+	if [ ! -d $tool/${ModelDir[$tool]}$MODELDIR$MODEL ] && [ -d  BSM/SPHENO/$MODELDIR$MODEL ]; then
+	    if [ "${ModelExec[$tool]}" ];then
+		cd $tool
+		${ModelExec[$tool]} $MODELDIR$MODEL
+		cd ..
+	    fi
+	    cp -r BSM/SPHENO/$MODELDIR$MODEL $tool/${ModelDir[$tool]}
         fi    		     
 	
 fi
