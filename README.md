@@ -50,9 +50,7 @@ Updating submodules
 ------------------------------------------------------------------------
 External dependences are tried as git submodules. Each submodule, SBM, is update as follow
 ```
-cd SBM
-rm -rf *
-cd ..
+rm -rf SBM/*
 wget http://....SBM_vN.N.tar.gz
 tar -zxvf SBM_vN.N.tar.gz -C SBM --strip-components=1
 find . -type d -empty -not -path "./.git/*" -exec touch {}/.gitkeep \;
