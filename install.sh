@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 #http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
+if [ "$1" == "--help" ] || [ "$1" == "-h" ];then
+    echo USAGE $0 [--butler]
+    echo "Install from BSM dir or with option --butler run ./butler on branch model"
+    echo "Default model is SM"
+    exit
+fi
 source functions.sh
 CHECK=False
 if [ $CHECK == True ];then  
@@ -32,6 +38,10 @@ echo $MODELDIR$sep$MODEL
 if [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d  BSM/SARAH/Models$MODELDIR$sep$MODEL ]; then
         mkdir -p SARAH/Models/$MODELDIR$sep$MODEL
 	cp -r BSM/SARAH/Models/$MODELDIR$sep$MODEL/*  SARAH/Models/$MODELDIR$sep$MODEL
+fi
+if [ "$1" == '--butler' ];then
+    ./butler $MODELDIR$sep$MODEL
+    exit
 fi
 
 declare -A ModelDir=( [SPHENO]="" [calchep]=""  [micromegas]="" [madgraph]=models )

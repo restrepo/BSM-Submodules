@@ -22,4 +22,6 @@ for tool in "${!ModelDir[@]}";do
 	cp -r $SARAHDIR/${ModelDir[$tool]}/* $tool/$MODELDIR$MODEL
     fi
 done
-
+#version=$( grep -E "version\s*=" ../SPHENO/src/Control.F90  | awk -F'"|"' '{print $2}')
+# git tag --sort -"v:refname"
+# manage tags: https://stackoverflow.com/a/5480292/2268280

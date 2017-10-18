@@ -80,7 +80,7 @@ e.g vN.N, of some submodule, go there and
 ```
 git checkout -b vN.N
 ```
-Finally, be sure to execute `install.sh` to compile the calchep and micromegas submodules
+Finally, be sure to execute `install.sh` to compile the SPHENO, calchep and micromegas submodules
 
 Official README stars here
 -------------------------------------------------------------------------------
