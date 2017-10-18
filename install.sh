@@ -9,7 +9,7 @@ if [ "$1" == "--help" ] || [ "$1" == "-h" ];then
     exit
 fi
 source functions.sh
-CHECK=False
+CHECK=True
 if [ $CHECK == True ];then  
     cd SPHENO
     if [ "$(grep -E '\#\s*F90\s*=\s*gfortran' Makefile)" ];then
@@ -54,7 +54,7 @@ for tool in "${!ModelDir[@]}";do
     if [ ! -d $tool/${ModelDir[$tool]}$MODELDIR$MODEL ] && [ -d  BSM/SPHENO/$MODELDIR$MODEL ]; then
 	if [ "${ModelExec[$tool]}" ];then
 	    cd $tool
-	    if [ -f VERSION];then
+	    if [ -f VERSION ];then
 		git branch checkout -b "$(cat VERSION)"
 	    fi
 	    pwd

@@ -7,13 +7,37 @@ directory.
 
  $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
 
-2) Symbolic links were removed and real directories were renamed
+2) Symbolic links were removed and real directories were as github submodules
  $ rm link
  $ mv real_name link
 
-3) YOU NEED TO EXPLICTLY execute make after clone the repo
+3) Afer the recursive clone (check README.md) you
+   need to create a branch for a model (new or any of SARAH's Models)
+   
 
- $ make
+ $ git branch NEW+BRANCH
+ $ git checkout NEW+BRANCH
+
+If the Model is new, put the model files under BSM/SARAH/Models
+
+4) Run
+
+ $ ./install --butler
+
+to creates the MODEL dirs
+
+4) Go to BSM and run
+
+ $./output.sh
+
+5) Make the commit and push. After a fresh version of the branch
+you can run directly 
+
+  $ ./install
+
+as a faster replacmente of butler
+
+Other details:
 
 To update to a new version X.X.X of some of tarballs, simply cd to the root dir where the tool is located
 
