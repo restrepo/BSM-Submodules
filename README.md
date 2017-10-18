@@ -49,7 +49,8 @@ See README_deploy_mybinder.md: To deploy a mybinder virtual machine:
 Updating submodules
 ------------------------------------------------------------------------
 External dependences are tried as git submodules. Each submodule, SBM, is update as follow
-``` cd SBM
+```
+cd SBM
 rm -rf *
 cd ..
 wget http://....SBM_vN.N.tar.gz
