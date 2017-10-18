@@ -2,7 +2,9 @@
 #http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 if [ "$1" == "--help" ] || [ "$1" == "-h" ];then
     echo USAGE $0 [--butler]
-    echo "Install from BSM dir or with option --butler run ./butler on branch model"
+    echo "Install from BSM dirs or..."
+    echo "if option --butler:"
+    echo "run ./butler on branch model"
     echo "Default model is SM"
     exit
 fi
@@ -52,6 +54,9 @@ for tool in "${!ModelDir[@]}";do
     if [ ! -d $tool/${ModelDir[$tool]}$MODELDIR$MODEL ] && [ -d  BSM/SPHENO/$MODELDIR$MODEL ]; then
 	if [ "${ModelExec[$tool]}" ];then
 	    cd $tool
+	    if [ -f VERSION];then
+		git branch checkout -b "$(cat VERSION)"
+	    fi
 	    pwd
 	    echo ${ModelExec[$tool]}
 	    ${ModelExec[$tool]} $MODELDIR$MODEL
@@ -68,10 +73,10 @@ for tool in "${!ModelDir[@]}";do
 	fi
 
 	if [ "$tool" == micromegas ];then
-	    PWD=$(pwd)
+	    oldPWD="$PWD"
 	    cd $tool/$MODELDIR$MODEL
 	    make main=CalcOmega_with_DDetection_MOv4.3.cpp
-	    cd "$PWD"
+	    cd "$oldPWD"
 	fi
 	
     fi    		     

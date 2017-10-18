@@ -8,6 +8,7 @@ MODEL=${mdl[MODEL]}
 sep=${mdl[sep]}
 
 #Check
+# Creates Model if it did not exists
 if [ -d SARAH/Models/$MODELDIR$sep$MODEL ];then
     mkdir -p ../SARAH/Models/$MODELDIR$sep$MODEL
     cp -r SARAH/Models/$MODELDIR$sep$MODEL/*  ../SARAH/Models/$MODELDIR$sep$MODEL
@@ -21,7 +22,14 @@ for tool in "${!ModelDir[@]}";do
 	mkdir -p $tool/$MODELDIR$MODEL
 	cp -r $SARAHDIR/${ModelDir[$tool]}/* $tool/$MODELDIR$MODEL
     fi
+    oldpwd="$PWD"
+    cd ../$tool
+    VERSION=$(git tag --sort -"v:refname"| head -1  )
+    if  [ "$VERSION" ];then
+	echo $VERSION > "$oldpwd"/$tool/$MODELDIR$MODEL/VERSION
+    fi
+    cd -
 done
 #version=$( grep -E "version\s*=" ../SPHENO/src/Control.F90  | awk -F'"|"' '{print $2}')
-# git tag --sort -"v:refname"
+# 
 # manage tags: https://stackoverflow.com/a/5480292/2268280
