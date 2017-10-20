@@ -47,7 +47,7 @@ DEFINITION[GaugeES][LagrangianInput]=
     {LagScHC  ,      {AddHC->True}}
   };
 
-LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q + + Yh conj[Sc].l.l + epsD conj[Et].d.q + epsE conj[Et].l.e + epsU Et.u.q;
+LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q + Yh conj[Sc].l.l + epsD conj[Et].d.q + epsE conj[Et].l.e + epsU Et.u.q;
 LagH     = -(+ mH2 conj[H].H     +  1/2 lambda1 conj[H].H.conj[H].H );
 LagEt    = -(+ mEt2 conj[Et].Et  +  1/2 lambda2 conj[Et].Et.conj[Et].Et );
 LagHEt   = -(+ lambda3 conj[H].H.conj[Et].Et + lambda4 conj[H].Et.conj[Et].H );

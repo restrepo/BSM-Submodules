@@ -37,7 +37,7 @@ sep=${mdl[sep]}
 echo $MODELDIR$sep$MODEL
 
 #Check
-if [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d  BSM/SARAH/Models$MODELDIR$sep$MODEL ]; then
+if [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d  BSM/SARAH/Models/$MODELDIR$sep$MODEL ]; then
         mkdir -p SARAH/Models/$MODELDIR$sep$MODEL
 	cp -r BSM/SARAH/Models/$MODELDIR$sep$MODEL/*  SARAH/Models/$MODELDIR$sep$MODEL
 fi
