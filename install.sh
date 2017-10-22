@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 #http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 if [ "$1" == "--help" ] || [ "$1" == "-h" ];then
-    echo USAGE $0 [--butler]
+    echo USAGE $0 [--butler] [--clean]
     echo "Install from BSM dirs or..."
     echo "if option --butler:"
     echo "run ./butler on branch model"
     echo "Default model is SM"
+    echo "if option --clean:"
+    echo "remove Model files directories"
     exit
 fi
 source functions.sh
@@ -26,6 +28,11 @@ if [ $CHECK == True ];then
     cd ..
 fi
 
+SUMMARY="===============================================================================
+Summary
+===============================================================================\n"
+
+
 # Install generated codes in several tools
 #get MODEL
 #TODO: Check against SARAH/Models DIRs
@@ -45,13 +52,31 @@ if [ "$1" == '--butler' ];then
     ./butler $MODELDIR$sep$MODEL
     exit
 fi
+FULLMODELNAME=$(echo $MODELDIR$MODEL| sed 's/-//g')
 
 declare -A ModelDir=( [SPHENO]="" [calchep]=""  [micromegas]="" [madgraph]=models )
 declare -A ModelDir2=( [SPHENO]="" [calchep]="models"  [micromegas]="work/models" [madgraph]="" )
 declare -A ModelExec=( [SPHENO]="" [calchep]="./mkWORKdir"  [micromegas]="./newProject" [madgraph]=""  )
+if [ "$1" == '--clean' ];then
+    echo "Deleting installed model files..."
+    for tool in "${!ModelDir[@]}";do
+	if [ -d $tool/${ModelDir[$tool]}/$FULLMODELNAME ];then
+	    rm -rf $tool/${ModelDir[$tool]}/$FULLMODELNAME
+	fi
+    done
+    exit
+fi
 for tool in "${!ModelDir[@]}";do
-    echo $tool
-    if [ ! -d $tool/${ModelDir[$tool]}$MODELDIR$MODEL ] && [ -d  BSM/SPHENO/$MODELDIR$MODEL ]; then
+    echo installing BSM/$tool/$FULLMODELNAME ...
+
+    if [ ! -d  BSM/$tool/$FULLMODELNAME ];then
+	echo ERROR! run first:
+	echo cd BSM
+	echo ./output.sh
+	exit
+    fi
+
+    if [ ! -d $tool/${ModelDir[$tool]}/$FULLMODELNAME ] && [ -d  BSM/$tool/$FULLMODELNAME ]; then
 	if [ "${ModelExec[$tool]}" ];then
 	    cd $tool
 	    if [ -f VERSION ];then
@@ -59,27 +84,34 @@ for tool in "${!ModelDir[@]}";do
 	    fi
 	    pwd
 	    echo ${ModelExec[$tool]}
-	    ${ModelExec[$tool]} $MODELDIR$MODEL
+	    ${ModelExec[$tool]} $FULLMODELNAME
 	    cd ..
 	fi
-	cp -r BSM/$tool/$MODELDIR$MODEL/ $tool/${ModelDir[$tool]}
+	cp -r BSM/$tool/$FULLMODELNAME $tool/${ModelDir[$tool]}
 	if [ "$tool" == calchep ] || [ "$tool" == micromegas ];then
-	    cp -r BSM/$tool/$MODELDIR$MODEL/* $tool/$MODELDIR$MODEL/${ModelDir2[$tool]}
+	    cp -r BSM/$tool/$FULLMODELNAME/* $tool/$FULLMODELNAME/${ModelDir2[$tool]}
 	fi
 	if [ "$tool" == SPHENO ];then
 	    cd $tool
-	    make Model=$MODELDIR$MODEL
+	    make Model=$FULLMODELNAME
 	    cd ..
 	fi
 
 	if [ "$tool" == micromegas ];then
 	    oldPWD="$PWD"
-	    cd $tool/$MODELDIR$MODEL
+	    cd $tool/$FULLMODELNAME
 	    make main=CalcOmega_with_DDetection_MOv4.3.cpp
 	    cd "$oldPWD"
 	fi
+	executable=""
+	if [ $tool == SPHENO ] ||  [ $tool == micromegas ];then
+	    executable=" and executable "
+	fi
 	
+	SUMMARY=${SUMMARY}$(printf "%-15s %s" $tool ": code$executable located in ./$tool/$FULLMODELNAME")"\n"
+
     fi    		     
 done
-
+printf "$SUMMARY"
+printf "===============================================================================\n"
 
