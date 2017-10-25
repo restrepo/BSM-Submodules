@@ -78,24 +78,33 @@ for tool in "${!ModelDir[@]}";do
 	echo ERROR! run first:
 	echo cd BSM
 	echo ./output.sh
-	exit
     fi
-
     if [ ! -d $tool/${ModelDir[$tool]}/$FULLMODELNAME ] && [ -d  BSM/$tool/$FULLMODELNAME ]; then
+	# change to proper branch
+	create_branch="-b"
+        if [ -f BSM/$tool/$FULLMODELNAME/VERSION ];then
+	    version="$(cat BSM/$tool/$FULLMODELNAME/VERSION)"
+	    cd $tool
+	    if [ $version ] && [ "$(git branch | grep -E '\s+'$version)" ]; then
+		create_branch=""
+	    fi    
+	    git checkout $create_branch $version
+	    echo git checkout $create_branch $version
+	    cd ..
+	fi
+	# Creates $FULLMODELNAME with command if necessary
 	if [ "${ModelExec[$tool]}" ];then
 	    cd $tool
-	    if [ -f VERSION ];then
-		git branch checkout -b "$(cat VERSION)"
-	    fi
-	    pwd
 	    echo ${ModelExec[$tool]}
 	    ${ModelExec[$tool]} $FULLMODELNAME
 	    cd ..
 	fi
+	# Copy files into the proper model directory
 	cp -r BSM/$tool/$FULLMODELNAME $tool/${ModelDir[$tool]}
 	if [ "$tool" == calchep ] || [ "$tool" == micromegas ];then
 	    cp -r BSM/$tool/$FULLMODELNAME/* $tool/$FULLMODELNAME/${ModelDir2[$tool]}
 	fi
+	# Creates executables where necessary
 	if [ "$tool" == SPHENO ];then
 	    cd $tool
 	    make Model=$FULLMODELNAME
@@ -115,7 +124,7 @@ for tool in "${!ModelDir[@]}";do
 	
 	SUMMARY=${SUMMARY}$(printf "%-15s %s" $tool ": code$executable located in ./$tool/$FULLMODELNAME")"\n"
 
-    fi    		     
+    fi
 done
 printf "$SUMMARY"
 printf "===============================================================================\n"
