@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:29 on 22.10.2017   
+! File created at 17:31 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -23,18 +23,18 @@ Contains
  
  Subroutine RunSM_and_SUSY_RGEs(Qout,g1input,g2input,g3input,Lam6input,Lam5input,      & 
 & Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,           & 
-& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vdinput,vuinput,              & 
+& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,               & 
 & g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
-& M112,M222,vd,vu,CKMout,sinW2_out,Alpha_out,AlphaS_out,realCKM)
+& M112,M222,v,v2,CKMout,sinW2_out,Alpha_out,AlphaS_out,realCKM)
 
 Implicit None 
-Real(dp),Intent(in) :: g1input,g2input,g3input,vdinput,vuinput
+Real(dp),Intent(in) :: g1input,g2input,g3input,vinput,v2input
 
 Complex(dp),Intent(in) :: Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput(3,3), & 
 & Yuinput(3,3),Ydinput(3,3),Yeinput(3,3),epYDinput(3,3),epYEinput(3,3),M12input,         & 
 & M112input,M222input
 
-Real(dp),Intent(out) :: g1,g2,g3,vd,vu
+Real(dp),Intent(out) :: g1,g2,g3,v,v2
 
 Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
@@ -57,10 +57,10 @@ Qin=sqrt(getRenormalizationScale())
 scale_save = Qin 
 Call ParametersToG133(g1input,g2input,g3input,Lam6input,Lam5input,Lam7input,          & 
 & Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,Yeinput,             & 
-& epYDinput,epYEinput,M12input,M112input,M222input,vdinput,vuinput,g1D)
+& epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,g1D)
 
 Call GToParameters133(g1D,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,           & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu)
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 g1 = Sqrt(3._dp/5._dp)*g1 
 
@@ -85,11 +85,10 @@ Call GtoParameters62_SM(g62_SM, g1SM, g2SM, g3SM, lambdaSM, YuSM, YdSM, YeSM, mu
 g1 = g1SM 
 g2 = g2SM 
 g3 = g3SM 
-vd=vSM/Sqrt(1._dp+TanBeta**2) 
-vu=TanBeta*vd 
-Yu = YuSM*Sqrt(1._dp+TanBeta**2)/TanBeta 
-Yd = YdSM*Sqrt(1._dp+TanBeta**2) 
-Ye = YeSM*Sqrt(1._dp+TanBeta**2) 
+v=vSM 
+Yu = YuSM 
+Yd = YdSM 
+Ye = YeSM 
 ! Calculate running CKM matrix 
 Call FermionMass(YuSM,1._dp,test,dummy,CKMout,kont) 
  
@@ -112,7 +111,7 @@ End if
 sinW2_out = g1**2/(g1**2+g2**2) 
 Alpha_out = sinW2_out*g2**2/(4._dp*Pi) 
 AlphaS_out = g3**2/(4._dp*Pi) 
-Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,vd,vu,g1,g2,             & 
+Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,g1,g2,              & 
 & g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,.False.)
 
 End if 
@@ -138,7 +137,7 @@ Integer :: i1,kont
  
 SinW2=0.22290_dp 
 CosW2SinW2=(1._dp-sinW2)*sinW2 
-vev2=mZ2*CosW2SinW2/(pi*Alpha_mZ) -0 
+vev2=mZ2*CosW2SinW2/(pi*Alpha_mZ) -2*v2**2 
 vSM = sqrt(vev2) 
  
 YdSM = 0._dp 

@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:29 on 22.10.2017   
+! File created at 17:31 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -228,6 +228,12 @@ InputValueforepYE= .True.
    Else If (read_line(7:14).Eq."IMHMIXIN") Then 
     Call Read_HMIXIN(99,1,i_model,set_mod_par,kont) 
  
+   Else If (read_line(7:10).Eq."V2IN") Then 
+    Call Read_V2IN(99,0,i_model,set_mod_par,kont) 
+ 
+   Else If (read_line(7:12).Eq."IMV2IN") Then 
+    Call Read_V2IN(99,1,i_model,set_mod_par,kont) 
+ 
 End if 
 End If 
 End Do 
@@ -286,8 +292,6 @@ If (i_c.Eq.1) Lambda7Input= Cmplx(Real(Lambda7Input,dp),wert,dp)
 Else If (i_par.Eq.9) Then 
 If (i_c.Eq.0) M12input= Cmplx(wert,Aimag(M12input),dp) 
 If (i_c.Eq.1) M12input= Cmplx(Real(M12input,dp),wert,dp) 
-Else If (i_par.Eq.10) Then 
-TanBeta= wert 
 Else
 Write(ErrCan,*) "Error in routine "//NameOfUnit(Iname)
 If (i_c.Eq.0) Write(ErrCan,*) "Unknown entry for Block MINPAR ",i_par
@@ -1480,7 +1484,6 @@ Write(io_L,101) 5, Real(Lambda5Input,dp) ,"# Lambda5Input"
 Write(io_L,101) 6, Real(Lambda6Input,dp) ,"# Lambda6Input"
 Write(io_L,101) 7, Real(Lambda7Input,dp) ,"# Lambda7Input"
 Write(io_L,101) 9, Real(M12input,dp) ,"# M12input"
-Write(io_L,101) 10, Real(TanBeta,dp) ,"# TanBeta"
 WriteNextBlock = .False. 
 If (Abs(Aimag(Lambda1Input)).gt.0._dp) WriteNextBlock = .True. 
 If (Abs(Aimag(Lambda2Input)).gt.0._dp) WriteNextBlock = .True. 
@@ -1559,11 +1562,8 @@ Write(io_L,104) 20,Real(M112,dp), "# M112"
 If (Abs(Aimag(M112)).gt.0._dp) WriteNextBlock = .True. 
 Write(io_L,104) 21,Real(M222,dp), "# M222" 
 If (Abs(Aimag(M222)).gt.0._dp) WriteNextBlock = .True. 
-Write(io_L,104) 102,Real(vd,dp), "# vd" 
-Write(io_L,104) 103,Real(vu,dp), "# vu" 
-Write(io_L,104) 3,Real(Sqrt(vd**2 + vu**2),dp), "# v" 
-Write(io_L,104) 10,Real(ASin(Abs(ZP(1,2))),dp), "# betaH" 
-Write(io_L,104) 11,Real(ATan(ZH(2,2)/ZH(1,2)),dp), "# alphaH" 
+Write(io_L,104) 3,Real(v,dp), "# v" 
+Write(io_L,104) 11,Real(ACos(ZH(1,2)),dp), "# alphaH" 
 If(WriteNextBlock) Then 
 Write(io_L,106) "Block IMHMIX Q=",Q,"# (Renormalization Scale)" 
 Write(io_L,104) 36,Aimag(Lam6), "# Lam6" 
@@ -1577,6 +1577,11 @@ Write(io_L,104) 22,Aimag(M12), "# M12"
 Write(io_L,104) 20,Aimag(M112), "# M112" 
 Write(io_L,104) 21,Aimag(M222), "# M222" 
 End if 
+WriteNextBlock = .false. 
+If (OutputForMG) WriteNextBlock = .True. 
+Write(io_L,106) "Block V2 Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 1,Real(v2,dp), "# v2" 
+Write(io_L,104) 1,Real(v2,dp), "# v2" 
 If (WriteTreeLevelTadpoleParameters) Then 
 If (HighScaleModel.Eq."LOW") Then 
 WriteNextBlock = .false. 
@@ -6348,8 +6353,7 @@ Write(123,*) ""
  Write(123,*) "# Dependent parameters " 
  
 Write(123,*) "" 
-Write(123,*) "betaH= ",ASin(Abs(ZP(1,2)))
-Write(123,*) "alphaH= ",ATan(ZH(2,2)/ZH(1,2))
+Write(123,*) "alphaH= ",ACos(ZH(1,2))
 Write(123,*) "" 
 Write(123,*) "" 
 
@@ -7426,10 +7430,8 @@ Else If (i_par.Eq.21) Then
 If (i_c.Eq.0) M222IN= Cmplx(wert,Aimag(M222IN),dp) 
 If (i_c.Eq.1) M222IN= Cmplx(Real(M222IN,dp),wert,dp) 
 InputValueforM222= .True. 
-Else If (i_par.Eq.102) Then 
-vdIN= wert 
-Else If (i_par.Eq.103) Then 
-vuIN= wert 
+Else If (i_par.Eq.3) Then 
+vIN= wert 
 Else
 Write(ErrCan,*) "Error in routine "//NameOfUnit(Iname)
 If (i_c.Eq.0) Write(ErrCan,*) "Unknown entry for Block HMIXIN ",i_par
@@ -7442,6 +7444,37 @@ End If
 End Do! i_par
 200 Return
 End Subroutine Read_HMIXIN 
+ 
+ 
+Subroutine Read_V2IN(io,i_c,i_model,set_mod_par,kont) 
+Implicit None 
+Integer,Intent(in)::io,i_c,i_model 
+Integer,Intent(inout)::kont,set_mod_par(:) 
+Integer::i_par 
+Real(dp)::wert 
+Character(len=80)::read_line 
+Do 
+Read(io,*,End=200) read_line 
+If (read_line(1:1).Eq."#") Cycle! this loop 
+Backspace(io)! resetting to the beginning of the line 
+If ((read_line(1:1).Eq."B").Or.(read_line(1:1).Eq."b")) Exit! this loop 
+Read(io,*) i_par,wert!,read_line 
+If (i_par.Eq.1) Then 
+v2IN= wert 
+Else If (i_par.Eq.1) Then 
+v2IN= wert 
+Else
+Write(ErrCan,*) "Error in routine "//NameOfUnit(Iname)
+If (i_c.Eq.0) Write(ErrCan,*) "Unknown entry for Block V2IN ",i_par
+If (i_c.Eq.1) Write(ErrCan,*) "Unknown entry for Block IMV2IN ",i_par
+If (i_c.Eq.0) Write(*,*) "Unknown entry for Block V2IN ",i_par
+If (i_c.Eq.1) Write(*,*) "Unknown entry for Block IMV2IN ",i_par
+Call AddError(304)
+If (ErrorLevel.Eq.2) Call TerminateProgram
+End If
+End Do! i_par
+200 Return
+End Subroutine Read_V2IN 
  
  
 Subroutine Switch_to_superCKM(Y_d, Y_u, Ad_in, Au_in, MD_in, MQ_in, MU_in &

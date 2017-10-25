@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:26 on 22.10.2017   
+! File created at 17:28 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -264,16 +264,15 @@ Complex(dp) :: Lam6GUT,Lam5GUT,Lam7GUT,Lam1GUT,Lam4GUT,Lam3GUT,Lam2GUT,epYUGUT(3
 & YdGUT(3,3),YeGUT(3,3),epYDGUT(3,3),epYEGUT(3,3),M12GUT,M112GUT,M222GUT
 
 Real(dp) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp) :: vd,vu
+Real(dp) :: v,v2
 
-Real(dp) :: vdIN,vuIN
+Real(dp) :: vIN,v2IN
 
-Real(dp) :: vdFix,vuFix
+Real(dp) :: vFix,v2Fix
 
 Real(dp) :: gPFu(3,159),gTFu(3),BRFu(3,159),gPFe(3,156),gTFe(3),BRFe(3,156),gPFd(3,159),          & 
 & gTFd(3),BRFd(3,159),gPhh(2,59),gThh(2),BRhh(2,59),gPAh(1,55),gTAh,BRAh(1,55),          & 
@@ -346,6 +345,7 @@ Logical, save :: InputValueforepYE =.False.
 Logical, save :: InputValueforM12 =.False. 
 Logical, save :: InputValueforM112 =.False. 
 Logical, save :: InputValueforM222 =.False. 
+Logical, save :: InputValueforv2 =.False. 
 Real (dp) :: vSM_Q 
 Real(dp), save :: RXiG = 1._dp 
 Real(dp), save :: RXiP = 1._dp 
@@ -360,11 +360,10 @@ Complex(dp) :: Lambda5Input
 Complex(dp) :: Lambda6Input
 Complex(dp) :: Lambda7Input
 Complex(dp) :: M12input
-Real(dp) :: TanBeta
-Real(dp) :: vdMZ 
-Real(dp) :: vdSUSY 
-Real(dp) :: vuMZ 
-Real(dp) :: vuSUSY 
+Real(dp) :: vMZ 
+Real(dp) :: vSUSY 
+Real(dp) :: v2MZ 
+Real(dp) :: v2SUSY 
 ! For HiggsBounds 
 Real(dp) :: BR_HpHW(2,2)  = 0._dp
 Real(dp) :: BR_HpAW(2,1) = 0._dp
@@ -1049,8 +1048,8 @@ M112 = 0._dp
 M112MZ = 0._dp 
 M222 = 0._dp 
 M222MZ = 0._dp 
-vdIN = 0._dp 
-vuIN = 0._dp 
+vIN = 0._dp 
+v2IN = 0._dp 
 MAh = 0._dp 
 MAh2 = 0._dp 
 MFd = 0._dp 
@@ -1073,7 +1072,6 @@ TW = 0._dp
 ZDR = 0._dp 
 ZER = 0._dp 
 ZUR = 0._dp 
-v = 0._dp 
 ZDL = 0._dp 
 ZEL = 0._dp 
 ZUL = 0._dp 
@@ -1082,9 +1080,8 @@ ZP = 0._dp
 ZW = 0._dp 
 ZZ = 0._dp 
 alphaH = 0._dp 
-betaH = 0._dp 
-vd = 0._dp 
-vu = 0._dp 
+v = 0._dp 
+v2 = 0._dp 
 gPFu = 0._dp 
 gTFu = 0._dp 
 BRFu = 0._dp 
@@ -1125,12 +1122,11 @@ Lambda5Input=(0._dp,0._dp)
 Lambda6Input=(0._dp,0._dp) 
 Lambda7Input=(0._dp,0._dp) 
 M12input=(0._dp,0._dp) 
-TanBeta= 0._dp 
 End Subroutine Set_All_Parameters_0 
  
 
 
-Subroutine SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,vd,vu,             & 
+Subroutine SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,              & 
 & g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
 & M112,M222,MZsuffix)
 
@@ -1139,14 +1135,14 @@ Real(dp),Intent(inout) :: g1,g2,g3
 Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
-Real(dp),Intent(inout) :: vd,vu
+Real(dp),Intent(inout) :: v,v2
 
 Logical,Intent(in)::MZsuffix 
 Real(dp), Intent(in) :: g1SM, g2SM, g3SM, vSM 
 Complex(dp),Intent(in) :: YuSM(3,3),YdSM(3,3),YeSM(3,3) 
 If (MZsuffix) Then 
-  vdMZ = vSM 
-  vuMZ = 0 
+  vMZ = vSM 
+  v2MZ = 0 
   YeMZ = YeSM 
   YdMZ = YdSM 
   YuMZ = YuSM 
@@ -1154,8 +1150,8 @@ If (MZsuffix) Then
   g2MZ = g2SM 
   g3MZ = g3SM 
 Else 
-  vd = vSM 
-  vu = 0 
+  v = vSM 
+  v2 = 0 
   Ye = YeSM 
   Yd = YdSM 
   Yu = YuSM 

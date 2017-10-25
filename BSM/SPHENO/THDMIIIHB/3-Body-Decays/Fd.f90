@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:24 on 22.10.2017   
+! File created at 17:26 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -17,17 +17,16 @@ Use ThreeBodyPhaseSpace
 Contains 
  
 Subroutine FdThreeBodyDecay(n_in,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,             & 
-& Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,               & 
-& ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,               & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,gTAh,gThh,gTHm,gTVWm,gTVZ,            & 
-& gFdFdcFdFd,gFdFdcFeFe,gFdFdcFuFu,gFdFdcFvFv,gFdFucFvFe,epsI,deltaM,CheckRealStates,    & 
+& Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,             & 
+& ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,               & 
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,gTAh,gThh,gTHm,gTVWm,gTVZ,gFdFdcFdFd,            & 
+& gFdFdcFeFe,gFdFdcFuFu,gFdFdcFvFv,gFdFucFvFe,epsI,deltaM,CheckRealStates,               & 
 & gT,gPartial,BR)
 
 Implicit None 
  
 Real(dp),Intent(in) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp),Intent(in) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
@@ -40,7 +39,7 @@ Complex(dp) :: cplcFdFdAhL(3,3),cplcFdFdAhR(3,3),cplcFdFdhhL(3,3,2),cplcFdFdhhR(
 & cplcFuFuVZR(3,3),cplcFvFecHmL(3,3,2),cplcFvFecHmR(3,3,2),cplcFvFecVWmL(3,3),           & 
 & cplcFvFecVWmR(3,3),cplcFvFvVZL(3,3),cplcFvFvVZR(3,3)
 
-Real(dp),Intent(in) :: g1,g2,g3,vd,vu
+Real(dp),Intent(in) :: g1,g2,g3,v,v2
 
 Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
@@ -119,8 +118,8 @@ Do i_run = i_start, i_end
  
 Call CouplingsFor_Fd_decays_3B(MFd(i_run),i_run,MAh,MAh2,MFd,MFd2,MFe,MFe2,           & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,cplcFdFdAhL,cplcFdFdAhR,    & 
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplcFdFdAhL,cplcFdFdAhR,               & 
 & cplcFdFdhhL,cplcFdFdhhR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,               & 
 & cplcFdFuVWmL,cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,             & 
 & cplcFeFeVZL,cplcFeFeVZR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,         & 

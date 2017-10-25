@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:24 on 22.10.2017   
+! File created at 17:26 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -16,9 +16,9 @@ Use Mathematics, Only: CompareMatrices, Adjungate
  
 Contains 
  
- Subroutine CalculateCouplingCT(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,             & 
-& Lam1,g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,dLam7,dvd,            & 
-& dLam5,dLam4,dLam3,dLam2,dvu,dZH,dLam6,dZP,dLam1,dg1,dg2,dSinTW,dCosTW,dTanTW,          & 
+ Subroutine CalculateCouplingCT(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,              & 
+& Lam1,g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,dLam7,dv,             & 
+& dLam5,dLam4,dLam3,dLam2,dv2,dZH,dLam6,dZP,dLam1,dg1,dg2,dSinTW,dCosTW,dTanTW,          & 
 & dg3,depYD,dZDL,dZDR,depYE,dZEL,dZER,dYu,dZUL,dZUR,dYd,depYU,dYe,ctcplAhAhAh,           & 
 & ctcplAhAhhh,ctcplAhAhsigma1,ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhHmcHm,ctcplAhsigma1sigma1,& 
 & ctcplhhhhhh,ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhsigma1sigma1,ctcplHmsigma1cHm,         & 
@@ -38,7 +38,7 @@ Contains
 & ctcplcFeFvVWmL,ctcplcFeFvVWmR,ctcplcFvFvVZL,ctcplcFvFvVZR)
 
 Implicit None 
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),ZP(2,2),g1,g2,TW,g3,dvd,dvu,dZH(2,2),dZP(2,2),dg1,dg2,dSinTW,           & 
+Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g1,g2,TW,g3,dv,dv2,dZH(2,2),dZP(2,2),dg1,dg2,dSinTW,             & 
 & dCosTW,dTanTW,dg3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
@@ -73,28 +73,28 @@ Iname = Iname + 1
 NameOfUnit(Iname) = 'CalculateCouplingCT'
  
 ctcplAhAhAh = 0._dp 
-Call CT_CouplingAhAhAh(Lam7,vd,dLam7,dvd,ctcplAhAhAh)
+Call CT_CouplingAhAhAh(Lam7,v,dLam7,dv,ctcplAhAhAh)
 
 
 
 ctcplAhAhhh = 0._dp 
 Do gt3 = 1, 2
-Call CT_CouplingAhAhhh(gt3,Lam5,Lam7,Lam4,Lam3,Lam2,vd,vu,ZH,dLam5,dLam7,             & 
-& dLam4,dLam3,dLam2,dvd,dvu,dZH,ctcplAhAhhh(gt3))
+Call CT_CouplingAhAhhh(gt3,Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,ZH,dLam5,dLam7,              & 
+& dLam4,dLam3,dLam2,dv,dv2,dZH,ctcplAhAhhh(gt3))
 
 End Do 
 
 
 ctcplAhAhsigma1 = 0._dp 
-Call CT_CouplingAhAhsigma1(Lam5,Lam7,vd,vu,dLam5,dLam7,dvd,dvu,ctcplAhAhsigma1)
+Call CT_CouplingAhAhsigma1(Lam5,Lam7,v,v2,dLam5,dLam7,dv,dv2,ctcplAhAhsigma1)
 
 
 
 ctcplAhhhhh = 0._dp 
 Do gt2 = 1, 2
  Do gt3 = 1, 2
-Call CT_CouplingAhhhhh(gt2,gt3,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,dLam5,dLam7,             & 
-& dvd,dvu,dZH,ctcplAhhhhh(gt2,gt3))
+Call CT_CouplingAhhhhh(gt2,gt3,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,dLam7,              & 
+& dv,dv2,dZH,ctcplAhhhhh(gt2,gt3))
 
  End Do 
 End Do 
@@ -102,8 +102,8 @@ End Do
 
 ctcplAhhhsigma1 = 0._dp 
 Do gt2 = 1, 2
-Call CT_CouplingAhhhsigma1(gt2,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,dLam5,dLam7,             & 
-& dvd,dvu,dZH,ctcplAhhhsigma1(gt2))
+Call CT_CouplingAhhhsigma1(gt2,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,dLam7,              & 
+& dv,dv2,dZH,ctcplAhhhsigma1(gt2))
 
 End Do 
 
@@ -111,15 +111,15 @@ End Do
 ctcplAhHmcHm = 0._dp 
 Do gt2 = 1, 2
  Do gt3 = 1, 2
-Call CT_CouplingAhHmcHm(gt2,gt3,Lam6,Lam5,Lam7,Lam4,vd,ZP,dLam6,dLam5,dLam7,          & 
-& dLam4,dvd,dZP,ctcplAhHmcHm(gt2,gt3))
+Call CT_CouplingAhHmcHm(gt2,gt3,Lam6,Lam5,Lam7,Lam4,v,ZP,dLam6,dLam5,dLam7,           & 
+& dLam4,dv,dZP,ctcplAhHmcHm(gt2,gt3))
 
  End Do 
 End Do 
 
 
 ctcplAhsigma1sigma1 = 0._dp 
-Call CT_CouplingAhsigma1sigma1(Lam6,Lam5,vd,vu,dLam6,dLam5,dvd,dvu,ctcplAhsigma1sigma1)
+Call CT_CouplingAhsigma1sigma1(Lam6,Lam5,v,v2,dLam6,dLam5,dv,dv2,ctcplAhsigma1sigma1)
 
 
 
@@ -127,8 +127,8 @@ ctcplhhhhhh = 0._dp
 Do gt1 = 1, 2
  Do gt2 = 1, 2
   Do gt3 = 1, 2
-Call CT_Couplinghhhhhh(gt1,gt2,gt3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,vd,             & 
-& vu,ZH,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,ctcplhhhhhh(gt1,gt2,gt3))
+Call CT_Couplinghhhhhh(gt1,gt2,gt3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,v,              & 
+& v2,ZH,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,ctcplhhhhhh(gt1,gt2,gt3))
 
   End Do 
  End Do 
@@ -138,8 +138,8 @@ End Do
 ctcplhhhhsigma1 = 0._dp 
 Do gt1 = 1, 2
  Do gt2 = 1, 2
-Call CT_Couplinghhhhsigma1(gt1,gt2,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,dLam5,               & 
-& dLam7,dvd,dvu,dZH,ctcplhhhhsigma1(gt1,gt2))
+Call CT_Couplinghhhhsigma1(gt1,gt2,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,dLam7,          & 
+& dv,dv2,dZH,ctcplhhhhsigma1(gt1,gt2))
 
  End Do 
 End Do 
@@ -150,7 +150,7 @@ Do gt1 = 1, 2
  Do gt2 = 1, 2
   Do gt3 = 1, 2
 Call CT_CouplinghhHmcHm(gt1,gt2,gt3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& vd,vu,ZH,ZP,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,dZP,ctcplhhHmcHm(gt1,gt2,gt3))
+& v,v2,ZH,ZP,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,ctcplhhHmcHm(gt1,gt2,gt3))
 
   End Do 
  End Do 
@@ -159,8 +159,8 @@ End Do
 
 ctcplhhsigma1sigma1 = 0._dp 
 Do gt1 = 1, 2
-Call CT_Couplinghhsigma1sigma1(gt1,Lam6,Lam5,Lam1,Lam4,Lam3,vd,vu,ZH,dLam6,           & 
-& dLam5,dLam1,dLam4,dLam3,dvd,dvu,dZH,ctcplhhsigma1sigma1(gt1))
+Call CT_Couplinghhsigma1sigma1(gt1,Lam6,Lam5,Lam1,Lam4,Lam3,v,v2,ZH,dLam6,            & 
+& dLam5,dLam1,dLam4,dLam3,dv,dv2,dZH,ctcplhhsigma1sigma1(gt1))
 
 End Do 
 
@@ -168,15 +168,15 @@ End Do
 ctcplHmsigma1cHm = 0._dp 
 Do gt1 = 1, 2
  Do gt3 = 1, 2
-Call CT_CouplingHmsigma1cHm(gt1,gt3,Lam6,Lam5,Lam7,Lam4,vu,ZP,dLam6,dLam5,            & 
-& dLam7,dLam4,dvu,dZP,ctcplHmsigma1cHm(gt1,gt3))
+Call CT_CouplingHmsigma1cHm(gt1,gt3,Lam6,Lam5,Lam7,Lam4,v2,ZP,dLam6,dLam5,            & 
+& dLam7,dLam4,dv2,dZP,ctcplHmsigma1cHm(gt1,gt3))
 
  End Do 
 End Do 
 
 
 ctcplsigma1sigma1sigma1 = 0._dp 
-Call CT_Couplingsigma1sigma1sigma1(Lam6,vu,dLam6,dvu,ctcplsigma1sigma1sigma1)
+Call CT_Couplingsigma1sigma1sigma1(Lam6,v2,dLam6,dv2,ctcplsigma1sigma1sigma1)
 
 
 
@@ -264,22 +264,22 @@ End Do
 
 ctcplhhcVWmVWm = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplinghhcVWmVWm(gt1,g2,vd,vu,ZH,dg2,dvd,dvu,dZH,ctcplhhcVWmVWm(gt1))
+Call CT_CouplinghhcVWmVWm(gt1,g2,v,v2,ZH,dg2,dv,dv2,dZH,ctcplhhcVWmVWm(gt1))
 
 End Do 
 
 
 ctcplhhVZVZ = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplinghhVZVZ(gt1,g1,g2,vd,vu,ZH,TW,dg1,dg2,dvd,dvu,dZH,dSinTW,              & 
-& dCosTW,dTanTW,ctcplhhVZVZ(gt1))
+Call CT_CouplinghhVZVZ(gt1,g1,g2,v,v2,ZH,TW,dg1,dg2,dv,dv2,dZH,dSinTW,dCosTW,         & 
+& dTanTW,ctcplhhVZVZ(gt1))
 
 End Do 
 
 
 ctcplHmcVWmVP = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplingHmcVWmVP(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,dSinTW,            & 
+Call CT_CouplingHmcVWmVP(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,dSinTW,              & 
 & dCosTW,dTanTW,ctcplHmcVWmVP(gt1))
 
 End Do 
@@ -287,7 +287,7 @@ End Do
 
 ctcplHmcVWmVZ = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplingHmcVWmVZ(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,dSinTW,            & 
+Call CT_CouplingHmcVWmVZ(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,dSinTW,              & 
 & dCosTW,dTanTW,ctcplHmcVWmVZ(gt1))
 
 End Do 
@@ -295,7 +295,7 @@ End Do
 
 ctcplcHmVPVWm = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplingcHmVPVWm(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,dSinTW,            & 
+Call CT_CouplingcHmVPVWm(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,dSinTW,              & 
 & dCosTW,dTanTW,ctcplcHmVPVWm(gt1))
 
 End Do 
@@ -303,7 +303,7 @@ End Do
 
 ctcplcHmVWmVZ = 0._dp 
 Do gt1 = 1, 2
-Call CT_CouplingcHmVWmVZ(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,dSinTW,            & 
+Call CT_CouplingcHmVWmVZ(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,dSinTW,              & 
 & dCosTW,dTanTW,ctcplcHmVWmVZ(gt1))
 
 End Do 
@@ -626,11 +626,11 @@ End Do
 Iname = Iname - 1 
 End Subroutine CalculateCouplingCT
 
-Subroutine CT_CouplingAhAhAh(Lam7,vd,dLam7,dvd,res)
+Subroutine CT_CouplingAhAhAh(Lam7,v,dLam7,dv,res)
 
 Implicit None 
 
-Real(dp), Intent(in) :: vd,dvd
+Real(dp), Intent(in) :: v,dv
 
 Complex(dp), Intent(in) :: Lam7,dLam7
 
@@ -641,10 +641,10 @@ Iname = Iname +1
 NameOfUnit(Iname) = 'CT_CouplingAhAhAh' 
  
 res = 0._dp 
-res = res+(3*dvd*Lam7)/2._dp
-res = res+(3*dLam7*vd)/2._dp
-res = res+(-3*vd*Conjg(dLam7))/2._dp
-res = res+(-3*dvd*Conjg(Lam7))/2._dp
+res = res+(3*dv*Lam7)/2._dp
+res = res+(3*dLam7*v)/2._dp
+res = res+(-3*v*Conjg(dLam7))/2._dp
+res = res+(-3*dv*Conjg(Lam7))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -658,13 +658,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhAhAh  
  
  
-Subroutine CT_CouplingAhAhhh(gt3,Lam5,Lam7,Lam4,Lam3,Lam2,vd,vu,ZH,dLam5,             & 
-& dLam7,dLam4,dLam3,dLam2,dvd,dvu,dZH,res)
+Subroutine CT_CouplingAhAhhh(gt3,Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,ZH,dLam5,              & 
+& dLam7,dLam4,dLam3,dLam2,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt3
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam5,Lam7,Lam4,Lam3,Lam2,dLam5,dLam7,dLam4,dLam3,dLam2
 
@@ -683,33 +683,33 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam3*vd*dZH(gt3,1))
-res = res-(Lam4*vd*dZH(gt3,1))
-res = res+(Lam5*vd*dZH(gt3,1))/2._dp
-res = res-(Lam7*vu*dZH(gt3,1))/2._dp
-res = res+(vd*Conjg(Lam5)*dZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt3,1))/2._dp
-res = res-(Lam7*vd*dZH(gt3,2))/2._dp
-res = res-(Lam2*vu*dZH(gt3,2))
-res = res-(vd*Conjg(Lam7)*dZH(gt3,2))/2._dp
-res = res-(dvd*Lam3*ZH(gt3,1))
-res = res-(dvd*Lam4*ZH(gt3,1))
-res = res+(dvd*Lam5*ZH(gt3,1))/2._dp
-res = res-(dvu*Lam7*ZH(gt3,1))/2._dp
-res = res-(dLam3*vd*ZH(gt3,1))
-res = res-(dLam4*vd*ZH(gt3,1))
-res = res+(dLam5*vd*ZH(gt3,1))/2._dp
-res = res-(dLam7*vu*ZH(gt3,1))/2._dp
-res = res+(vd*Conjg(dLam5)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt3,1))/2._dp
-res = res+(dvd*Conjg(Lam5)*ZH(gt3,1))/2._dp
-res = res-(dvu*Conjg(Lam7)*ZH(gt3,1))/2._dp
-res = res-(dvu*Lam2*ZH(gt3,2))
-res = res-(dvd*Lam7*ZH(gt3,2))/2._dp
-res = res-(dLam7*vd*ZH(gt3,2))/2._dp
-res = res-(dLam2*vu*ZH(gt3,2))
-res = res-(vd*Conjg(dLam7)*ZH(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam7)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt3,1))
+res = res-(Lam4*v*dZH(gt3,1))
+res = res+(Lam5*v*dZH(gt3,1))/2._dp
+res = res-(Lam7*v2*dZH(gt3,1))/2._dp
+res = res+(v*Conjg(Lam5)*dZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt3,1))/2._dp
+res = res-(Lam7*v*dZH(gt3,2))/2._dp
+res = res-(Lam2*v2*dZH(gt3,2))
+res = res-(v*Conjg(Lam7)*dZH(gt3,2))/2._dp
+res = res-(dv*Lam3*ZH(gt3,1))
+res = res-(dv*Lam4*ZH(gt3,1))
+res = res+(dv*Lam5*ZH(gt3,1))/2._dp
+res = res-(dv2*Lam7*ZH(gt3,1))/2._dp
+res = res-(dLam3*v*ZH(gt3,1))
+res = res-(dLam4*v*ZH(gt3,1))
+res = res+(dLam5*v*ZH(gt3,1))/2._dp
+res = res-(dLam7*v2*ZH(gt3,1))/2._dp
+res = res+(v*Conjg(dLam5)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt3,1))/2._dp
+res = res+(dv*Conjg(Lam5)*ZH(gt3,1))/2._dp
+res = res-(dv2*Conjg(Lam7)*ZH(gt3,1))/2._dp
+res = res-(dv2*Lam2*ZH(gt3,2))
+res = res-(dv*Lam7*ZH(gt3,2))/2._dp
+res = res-(dLam7*v*ZH(gt3,2))/2._dp
+res = res-(dLam2*v2*ZH(gt3,2))
+res = res-(v*Conjg(dLam7)*ZH(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam7)*ZH(gt3,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -721,11 +721,11 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhAhhh  
  
  
-Subroutine CT_CouplingAhAhsigma1(Lam5,Lam7,vd,vu,dLam5,dLam7,dvd,dvu,res)
+Subroutine CT_CouplingAhAhsigma1(Lam5,Lam7,v,v2,dLam5,dLam7,dv,dv2,res)
 
 Implicit None 
 
-Real(dp), Intent(in) :: vd,vu,dvd,dvu
+Real(dp), Intent(in) :: v,v2,dv,dv2
 
 Complex(dp), Intent(in) :: Lam5,Lam7,dLam5,dLam7
 
@@ -736,14 +736,14 @@ Iname = Iname +1
 NameOfUnit(Iname) = 'CT_CouplingAhAhsigma1' 
  
 res = 0._dp 
-res = res-(dvd*Lam5)/2._dp
-res = res-(dvu*Lam7)/2._dp
-res = res-(dLam5*vd)/2._dp
-res = res-(dLam7*vu)/2._dp
-res = res+(vd*Conjg(dLam5))/2._dp
-res = res+(vu*Conjg(dLam7))/2._dp
-res = res+(dvd*Conjg(Lam5))/2._dp
-res = res+(dvu*Conjg(Lam7))/2._dp
+res = res-(dv*Lam5)/2._dp
+res = res-(dv2*Lam7)/2._dp
+res = res-(dLam5*v)/2._dp
+res = res-(dLam7*v2)/2._dp
+res = res+(v*Conjg(dLam5))/2._dp
+res = res+(v2*Conjg(dLam7))/2._dp
+res = res+(dv*Conjg(Lam5))/2._dp
+res = res+(dv2*Conjg(Lam7))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -757,13 +757,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhAhsigma1  
  
  
-Subroutine CT_CouplingAhhhhh(gt2,gt3,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,dLam5,             & 
-& dLam7,dvd,dvu,dZH,res)
+Subroutine CT_CouplingAhhhhh(gt2,gt3,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,              & 
+& dLam7,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt2,gt3
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,dLam6,dLam5,dLam7
 
@@ -790,62 +790,62 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(3*Lam6*vd*dZH(gt3,1)*ZH(gt2,1))/2._dp
-res = res-(Lam5*vu*dZH(gt3,1)*ZH(gt2,1))/2._dp
-res = res+(vu*Conjg(Lam5)*dZH(gt3,1)*ZH(gt2,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt3,1)*ZH(gt2,1))/2._dp
-res = res-(Lam5*vd*dZH(gt3,2)*ZH(gt2,1))/2._dp
-res = res+(Lam7*vu*dZH(gt3,2)*ZH(gt2,1))/2._dp
-res = res+(vd*Conjg(Lam5)*dZH(gt3,2)*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt3,2)*ZH(gt2,1))/2._dp
-res = res-(Lam5*vd*dZH(gt3,1)*ZH(gt2,2))/2._dp
-res = res+(Lam7*vu*dZH(gt3,1)*ZH(gt2,2))/2._dp
-res = res+(vd*Conjg(Lam5)*dZH(gt3,1)*ZH(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt3,1)*ZH(gt2,2))/2._dp
-res = res+(Lam7*vd*dZH(gt3,2)*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam7)*dZH(gt3,2)*ZH(gt2,2))/2._dp
-res = res+(3*Lam6*vd*dZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(Lam5*vu*dZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(vu*Conjg(Lam5)*dZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(Lam5*vd*dZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(Lam7*vu*dZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(vd*Conjg(Lam5)*dZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvu*Lam5*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(3*dvd*Lam6*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(3*dLam6*vd*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(dLam5*vu*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(vu*Conjg(dLam5)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(dLam6)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(dvu*Conjg(Lam5)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*dvd*Conjg(Lam6)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(dvd*Lam5*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(dvu*Lam7*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dLam5*vd*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(dLam7*vu*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(vd*Conjg(dLam5)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(dvd*Conjg(Lam5)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvu*Conjg(Lam7)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(Lam5*vd*dZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(Lam7*vu*dZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(vd*Conjg(Lam5)*dZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(Lam7*vd*dZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam7)*dZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(dvd*Lam5*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(dvu*Lam7*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dLam5*vd*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(dLam7*vu*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(vd*Conjg(dLam5)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(dvd*Conjg(Lam5)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dvu*Conjg(Lam7)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(dvd*Lam7*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(dLam7*vd*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(dLam7)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam7)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(3*Lam6*v*dZH(gt3,1)*ZH(gt2,1))/2._dp
+res = res-(Lam5*v2*dZH(gt3,1)*ZH(gt2,1))/2._dp
+res = res+(v2*Conjg(Lam5)*dZH(gt3,1)*ZH(gt2,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt3,1)*ZH(gt2,1))/2._dp
+res = res-(Lam5*v*dZH(gt3,2)*ZH(gt2,1))/2._dp
+res = res+(Lam7*v2*dZH(gt3,2)*ZH(gt2,1))/2._dp
+res = res+(v*Conjg(Lam5)*dZH(gt3,2)*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt3,2)*ZH(gt2,1))/2._dp
+res = res-(Lam5*v*dZH(gt3,1)*ZH(gt2,2))/2._dp
+res = res+(Lam7*v2*dZH(gt3,1)*ZH(gt2,2))/2._dp
+res = res+(v*Conjg(Lam5)*dZH(gt3,1)*ZH(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt3,1)*ZH(gt2,2))/2._dp
+res = res+(Lam7*v*dZH(gt3,2)*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(Lam7)*dZH(gt3,2)*ZH(gt2,2))/2._dp
+res = res+(3*Lam6*v*dZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(Lam5*v2*dZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(v2*Conjg(Lam5)*dZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(Lam5*v*dZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(Lam7*v2*dZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(v*Conjg(Lam5)*dZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv2*Lam5*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(3*dv*Lam6*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(3*dLam6*v*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(dLam5*v2*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(v2*Conjg(dLam5)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(dLam6)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(dv2*Conjg(Lam5)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*dv*Conjg(Lam6)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(dv*Lam5*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(dv2*Lam7*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dLam5*v*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(dLam7*v2*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(v*Conjg(dLam5)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(dv*Conjg(Lam5)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv2*Conjg(Lam7)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(Lam5*v*dZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(Lam7*v2*dZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(v*Conjg(Lam5)*dZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(Lam7*v*dZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(Lam7)*dZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(dv*Lam5*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(dv2*Lam7*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dLam5*v*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(dLam7*v2*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(v*Conjg(dLam5)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(dv*Conjg(Lam5)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dv2*Conjg(Lam7)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(dv*Lam7*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(dLam7*v*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(dLam7)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam7)*ZH(gt2,2)*ZH(gt3,2))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -859,13 +859,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhhhhh  
  
  
-Subroutine CT_CouplingAhhhsigma1(gt2,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,dLam5,             & 
-& dLam7,dvd,dvu,dZH,res)
+Subroutine CT_CouplingAhhhsigma1(gt2,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,              & 
+& dLam7,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt2
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,dLam6,dLam5,dLam7
 
@@ -884,30 +884,30 @@ If ((gt2.Lt.1).Or.(gt2.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam6*vd*dZH(gt2,1))/2._dp
-res = res-(Lam5*vu*dZH(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,1))/2._dp
-res = res-(vd*Conjg(Lam6)*dZH(gt2,1))/2._dp
-res = res-(Lam5*vd*dZH(gt2,2))/2._dp
-res = res-(Lam7*vu*dZH(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt2,2))/2._dp
-res = res-(dvu*Lam5*ZH(gt2,1))/2._dp
-res = res-(dvd*Lam6*ZH(gt2,1))/2._dp
-res = res-(dLam6*vd*ZH(gt2,1))/2._dp
-res = res-(dLam5*vu*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt2,1))/2._dp
-res = res-(vd*Conjg(dLam6)*ZH(gt2,1))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt2,1))/2._dp
-res = res-(dvd*Conjg(Lam6)*ZH(gt2,1))/2._dp
-res = res-(dvd*Lam5*ZH(gt2,2))/2._dp
-res = res-(dvu*Lam7*ZH(gt2,2))/2._dp
-res = res-(dLam5*vd*ZH(gt2,2))/2._dp
-res = res-(dLam7*vu*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(dLam5)*ZH(gt2,2))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt2,2))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt2,2))/2._dp
-res = res-(dvu*Conjg(Lam7)*ZH(gt2,2))/2._dp
+res = res-(Lam6*v*dZH(gt2,1))/2._dp
+res = res-(Lam5*v2*dZH(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,1))/2._dp
+res = res-(v*Conjg(Lam6)*dZH(gt2,1))/2._dp
+res = res-(Lam5*v*dZH(gt2,2))/2._dp
+res = res-(Lam7*v2*dZH(gt2,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt2,2))/2._dp
+res = res-(dv2*Lam5*ZH(gt2,1))/2._dp
+res = res-(dv*Lam6*ZH(gt2,1))/2._dp
+res = res-(dLam6*v*ZH(gt2,1))/2._dp
+res = res-(dLam5*v2*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt2,1))/2._dp
+res = res-(v*Conjg(dLam6)*ZH(gt2,1))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt2,1))/2._dp
+res = res-(dv*Conjg(Lam6)*ZH(gt2,1))/2._dp
+res = res-(dv*Lam5*ZH(gt2,2))/2._dp
+res = res-(dv2*Lam7*ZH(gt2,2))/2._dp
+res = res-(dLam5*v*ZH(gt2,2))/2._dp
+res = res-(dLam7*v2*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(dLam5)*ZH(gt2,2))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt2,2))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt2,2))/2._dp
+res = res-(dv2*Conjg(Lam7)*ZH(gt2,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -919,13 +919,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhhhsigma1  
  
  
-Subroutine CT_CouplingAhHmcHm(gt2,gt3,Lam6,Lam5,Lam7,Lam4,vd,ZP,dLam6,dLam5,          & 
-& dLam7,dLam4,dvd,dZP,res)
+Subroutine CT_CouplingAhHmcHm(gt2,gt3,Lam6,Lam5,Lam7,Lam4,v,ZP,dLam6,dLam5,           & 
+& dLam7,dLam4,dv,dZP,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt2,gt3
-Real(dp), Intent(in) :: vd,ZP(2,2),dvd,dZP(2,2)
+Real(dp), Intent(in) :: v,ZP(2,2),dv,dZP(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam4,dLam6,dLam5,dLam7,dLam4
 
@@ -952,38 +952,38 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(Lam6*vd*dZP(gt3,1)*ZP(gt2,1))/2._dp
-res = res-(vd*Conjg(Lam6)*dZP(gt3,1)*ZP(gt2,1))/2._dp
-res = res-(Lam4*vd*dZP(gt3,2)*ZP(gt2,1))/2._dp
-res = res+(vd*Conjg(Lam5)*dZP(gt3,2)*ZP(gt2,1))/2._dp
-res = res+(Lam4*vd*dZP(gt3,1)*ZP(gt2,2))/2._dp
-res = res-(Lam5*vd*dZP(gt3,1)*ZP(gt2,2))/2._dp
-res = res+(Lam7*vd*dZP(gt3,2)*ZP(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam7)*dZP(gt3,2)*ZP(gt2,2))/2._dp
-res = res+(Lam6*vd*dZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(vd*Conjg(Lam6)*dZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res+(Lam4*vd*dZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(Lam5*vd*dZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res+(dvd*Lam6*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res+(dLam6*vd*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(vd*Conjg(dLam6)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dvd*Conjg(Lam6)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res+(dvd*Lam4*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dvd*Lam5*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res+(dLam4*vd*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dLam5*vd*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(Lam4*vd*dZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res+(vd*Conjg(Lam5)*dZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res+(Lam7*vd*dZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam7)*dZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvd*Lam4*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dLam4*vd*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res+(vd*Conjg(dLam5)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res+(dvd*Conjg(Lam5)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res+(dvd*Lam7*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res+(dLam7*vd*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(vd*Conjg(dLam7)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam7)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res+(Lam6*v*dZP(gt3,1)*ZP(gt2,1))/2._dp
+res = res-(v*Conjg(Lam6)*dZP(gt3,1)*ZP(gt2,1))/2._dp
+res = res-(Lam4*v*dZP(gt3,2)*ZP(gt2,1))/2._dp
+res = res+(v*Conjg(Lam5)*dZP(gt3,2)*ZP(gt2,1))/2._dp
+res = res+(Lam4*v*dZP(gt3,1)*ZP(gt2,2))/2._dp
+res = res-(Lam5*v*dZP(gt3,1)*ZP(gt2,2))/2._dp
+res = res+(Lam7*v*dZP(gt3,2)*ZP(gt2,2))/2._dp
+res = res-(v*Conjg(Lam7)*dZP(gt3,2)*ZP(gt2,2))/2._dp
+res = res+(Lam6*v*dZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(v*Conjg(Lam6)*dZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res+(Lam4*v*dZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(Lam5*v*dZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res+(dv*Lam6*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res+(dLam6*v*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(v*Conjg(dLam6)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dv*Conjg(Lam6)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res+(dv*Lam4*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dv*Lam5*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res+(dLam4*v*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dLam5*v*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(Lam4*v*dZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res+(v*Conjg(Lam5)*dZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res+(Lam7*v*dZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(v*Conjg(Lam7)*dZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv*Lam4*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dLam4*v*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res+(v*Conjg(dLam5)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res+(dv*Conjg(Lam5)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res+(dv*Lam7*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res+(dLam7*v*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(v*Conjg(dLam7)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam7)*ZP(gt2,2)*ZP(gt3,2))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -997,11 +997,11 @@ Iname = Iname - 1
 End Subroutine CT_CouplingAhHmcHm  
  
  
-Subroutine CT_CouplingAhsigma1sigma1(Lam6,Lam5,vd,vu,dLam6,dLam5,dvd,dvu,res)
+Subroutine CT_CouplingAhsigma1sigma1(Lam6,Lam5,v,v2,dLam6,dLam5,dv,dv2,res)
 
 Implicit None 
 
-Real(dp), Intent(in) :: vd,vu,dvd,dvu
+Real(dp), Intent(in) :: v,v2,dv,dv2
 
 Complex(dp), Intent(in) :: Lam6,Lam5,dLam6,dLam5
 
@@ -1012,14 +1012,14 @@ Iname = Iname +1
 NameOfUnit(Iname) = 'CT_CouplingAhsigma1sigma1' 
  
 res = 0._dp 
-res = res+(dvu*Lam5)/2._dp
-res = res+(dvd*Lam6)/2._dp
-res = res+(dLam6*vd)/2._dp
-res = res+(dLam5*vu)/2._dp
-res = res-(vu*Conjg(dLam5))/2._dp
-res = res-(vd*Conjg(dLam6))/2._dp
-res = res-(dvu*Conjg(Lam5))/2._dp
-res = res-(dvd*Conjg(Lam6))/2._dp
+res = res+(dv2*Lam5)/2._dp
+res = res+(dv*Lam6)/2._dp
+res = res+(dLam6*v)/2._dp
+res = res+(dLam5*v2)/2._dp
+res = res-(v2*Conjg(dLam5))/2._dp
+res = res-(v*Conjg(dLam6))/2._dp
+res = res-(dv2*Conjg(Lam5))/2._dp
+res = res-(dv*Conjg(Lam6))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -1034,12 +1034,12 @@ End Subroutine CT_CouplingAhsigma1sigma1
  
  
 Subroutine CT_Couplinghhhhhh(gt1,gt2,gt3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,               & 
-& Lam2,vd,vu,ZH,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,res)
+& Lam2,v,v2,ZH,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2
 
@@ -1074,216 +1074,216 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-3*Lam1*vd*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1)
-res = res+(-3*Lam6*vu*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(-3*vu*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res-(Lam3*vu*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))
-res = res-(Lam4*vu*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))
-res = res-(Lam5*vu*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(Lam3*vu*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))
-res = res-(Lam4*vu*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))
-res = res-(Lam5*vu*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(Lam3*vd*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))
-res = res-(Lam4*vd*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))
-res = res-(Lam5*vd*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(Lam3*vu*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))
-res = res-(Lam4*vu*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))
-res = res-(Lam5*vu*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(Lam3*vd*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))
-res = res-(Lam4*vd*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))
-res = res-(Lam5*vd*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(Lam3*vd*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))
-res = res-(Lam4*vd*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))
-res = res-(Lam5*vd*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*Lam7*vd*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-3*Lam2*vu*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2)
-res = res+(-3*vd*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-3*Lam1*vd*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1)
-res = res+(-3*Lam6*vu*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vu*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))
-res = res-(Lam4*vu*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))
-res = res-(Lam5*vu*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vu*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))
-res = res-(Lam4*vu*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))
-res = res-(Lam5*vu*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vd*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))
-res = res-(Lam4*vd*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))
-res = res-(Lam5*vd*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
-res = res-3*Lam1*vd*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
-res = res+(-3*Lam6*vu*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vu*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(Lam4*vu*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(Lam5*vu*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-3*dvd*Lam1*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
-res = res+(-3*dvu*Lam6*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-3*dLam1*vd*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
-res = res+(-3*dLam6*vu*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*dvu*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(dvu*Lam3*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(dvu*Lam4*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(dvu*Lam5*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*dvd*Lam6*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*dLam6*vd*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(dLam3*vu*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(dLam4*vu*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
-res = res-(dLam5*vu*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(dLam6)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*dvd*Conjg(Lam6)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vu*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(Lam4*vu*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(Lam5*vu*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(Lam3*vd*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(Lam4*vd*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(Lam5*vd*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvu*Lam3*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dvu*Lam4*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dvu*Lam5*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dvd*Lam6*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dLam6*vd*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dLam3*vu*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dLam4*vu*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dLam5*vu*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vd*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dvd*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvd*Lam3*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dvd*Lam4*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dvd*Lam5*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dvu*Lam7*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dLam3*vd*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dLam4*vd*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
-res = res-(dLam5*vd*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dLam7*vu*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(vd*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*vu*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*dvu*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vu*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))
-res = res-(Lam4*vu*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))
-res = res-(Lam5*vu*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vd*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))
-res = res-(Lam4*vd*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))
-res = res-(Lam5*vd*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vd*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))
-res = res-(Lam4*vd*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))
-res = res-(Lam5*vd*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vd*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res-3*Lam2*vu*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2)
-res = res+(-3*vd*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam6*vd*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vu*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(Lam4*vu*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(Lam5*vu*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vd*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vd*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(Lam4*vd*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(Lam5*vd*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dvu*Lam3*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dvu*Lam4*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dvu*Lam5*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dvd*Lam6*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dLam6*vd*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dLam3*vu*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dLam4*vu*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dLam5*vu*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vd*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dvd*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dvd*Lam3*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dvd*Lam4*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dvd*Lam5*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dvu*Lam7*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dLam3*vd*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dLam4*vd*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
-res = res-(dLam5*vd*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dLam7*vu*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res+(-3*dvu*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
-res = res-(Lam3*vd*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(Lam4*vd*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(Lam5*vd*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(Lam7)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*Lam7*vd*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-3*Lam2*vu*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
-res = res+(-3*vd*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(dvd*Lam3*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(dvd*Lam4*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(dvd*Lam5*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*dvu*Lam7*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(dLam3*vd*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(dLam4*vd*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
-res = res-(dLam5*vd*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*dLam7*vu*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(vd*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*vu*Conjg(dLam7)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*dvu*Conjg(Lam7)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-3*dvu*Lam2*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
-res = res+(-3*dvd*Lam7*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*dLam7*vd*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res-3*dLam2*vu*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
-res = res+(-3*vd*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
-res = res+(-3*dvd*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-3*Lam1*v*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1)
+res = res+(-3*Lam6*v2*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(-3*v2*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res-(Lam3*v2*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))
+res = res-(Lam4*v2*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))
+res = res-(Lam5*v2*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(Lam3*v2*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))
+res = res-(Lam4*v2*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))
+res = res-(Lam5*v2*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(Lam3*v*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))
+res = res-(Lam4*v*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))
+res = res-(Lam5*v*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(Lam3*v2*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))
+res = res-(Lam4*v2*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))
+res = res-(Lam5*v2*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt3,1)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(Lam3*v*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))
+res = res-(Lam4*v*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))
+res = res-(Lam5*v*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(Lam3*v*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))
+res = res-(Lam4*v*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))
+res = res-(Lam5*v*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt3,1)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*Lam7*v*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-3*Lam2*v2*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2)
+res = res+(-3*v*Conjg(Lam7)*dZH(gt3,2)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-3*Lam1*v*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1)
+res = res+(-3*Lam6*v2*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v2*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))
+res = res-(Lam4*v2*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))
+res = res-(Lam5*v2*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v2*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))
+res = res-(Lam4*v2*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))
+res = res-(Lam5*v2*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))
+res = res-(Lam4*v*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))
+res = res-(Lam5*v*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,1))/2._dp
+res = res-3*Lam1*v*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
+res = res+(-3*Lam6*v2*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v2*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(Lam4*v2*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(Lam5*v2*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-3*dv*Lam1*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
+res = res+(-3*dv2*Lam6*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-3*dLam1*v*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1)
+res = res+(-3*dLam6*v2*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*dv2*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(dv2*Lam3*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(dv2*Lam4*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(dv2*Lam5*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*dv*Lam6*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*dLam6*v*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(dLam3*v2*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(dLam4*v2*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))
+res = res-(dLam5*v2*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(dLam6)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*dv*Conjg(Lam6)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v2*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(Lam4*v2*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(Lam5*v2*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(Lam3*v*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(Lam4*v*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(Lam5*v*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv2*Lam3*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dv2*Lam4*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dv2*Lam5*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dv*Lam6*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dLam6*v*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dLam3*v2*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dLam4*v2*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dLam5*v2*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dv*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv*Lam3*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dv*Lam4*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dv*Lam5*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dv2*Lam7*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dLam3*v*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dLam4*v*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))
+res = res-(dLam5*v*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dLam7*v2*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(v*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*v2*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*dv2*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,1))/2._dp
+res = res+(-3*Lam6*v*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v2*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))
+res = res-(Lam4*v2*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))
+res = res-(Lam5*v2*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))
+res = res-(Lam4*v*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))
+res = res-(Lam5*v*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))
+res = res-(Lam4*v*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))
+res = res-(Lam5*v*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt2,1)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res-3*Lam2*v2*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2)
+res = res+(-3*v*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam6*v*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v2*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(Lam4*v2*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(Lam5*v2*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(Lam4*v*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(Lam5*v*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dv2*Lam3*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dv2*Lam4*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dv2*Lam5*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dv*Lam6*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dLam6*v*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dLam3*v2*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dLam4*v2*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dLam5*v2*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dv*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dv*Lam3*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dv*Lam4*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dv*Lam5*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dv2*Lam7*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dLam3*v*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dLam4*v*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))
+res = res-(dLam5*v*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dLam7*v2*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res+(-3*dv2*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,1)*ZH(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(Lam4*v*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(Lam5*v*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(Lam7)*dZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*Lam7*v*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-3*Lam2*v2*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
+res = res+(-3*v*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(dv*Lam3*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(dv*Lam4*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(dv*Lam5*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*dv2*Lam7*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(dLam3*v*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(dLam4*v*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))
+res = res-(dLam5*v*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*dLam7*v2*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(v*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*v2*Conjg(dLam7)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*dv2*Conjg(Lam7)*ZH(gt1,1)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-3*dv2*Lam2*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
+res = res+(-3*dv*Lam7*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*dLam7*v*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res-3*dLam2*v2*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2)
+res = res+(-3*v*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
+res = res+(-3*dv*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2)*ZH(gt3,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -1295,13 +1295,13 @@ Iname = Iname - 1
 End Subroutine CT_Couplinghhhhhh  
  
  
-Subroutine CT_Couplinghhhhsigma1(gt1,gt2,Lam6,Lam5,Lam7,vd,vu,ZH,dLam6,               & 
-& dLam5,dLam7,dvd,dvu,dZH,res)
+Subroutine CT_Couplinghhhhsigma1(gt1,gt2,Lam6,Lam5,Lam7,v,v2,ZH,dLam6,dLam5,          & 
+& dLam7,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,dLam6,dLam5,dLam7
 
@@ -1328,62 +1328,62 @@ If ((gt2.Lt.1).Or.(gt2.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam6*vu*dZH(gt2,1)*ZH(gt1,1))/2._dp
-res = res+(vu*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1))/2._dp
-res = res-(Lam6*vd*dZH(gt2,2)*ZH(gt1,1))/2._dp
-res = res+(Lam5*vu*dZH(gt2,2)*ZH(gt1,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1))/2._dp
-res = res+(vd*Conjg(Lam6)*dZH(gt2,2)*ZH(gt1,1))/2._dp
-res = res-(Lam6*vd*dZH(gt2,1)*ZH(gt1,2))/2._dp
-res = res+(Lam5*vu*dZH(gt2,1)*ZH(gt1,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2))/2._dp
-res = res+(vd*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,2))/2._dp
-res = res+(Lam5*vd*dZH(gt2,2)*ZH(gt1,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt2,2)*ZH(gt1,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,2))/2._dp
-res = res+(3*vu*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2))/2._dp
-res = res-(Lam6*vu*dZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(vu*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res-(Lam6*vd*dZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(Lam5*vu*dZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(vd*Conjg(Lam6)*dZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(dvu*Lam6*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res-(dLam6*vu*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(vu*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(dvu*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1))/2._dp
-res = res+(dvu*Lam5*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(dvd*Lam6*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(dLam6*vd*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(dLam5*vu*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(vd*Conjg(dLam6)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res+(dvd*Conjg(Lam6)*ZH(gt1,2)*ZH(gt2,1))/2._dp
-res = res-(Lam6*vd*dZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(Lam5*vu*dZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(vd*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(Lam5*vd*dZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*Lam7*vu*dZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(3*vu*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(dvu*Lam5*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(dvd*Lam6*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(dLam6*vd*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(dLam5*vu*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(vd*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(dvd*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,2))/2._dp
-res = res+(dvd*Lam5*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*dvu*Lam7*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(dLam5*vd*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(-3*dLam7*vu*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-(vd*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(3*vu*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,2))/2._dp
-res = res+(3*dvu*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-(Lam6*v2*dZH(gt2,1)*ZH(gt1,1))/2._dp
+res = res+(v2*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,1))/2._dp
+res = res-(Lam6*v*dZH(gt2,2)*ZH(gt1,1))/2._dp
+res = res+(Lam5*v2*dZH(gt2,2)*ZH(gt1,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,1))/2._dp
+res = res+(v*Conjg(Lam6)*dZH(gt2,2)*ZH(gt1,1))/2._dp
+res = res-(Lam6*v*dZH(gt2,1)*ZH(gt1,2))/2._dp
+res = res+(Lam5*v2*dZH(gt2,1)*ZH(gt1,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt2,1)*ZH(gt1,2))/2._dp
+res = res+(v*Conjg(Lam6)*dZH(gt2,1)*ZH(gt1,2))/2._dp
+res = res+(Lam5*v*dZH(gt2,2)*ZH(gt1,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt2,2)*ZH(gt1,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt2,2)*ZH(gt1,2))/2._dp
+res = res+(3*v2*Conjg(Lam7)*dZH(gt2,2)*ZH(gt1,2))/2._dp
+res = res-(Lam6*v2*dZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(v2*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res-(Lam6*v*dZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(Lam5*v2*dZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(v*Conjg(Lam6)*dZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(dv2*Lam6*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res-(dLam6*v2*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(v2*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(dv2*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,1))/2._dp
+res = res+(dv2*Lam5*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(dv*Lam6*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(dLam6*v*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(dLam5*v2*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(v*Conjg(dLam6)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res+(dv*Conjg(Lam6)*ZH(gt1,2)*ZH(gt2,1))/2._dp
+res = res-(Lam6*v*dZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(Lam5*v2*dZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(v*Conjg(Lam6)*dZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(Lam5*v*dZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*Lam7*v2*dZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(Lam5)*dZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(3*v2*Conjg(Lam7)*dZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(dv2*Lam5*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(dv*Lam6*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(dLam6*v*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(dLam5*v2*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(v*Conjg(dLam6)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(dv*Conjg(Lam6)*ZH(gt1,1)*ZH(gt2,2))/2._dp
+res = res+(dv*Lam5*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*dv2*Lam7*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(dLam5*v*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(-3*dLam7*v2*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-(v*Conjg(dLam5)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(3*v2*Conjg(dLam7)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt1,2)*ZH(gt2,2))/2._dp
+res = res+(3*dv2*Conjg(Lam7)*ZH(gt1,2)*ZH(gt2,2))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -1398,12 +1398,12 @@ End Subroutine CT_Couplinghhhhsigma1
  
  
 Subroutine CT_CouplinghhHmcHm(gt1,gt2,gt3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,              & 
-& Lam2,vd,vu,ZH,ZP,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,dZP,res)
+& Lam2,v,v2,ZH,ZP,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),ZP(2,2),dvd,dvu,dZH(2,2),dZP(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),dv,dv2,dZH(2,2),dZP(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,dLam2
 
@@ -1438,126 +1438,126 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam1*vd*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))
-res = res-(Lam6*vu*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))/2._dp
-res = res-(Lam6*vd*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))
-res = res-(Lam4*vu*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))/2._dp
-res = res-(Lam6*vd*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))/2._dp
-res = res-(Lam3*vu*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))
-res = res-(vd*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))/2._dp
-res = res-(Lam4*vd*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))/2._dp
-res = res-(Lam7*vu*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))
-res = res-(vd*Conjg(Lam5)*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))/2._dp
-res = res-(Lam4*vu*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))/2._dp
-res = res-(Lam5*vu*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))/2._dp
-res = res-(vd*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))
-res = res-(Lam3*vd*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))
-res = res-(Lam7*vu*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))/2._dp
-res = res-(Lam4*vd*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))/2._dp
-res = res-(Lam5*vd*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))
-res = res-(Lam7*vd*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))/2._dp
-res = res-(Lam2*vu*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))
-res = res-(vd*Conjg(Lam7)*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))/2._dp
-res = res-(Lam1*vd*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))
-res = res-(Lam6*vu*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam6)*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(Lam4*vu*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(Lam5*vu*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(vd*Conjg(Lam6)*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))
-res = res-(Lam6*vd*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(Lam3*vu*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))
-res = res-(vd*Conjg(Lam6)*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(Lam4*vd*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(Lam5*vd*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))
-res = res-(Lam1*vd*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(Lam6*vu*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam6)*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(Lam6*vd*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(Lam3*vu*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(vd*Conjg(Lam6)*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dvd*Lam1*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(dvu*Lam6*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dLam1*vd*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(dLam6*vu*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam6)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dvu*Conjg(Lam6)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dvu*Lam3*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(dvd*Lam6*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dLam6*vd*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dLam3*vu*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
-res = res-(vd*Conjg(dLam6)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(dvd*Conjg(Lam6)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
-res = res-(Lam4*vu*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(Lam5*vu*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(vd*Conjg(Lam6)*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(Lam4*vd*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(Lam5*vd*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(dvu*Lam4*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dvu*Lam5*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dLam4*vu*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dLam5*vu*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(vd*Conjg(dLam6)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(dvd*Conjg(Lam6)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(dvd*Lam4*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dvd*Lam5*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dLam4*vd*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(dLam5*vd*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(dvu*Conjg(Lam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
-res = res-(Lam6*vd*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))
-res = res-(Lam4*vu*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(Lam3*vd*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))
-res = res-(Lam7*vu*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(Lam4*vd*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))/2._dp
-res = res-(Lam7*vu*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))
-res = res-(vd*Conjg(Lam5)*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))/2._dp
-res = res-(Lam7*vd*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))/2._dp
-res = res-(Lam2*vu*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))
-res = res-(vd*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))/2._dp
-res = res-(Lam6*vd*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(Lam4*vu*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(Lam4*vd*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(Lam7*vu*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(vd*Conjg(Lam5)*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvu*Lam4*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvd*Lam6*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(dLam6*vd*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(dLam4*vu*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(dLam5)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvd*Lam4*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvu*Lam7*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(dLam4*vd*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dLam7*vu*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
-res = res-(vd*Conjg(dLam5)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam5)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
-res = res-(Lam3*vd*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(Lam7*vu*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam7)*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(Lam7*vd*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(Lam2*vu*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(vd*Conjg(Lam7)*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvd*Lam3*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(dvu*Lam7*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dLam3*vd*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(dLam7*vu*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(dLam7)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvu*Conjg(Lam7)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvu*Lam2*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(dvd*Lam7*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dLam7*vd*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dLam2*vu*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
-res = res-(vd*Conjg(dLam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
-res = res-(dvd*Conjg(Lam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(Lam1*v*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))
+res = res-(Lam6*v2*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,1))/2._dp
+res = res-(Lam6*v*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))
+res = res-(Lam4*v2*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,1))/2._dp
+res = res-(Lam6*v*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))/2._dp
+res = res-(Lam3*v2*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))
+res = res-(v*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,1))/2._dp
+res = res-(Lam4*v*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))/2._dp
+res = res-(Lam7*v2*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))
+res = res-(v*Conjg(Lam5)*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,1))/2._dp
+res = res-(Lam4*v2*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))/2._dp
+res = res-(Lam5*v2*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))/2._dp
+res = res-(v*Conjg(Lam6)*dZP(gt3,1)*ZH(gt1,1)*ZP(gt2,2))
+res = res-(Lam3*v*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))
+res = res-(Lam7*v2*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZP(gt3,2)*ZH(gt1,1)*ZP(gt2,2))/2._dp
+res = res-(Lam4*v*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))/2._dp
+res = res-(Lam5*v*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZP(gt3,1)*ZH(gt1,2)*ZP(gt2,2))
+res = res-(Lam7*v*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))/2._dp
+res = res-(Lam2*v2*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))
+res = res-(v*Conjg(Lam7)*dZP(gt3,2)*ZH(gt1,2)*ZP(gt2,2))/2._dp
+res = res-(Lam1*v*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))
+res = res-(Lam6*v2*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam6)*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(Lam4*v2*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(Lam5*v2*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(v*Conjg(Lam6)*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,1))
+res = res-(Lam6*v*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(Lam3*v2*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))
+res = res-(v*Conjg(Lam6)*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(Lam4*v*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(Lam5*v*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,1))
+res = res-(Lam1*v*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(Lam6*v2*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam6)*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(Lam6*v*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(Lam3*v2*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(v*Conjg(Lam6)*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dv*Lam1*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(dv2*Lam6*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dLam1*v*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(dLam6*v2*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam6)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dv2*Conjg(Lam6)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dv2*Lam3*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(dv*Lam6*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dLam6*v*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dLam3*v2*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))
+res = res-(v*Conjg(dLam6)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(dv*Conjg(Lam6)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,1))/2._dp
+res = res-(Lam4*v2*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(Lam5*v2*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(v*Conjg(Lam6)*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(Lam4*v*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(Lam5*v*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(dv2*Lam4*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dv2*Lam5*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dLam4*v2*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dLam5*v2*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(v*Conjg(dLam6)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(dv*Conjg(Lam6)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(dv*Lam4*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dv*Lam5*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dLam4*v*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(dLam5*v*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(dv2*Conjg(Lam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,1))
+res = res-(Lam6*v*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))
+res = res-(Lam4*v2*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZP(gt2,1)*ZH(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(Lam3*v*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))
+res = res-(Lam7*v2*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(Lam4*v*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(Lam7*v2*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))
+res = res-(v*Conjg(Lam5)*dZP(gt2,1)*ZH(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(Lam7*v*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(Lam2*v2*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))
+res = res-(v*Conjg(Lam7)*dZP(gt2,2)*ZH(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(Lam6*v*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(Lam4*v2*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(Lam4*v*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(Lam7*v2*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(v*Conjg(Lam5)*dZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv2*Lam4*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv*Lam6*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(dLam6*v*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(dLam4*v2*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(dLam5)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZH(gt1,1)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv*Lam4*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv2*Lam7*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(dLam4*v*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dLam7*v2*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))
+res = res-(v*Conjg(dLam5)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam5)*ZH(gt1,2)*ZP(gt2,1)*ZP(gt3,2))/2._dp
+res = res-(Lam3*v*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(Lam7*v2*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam7)*dZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(Lam7*v*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(Lam2*v2*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(v*Conjg(Lam7)*dZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv*Lam3*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(dv2*Lam7*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dLam3*v*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(dLam7*v2*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(dLam7)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv2*Conjg(Lam7)*ZH(gt1,1)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv2*Lam2*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(dv*Lam7*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dLam7*v*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dLam2*v2*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))
+res = res-(v*Conjg(dLam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
+res = res-(dv*Conjg(Lam7)*ZH(gt1,2)*ZP(gt2,2)*ZP(gt3,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -1569,13 +1569,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplinghhHmcHm  
  
  
-Subroutine CT_Couplinghhsigma1sigma1(gt1,Lam6,Lam5,Lam1,Lam4,Lam3,vd,vu,              & 
-& ZH,dLam6,dLam5,dLam1,dLam4,dLam3,dvd,dvu,dZH,res)
+Subroutine CT_Couplinghhsigma1sigma1(gt1,Lam6,Lam5,Lam1,Lam4,Lam3,v,v2,               & 
+& ZH,dLam6,dLam5,dLam1,dLam4,dLam3,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: v,v2,ZH(2,2),dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam1,Lam4,Lam3,dLam6,dLam5,dLam1,dLam4,dLam3
 
@@ -1594,33 +1594,33 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam1*vd*dZH(gt1,1))
-res = res-(Lam6*vu*dZH(gt1,1))/2._dp
-res = res-(vu*Conjg(Lam6)*dZH(gt1,1))/2._dp
-res = res-(Lam6*vd*dZH(gt1,2))/2._dp
-res = res-(Lam3*vu*dZH(gt1,2))
-res = res-(Lam4*vu*dZH(gt1,2))
-res = res+(Lam5*vu*dZH(gt1,2))/2._dp
-res = res+(vu*Conjg(Lam5)*dZH(gt1,2))/2._dp
-res = res-(vd*Conjg(Lam6)*dZH(gt1,2))/2._dp
-res = res-(dvd*Lam1*ZH(gt1,1))
-res = res-(dvu*Lam6*ZH(gt1,1))/2._dp
-res = res-(dLam1*vd*ZH(gt1,1))
-res = res-(dLam6*vu*ZH(gt1,1))/2._dp
-res = res-(vu*Conjg(dLam6)*ZH(gt1,1))/2._dp
-res = res-(dvu*Conjg(Lam6)*ZH(gt1,1))/2._dp
-res = res-(dvu*Lam3*ZH(gt1,2))
-res = res-(dvu*Lam4*ZH(gt1,2))
-res = res+(dvu*Lam5*ZH(gt1,2))/2._dp
-res = res-(dvd*Lam6*ZH(gt1,2))/2._dp
-res = res-(dLam6*vd*ZH(gt1,2))/2._dp
-res = res-(dLam3*vu*ZH(gt1,2))
-res = res-(dLam4*vu*ZH(gt1,2))
-res = res+(dLam5*vu*ZH(gt1,2))/2._dp
-res = res+(vu*Conjg(dLam5)*ZH(gt1,2))/2._dp
-res = res-(vd*Conjg(dLam6)*ZH(gt1,2))/2._dp
-res = res+(dvu*Conjg(Lam5)*ZH(gt1,2))/2._dp
-res = res-(dvd*Conjg(Lam6)*ZH(gt1,2))/2._dp
+res = res-(Lam1*v*dZH(gt1,1))
+res = res-(Lam6*v2*dZH(gt1,1))/2._dp
+res = res-(v2*Conjg(Lam6)*dZH(gt1,1))/2._dp
+res = res-(Lam6*v*dZH(gt1,2))/2._dp
+res = res-(Lam3*v2*dZH(gt1,2))
+res = res-(Lam4*v2*dZH(gt1,2))
+res = res+(Lam5*v2*dZH(gt1,2))/2._dp
+res = res+(v2*Conjg(Lam5)*dZH(gt1,2))/2._dp
+res = res-(v*Conjg(Lam6)*dZH(gt1,2))/2._dp
+res = res-(dv*Lam1*ZH(gt1,1))
+res = res-(dv2*Lam6*ZH(gt1,1))/2._dp
+res = res-(dLam1*v*ZH(gt1,1))
+res = res-(dLam6*v2*ZH(gt1,1))/2._dp
+res = res-(v2*Conjg(dLam6)*ZH(gt1,1))/2._dp
+res = res-(dv2*Conjg(Lam6)*ZH(gt1,1))/2._dp
+res = res-(dv2*Lam3*ZH(gt1,2))
+res = res-(dv2*Lam4*ZH(gt1,2))
+res = res+(dv2*Lam5*ZH(gt1,2))/2._dp
+res = res-(dv*Lam6*ZH(gt1,2))/2._dp
+res = res-(dLam6*v*ZH(gt1,2))/2._dp
+res = res-(dLam3*v2*ZH(gt1,2))
+res = res-(dLam4*v2*ZH(gt1,2))
+res = res+(dLam5*v2*ZH(gt1,2))/2._dp
+res = res+(v2*Conjg(dLam5)*ZH(gt1,2))/2._dp
+res = res-(v*Conjg(dLam6)*ZH(gt1,2))/2._dp
+res = res+(dv2*Conjg(Lam5)*ZH(gt1,2))/2._dp
+res = res-(dv*Conjg(Lam6)*ZH(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -1632,13 +1632,13 @@ Iname = Iname - 1
 End Subroutine CT_Couplinghhsigma1sigma1  
  
  
-Subroutine CT_CouplingHmsigma1cHm(gt1,gt3,Lam6,Lam5,Lam7,Lam4,vu,ZP,dLam6,            & 
-& dLam5,dLam7,dLam4,dvu,dZP,res)
+Subroutine CT_CouplingHmsigma1cHm(gt1,gt3,Lam6,Lam5,Lam7,Lam4,v2,ZP,dLam6,            & 
+& dLam5,dLam7,dLam4,dv2,dZP,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt3
-Real(dp), Intent(in) :: vu,ZP(2,2),dvu,dZP(2,2)
+Real(dp), Intent(in) :: v2,ZP(2,2),dv2,dZP(2,2)
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam4,dLam6,dLam5,dLam7,dLam4
 
@@ -1665,38 +1665,38 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(Lam6*vu*dZP(gt3,1)*ZP(gt1,1))/2._dp
-res = res+(vu*Conjg(Lam6)*dZP(gt3,1)*ZP(gt1,1))/2._dp
-res = res+(Lam4*vu*dZP(gt3,2)*ZP(gt1,1))/2._dp
-res = res-(vu*Conjg(Lam5)*dZP(gt3,2)*ZP(gt1,1))/2._dp
-res = res-(Lam4*vu*dZP(gt3,1)*ZP(gt1,2))/2._dp
-res = res+(Lam5*vu*dZP(gt3,1)*ZP(gt1,2))/2._dp
-res = res-(Lam7*vu*dZP(gt3,2)*ZP(gt1,2))/2._dp
-res = res+(vu*Conjg(Lam7)*dZP(gt3,2)*ZP(gt1,2))/2._dp
-res = res-(Lam6*vu*dZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res+(vu*Conjg(Lam6)*dZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(Lam4*vu*dZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res+(Lam5*vu*dZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(dvu*Lam6*ZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(dLam6*vu*ZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res+(vu*Conjg(dLam6)*ZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res+(dvu*Conjg(Lam6)*ZP(gt1,1)*ZP(gt3,1))/2._dp
-res = res-(dvu*Lam4*ZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res+(dvu*Lam5*ZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res-(dLam4*vu*ZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res+(dLam5*vu*ZP(gt1,2)*ZP(gt3,1))/2._dp
-res = res+(Lam4*vu*dZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(Lam5)*dZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(Lam7*vu*dZP(gt1,2)*ZP(gt3,2))/2._dp
-res = res+(vu*Conjg(Lam7)*dZP(gt1,2)*ZP(gt3,2))/2._dp
-res = res+(dvu*Lam4*ZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res+(dLam4*vu*ZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(vu*Conjg(dLam5)*ZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(dvu*Conjg(Lam5)*ZP(gt1,1)*ZP(gt3,2))/2._dp
-res = res-(dvu*Lam7*ZP(gt1,2)*ZP(gt3,2))/2._dp
-res = res-(dLam7*vu*ZP(gt1,2)*ZP(gt3,2))/2._dp
-res = res+(vu*Conjg(dLam7)*ZP(gt1,2)*ZP(gt3,2))/2._dp
-res = res+(dvu*Conjg(Lam7)*ZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(Lam6*v2*dZP(gt3,1)*ZP(gt1,1))/2._dp
+res = res+(v2*Conjg(Lam6)*dZP(gt3,1)*ZP(gt1,1))/2._dp
+res = res+(Lam4*v2*dZP(gt3,2)*ZP(gt1,1))/2._dp
+res = res-(v2*Conjg(Lam5)*dZP(gt3,2)*ZP(gt1,1))/2._dp
+res = res-(Lam4*v2*dZP(gt3,1)*ZP(gt1,2))/2._dp
+res = res+(Lam5*v2*dZP(gt3,1)*ZP(gt1,2))/2._dp
+res = res-(Lam7*v2*dZP(gt3,2)*ZP(gt1,2))/2._dp
+res = res+(v2*Conjg(Lam7)*dZP(gt3,2)*ZP(gt1,2))/2._dp
+res = res-(Lam6*v2*dZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res+(v2*Conjg(Lam6)*dZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(Lam4*v2*dZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res+(Lam5*v2*dZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(dv2*Lam6*ZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(dLam6*v2*ZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res+(v2*Conjg(dLam6)*ZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res+(dv2*Conjg(Lam6)*ZP(gt1,1)*ZP(gt3,1))/2._dp
+res = res-(dv2*Lam4*ZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res+(dv2*Lam5*ZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res-(dLam4*v2*ZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res+(dLam5*v2*ZP(gt1,2)*ZP(gt3,1))/2._dp
+res = res+(Lam4*v2*dZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(Lam5)*dZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(Lam7*v2*dZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res+(v2*Conjg(Lam7)*dZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res+(dv2*Lam4*ZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res+(dLam4*v2*ZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(v2*Conjg(dLam5)*ZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(dv2*Conjg(Lam5)*ZP(gt1,1)*ZP(gt3,2))/2._dp
+res = res-(dv2*Lam7*ZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res-(dLam7*v2*ZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res+(v2*Conjg(dLam7)*ZP(gt1,2)*ZP(gt3,2))/2._dp
+res = res+(dv2*Conjg(Lam7)*ZP(gt1,2)*ZP(gt3,2))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -1710,11 +1710,11 @@ Iname = Iname - 1
 End Subroutine CT_CouplingHmsigma1cHm  
  
  
-Subroutine CT_Couplingsigma1sigma1sigma1(Lam6,vu,dLam6,dvu,res)
+Subroutine CT_Couplingsigma1sigma1sigma1(Lam6,v2,dLam6,dv2,res)
 
 Implicit None 
 
-Real(dp), Intent(in) :: vu,dvu
+Real(dp), Intent(in) :: v2,dv2
 
 Complex(dp), Intent(in) :: Lam6,dLam6
 
@@ -1725,10 +1725,10 @@ Iname = Iname +1
 NameOfUnit(Iname) = 'CT_Couplingsigma1sigma1sigma1' 
  
 res = 0._dp 
-res = res+(-3*dvu*Lam6)/2._dp
-res = res+(-3*dLam6*vu)/2._dp
-res = res+(3*vu*Conjg(dLam6))/2._dp
-res = res+(3*dvu*Conjg(Lam6))/2._dp
+res = res+(-3*dv2*Lam6)/2._dp
+res = res+(-3*dLam6*v2)/2._dp
+res = res+(3*v2*Conjg(dLam6))/2._dp
+res = res+(3*dv2*Conjg(Lam6))/2._dp
 res = -(0.,1.)*res 
  
 If (Real(res,dp).ne.Real(res,dp)) Then 
@@ -2184,12 +2184,12 @@ Iname = Iname - 1
 End Subroutine CT_Couplingsigma1cHmVWm  
  
  
-Subroutine CT_CouplinghhcVWmVWm(gt1,g2,vd,vu,ZH,dg2,dvd,dvu,dZH,res)
+Subroutine CT_CouplinghhcVWmVWm(gt1,g2,v,v2,ZH,dg2,dv,dv2,dZH,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g2,vd,vu,ZH(2,2),dg2,dvd,dvu,dZH(2,2)
+Real(dp), Intent(in) :: g2,v,v2,ZH(2,2),dg2,dv,dv2,dZH(2,2)
 
 Complex(dp), Intent(out) :: res 
  
@@ -2206,12 +2206,12 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(g2**2*vd*dZH(gt1,1))/2._dp
-res = res+(g2**2*vu*dZH(gt1,2))/2._dp
-res = res+(dvd*g2**2*ZH(gt1,1))/2._dp
-res = res+dg2*g2*vd*ZH(gt1,1)
-res = res+(dvu*g2**2*ZH(gt1,2))/2._dp
-res = res+dg2*g2*vu*ZH(gt1,2)
+res = res+(g2**2*v*dZH(gt1,1))/2._dp
+res = res+(g2**2*v2*dZH(gt1,2))/2._dp
+res = res+(dv*g2**2*ZH(gt1,1))/2._dp
+res = res+dg2*g2*v*ZH(gt1,1)
+res = res+(dv2*g2**2*ZH(gt1,2))/2._dp
+res = res+dg2*g2*v2*ZH(gt1,2)
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -2223,13 +2223,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplinghhcVWmVWm  
  
  
-Subroutine CT_CouplinghhVZVZ(gt1,g1,g2,vd,vu,ZH,TW,dg1,dg2,dvd,dvu,dZH,               & 
-& dSinTW,dCosTW,dTanTW,res)
+Subroutine CT_CouplinghhVZVZ(gt1,g1,g2,v,v2,ZH,TW,dg1,dg2,dv,dv2,dZH,dSinTW,          & 
+& dCosTW,dTanTW,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g1,g2,vd,vu,ZH(2,2),TW,dg1,dg2,dvd,dvu,dZH(2,2),dSinTW,dCosTW,dTanTW
+Real(dp), Intent(in) :: g1,g2,v,v2,ZH(2,2),TW,dg1,dg2,dv,dv2,dZH(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp), Intent(out) :: res 
  
@@ -2246,62 +2246,62 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(g1**2*vd*dZH(gt1,1))/4._dp
-res = res+(g2**2*vd*dZH(gt1,1))/4._dp
-res = res-(g1**2*vd*Cos(TW)**2*dZH(gt1,1))/4._dp
-res = res+(g2**2*vd*Cos(TW)**2*dZH(gt1,1))/4._dp
-res = res+(g1**2*vu*dZH(gt1,2))/4._dp
-res = res+(g2**2*vu*dZH(gt1,2))/4._dp
-res = res-(g1**2*vu*Cos(TW)**2*dZH(gt1,2))/4._dp
-res = res+(g2**2*vu*Cos(TW)**2*dZH(gt1,2))/4._dp
-res = res+g1*g2*vd*Cos(TW)*dZH(gt1,1)*Sin(TW)
-res = res+g1*g2*vu*Cos(TW)*dZH(gt1,2)*Sin(TW)
-res = res+(g1**2*vd*dZH(gt1,1)*Sin(TW)**2)/4._dp
-res = res-(g2**2*vd*dZH(gt1,1)*Sin(TW)**2)/4._dp
-res = res+(g1**2*vu*dZH(gt1,2)*Sin(TW)**2)/4._dp
-res = res-(g2**2*vu*dZH(gt1,2)*Sin(TW)**2)/4._dp
-res = res+(dvd*g1**2*ZH(gt1,1))/4._dp
-res = res+(dvd*g2**2*ZH(gt1,1))/4._dp
-res = res+(dg1*g1*vd*ZH(gt1,1))/2._dp
-res = res+(dg2*g2*vd*ZH(gt1,1))/2._dp
-res = res-(dCosTW*g1**2*vd*Cos(TW)*ZH(gt1,1))/2._dp
-res = res+dSinTW*g1*g2*vd*Cos(TW)*ZH(gt1,1)
-res = res+(dCosTW*g2**2*vd*Cos(TW)*ZH(gt1,1))/2._dp
-res = res-(dvd*g1**2*Cos(TW)**2*ZH(gt1,1))/4._dp
-res = res+(dvd*g2**2*Cos(TW)**2*ZH(gt1,1))/4._dp
-res = res-(dg1*g1*vd*Cos(TW)**2*ZH(gt1,1))/2._dp
-res = res+(dg2*g2*vd*Cos(TW)**2*ZH(gt1,1))/2._dp
-res = res+(dSinTW*g1**2*vd*Sin(TW)*ZH(gt1,1))/2._dp
-res = res+dCosTW*g1*g2*vd*Sin(TW)*ZH(gt1,1)
-res = res-(dSinTW*g2**2*vd*Sin(TW)*ZH(gt1,1))/2._dp
-res = res+dvd*g1*g2*Cos(TW)*Sin(TW)*ZH(gt1,1)
-res = res+dg2*g1*vd*Cos(TW)*Sin(TW)*ZH(gt1,1)
-res = res+dg1*g2*vd*Cos(TW)*Sin(TW)*ZH(gt1,1)
-res = res+(dvd*g1**2*Sin(TW)**2*ZH(gt1,1))/4._dp
-res = res-(dvd*g2**2*Sin(TW)**2*ZH(gt1,1))/4._dp
-res = res+(dg1*g1*vd*Sin(TW)**2*ZH(gt1,1))/2._dp
-res = res-(dg2*g2*vd*Sin(TW)**2*ZH(gt1,1))/2._dp
-res = res+(dvu*g1**2*ZH(gt1,2))/4._dp
-res = res+(dvu*g2**2*ZH(gt1,2))/4._dp
-res = res+(dg1*g1*vu*ZH(gt1,2))/2._dp
-res = res+(dg2*g2*vu*ZH(gt1,2))/2._dp
-res = res-(dCosTW*g1**2*vu*Cos(TW)*ZH(gt1,2))/2._dp
-res = res+dSinTW*g1*g2*vu*Cos(TW)*ZH(gt1,2)
-res = res+(dCosTW*g2**2*vu*Cos(TW)*ZH(gt1,2))/2._dp
-res = res-(dvu*g1**2*Cos(TW)**2*ZH(gt1,2))/4._dp
-res = res+(dvu*g2**2*Cos(TW)**2*ZH(gt1,2))/4._dp
-res = res-(dg1*g1*vu*Cos(TW)**2*ZH(gt1,2))/2._dp
-res = res+(dg2*g2*vu*Cos(TW)**2*ZH(gt1,2))/2._dp
-res = res+(dSinTW*g1**2*vu*Sin(TW)*ZH(gt1,2))/2._dp
-res = res+dCosTW*g1*g2*vu*Sin(TW)*ZH(gt1,2)
-res = res-(dSinTW*g2**2*vu*Sin(TW)*ZH(gt1,2))/2._dp
-res = res+dvu*g1*g2*Cos(TW)*Sin(TW)*ZH(gt1,2)
-res = res+dg2*g1*vu*Cos(TW)*Sin(TW)*ZH(gt1,2)
-res = res+dg1*g2*vu*Cos(TW)*Sin(TW)*ZH(gt1,2)
-res = res+(dvu*g1**2*Sin(TW)**2*ZH(gt1,2))/4._dp
-res = res-(dvu*g2**2*Sin(TW)**2*ZH(gt1,2))/4._dp
-res = res+(dg1*g1*vu*Sin(TW)**2*ZH(gt1,2))/2._dp
-res = res-(dg2*g2*vu*Sin(TW)**2*ZH(gt1,2))/2._dp
+res = res+(g1**2*v*dZH(gt1,1))/4._dp
+res = res+(g2**2*v*dZH(gt1,1))/4._dp
+res = res-(g1**2*v*Cos(TW)**2*dZH(gt1,1))/4._dp
+res = res+(g2**2*v*Cos(TW)**2*dZH(gt1,1))/4._dp
+res = res+(g1**2*v2*dZH(gt1,2))/4._dp
+res = res+(g2**2*v2*dZH(gt1,2))/4._dp
+res = res-(g1**2*v2*Cos(TW)**2*dZH(gt1,2))/4._dp
+res = res+(g2**2*v2*Cos(TW)**2*dZH(gt1,2))/4._dp
+res = res+g1*g2*v*Cos(TW)*dZH(gt1,1)*Sin(TW)
+res = res+g1*g2*v2*Cos(TW)*dZH(gt1,2)*Sin(TW)
+res = res+(g1**2*v*dZH(gt1,1)*Sin(TW)**2)/4._dp
+res = res-(g2**2*v*dZH(gt1,1)*Sin(TW)**2)/4._dp
+res = res+(g1**2*v2*dZH(gt1,2)*Sin(TW)**2)/4._dp
+res = res-(g2**2*v2*dZH(gt1,2)*Sin(TW)**2)/4._dp
+res = res+(dv*g1**2*ZH(gt1,1))/4._dp
+res = res+(dv*g2**2*ZH(gt1,1))/4._dp
+res = res+(dg1*g1*v*ZH(gt1,1))/2._dp
+res = res+(dg2*g2*v*ZH(gt1,1))/2._dp
+res = res-(dCosTW*g1**2*v*Cos(TW)*ZH(gt1,1))/2._dp
+res = res+dSinTW*g1*g2*v*Cos(TW)*ZH(gt1,1)
+res = res+(dCosTW*g2**2*v*Cos(TW)*ZH(gt1,1))/2._dp
+res = res-(dv*g1**2*Cos(TW)**2*ZH(gt1,1))/4._dp
+res = res+(dv*g2**2*Cos(TW)**2*ZH(gt1,1))/4._dp
+res = res-(dg1*g1*v*Cos(TW)**2*ZH(gt1,1))/2._dp
+res = res+(dg2*g2*v*Cos(TW)**2*ZH(gt1,1))/2._dp
+res = res+(dSinTW*g1**2*v*Sin(TW)*ZH(gt1,1))/2._dp
+res = res+dCosTW*g1*g2*v*Sin(TW)*ZH(gt1,1)
+res = res-(dSinTW*g2**2*v*Sin(TW)*ZH(gt1,1))/2._dp
+res = res+dv*g1*g2*Cos(TW)*Sin(TW)*ZH(gt1,1)
+res = res+dg2*g1*v*Cos(TW)*Sin(TW)*ZH(gt1,1)
+res = res+dg1*g2*v*Cos(TW)*Sin(TW)*ZH(gt1,1)
+res = res+(dv*g1**2*Sin(TW)**2*ZH(gt1,1))/4._dp
+res = res-(dv*g2**2*Sin(TW)**2*ZH(gt1,1))/4._dp
+res = res+(dg1*g1*v*Sin(TW)**2*ZH(gt1,1))/2._dp
+res = res-(dg2*g2*v*Sin(TW)**2*ZH(gt1,1))/2._dp
+res = res+(dv2*g1**2*ZH(gt1,2))/4._dp
+res = res+(dv2*g2**2*ZH(gt1,2))/4._dp
+res = res+(dg1*g1*v2*ZH(gt1,2))/2._dp
+res = res+(dg2*g2*v2*ZH(gt1,2))/2._dp
+res = res-(dCosTW*g1**2*v2*Cos(TW)*ZH(gt1,2))/2._dp
+res = res+dSinTW*g1*g2*v2*Cos(TW)*ZH(gt1,2)
+res = res+(dCosTW*g2**2*v2*Cos(TW)*ZH(gt1,2))/2._dp
+res = res-(dv2*g1**2*Cos(TW)**2*ZH(gt1,2))/4._dp
+res = res+(dv2*g2**2*Cos(TW)**2*ZH(gt1,2))/4._dp
+res = res-(dg1*g1*v2*Cos(TW)**2*ZH(gt1,2))/2._dp
+res = res+(dg2*g2*v2*Cos(TW)**2*ZH(gt1,2))/2._dp
+res = res+(dSinTW*g1**2*v2*Sin(TW)*ZH(gt1,2))/2._dp
+res = res+dCosTW*g1*g2*v2*Sin(TW)*ZH(gt1,2)
+res = res-(dSinTW*g2**2*v2*Sin(TW)*ZH(gt1,2))/2._dp
+res = res+dv2*g1*g2*Cos(TW)*Sin(TW)*ZH(gt1,2)
+res = res+dg2*g1*v2*Cos(TW)*Sin(TW)*ZH(gt1,2)
+res = res+dg1*g2*v2*Cos(TW)*Sin(TW)*ZH(gt1,2)
+res = res+(dv2*g1**2*Sin(TW)**2*ZH(gt1,2))/4._dp
+res = res-(dv2*g2**2*Sin(TW)**2*ZH(gt1,2))/4._dp
+res = res+(dg1*g1*v2*Sin(TW)**2*ZH(gt1,2))/2._dp
+res = res-(dg2*g2*v2*Sin(TW)**2*ZH(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -2313,13 +2313,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplinghhVZVZ  
  
  
-Subroutine CT_CouplingHmcVWmVP(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,             & 
+Subroutine CT_CouplingHmcVWmVP(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,               & 
 & dSinTW,dCosTW,dTanTW,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g1,g2,vd,vu,ZP(2,2),TW,dg1,dg2,dvd,dvu,dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp), Intent(in) :: g1,g2,v,v2,ZP(2,2),TW,dg1,dg2,dv,dv2,dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp), Intent(out) :: res 
  
@@ -2336,16 +2336,16 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(g1*g2*vd*Cos(TW)*dZP(gt1,1))/2._dp
-res = res+(g1*g2*vu*Cos(TW)*dZP(gt1,2))/2._dp
-res = res+(dCosTW*g1*g2*vd*ZP(gt1,1))/2._dp
-res = res+(dvd*g1*g2*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dg2*g1*vd*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dg1*g2*vd*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dCosTW*g1*g2*vu*ZP(gt1,2))/2._dp
-res = res+(dvu*g1*g2*Cos(TW)*ZP(gt1,2))/2._dp
-res = res+(dg2*g1*vu*Cos(TW)*ZP(gt1,2))/2._dp
-res = res+(dg1*g2*vu*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(g1*g2*v*Cos(TW)*dZP(gt1,1))/2._dp
+res = res+(g1*g2*v2*Cos(TW)*dZP(gt1,2))/2._dp
+res = res+(dCosTW*g1*g2*v*ZP(gt1,1))/2._dp
+res = res+(dv*g1*g2*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dg2*g1*v*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dg1*g2*v*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dCosTW*g1*g2*v2*ZP(gt1,2))/2._dp
+res = res+(dv2*g1*g2*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(dg2*g1*v2*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(dg1*g2*v2*Cos(TW)*ZP(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -2357,13 +2357,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingHmcVWmVP  
  
  
-Subroutine CT_CouplingHmcVWmVZ(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,             & 
+Subroutine CT_CouplingHmcVWmVZ(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,               & 
 & dSinTW,dCosTW,dTanTW,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g1,g2,vd,vu,ZP(2,2),TW,dg1,dg2,dvd,dvu,dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp), Intent(in) :: g1,g2,v,v2,ZP(2,2),TW,dg1,dg2,dv,dv2,dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp), Intent(out) :: res 
  
@@ -2380,16 +2380,16 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(g1*g2*vd*dZP(gt1,1)*Sin(TW))/2._dp
-res = res-(g1*g2*vu*dZP(gt1,2)*Sin(TW))/2._dp
-res = res-(dSinTW*g1*g2*vd*ZP(gt1,1))/2._dp
-res = res-(dvd*g1*g2*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dg2*g1*vd*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dg1*g2*vd*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dSinTW*g1*g2*vu*ZP(gt1,2))/2._dp
-res = res-(dvu*g1*g2*Sin(TW)*ZP(gt1,2))/2._dp
-res = res-(dg2*g1*vu*Sin(TW)*ZP(gt1,2))/2._dp
-res = res-(dg1*g2*vu*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(g1*g2*v*dZP(gt1,1)*Sin(TW))/2._dp
+res = res-(g1*g2*v2*dZP(gt1,2)*Sin(TW))/2._dp
+res = res-(dSinTW*g1*g2*v*ZP(gt1,1))/2._dp
+res = res-(dv*g1*g2*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dg2*g1*v*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dg1*g2*v*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dSinTW*g1*g2*v2*ZP(gt1,2))/2._dp
+res = res-(dv2*g1*g2*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(dg2*g1*v2*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(dg1*g2*v2*Sin(TW)*ZP(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -2401,13 +2401,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingHmcVWmVZ  
  
  
-Subroutine CT_CouplingcHmVPVWm(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,             & 
+Subroutine CT_CouplingcHmVPVWm(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,               & 
 & dSinTW,dCosTW,dTanTW,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g1,g2,vd,vu,ZP(2,2),TW,dg1,dg2,dvd,dvu,dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp), Intent(in) :: g1,g2,v,v2,ZP(2,2),TW,dg1,dg2,dv,dv2,dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp), Intent(out) :: res 
  
@@ -2424,16 +2424,16 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res+(g1*g2*vd*Cos(TW)*dZP(gt1,1))/2._dp
-res = res+(g1*g2*vu*Cos(TW)*dZP(gt1,2))/2._dp
-res = res+(dCosTW*g1*g2*vd*ZP(gt1,1))/2._dp
-res = res+(dvd*g1*g2*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dg2*g1*vd*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dg1*g2*vd*Cos(TW)*ZP(gt1,1))/2._dp
-res = res+(dCosTW*g1*g2*vu*ZP(gt1,2))/2._dp
-res = res+(dvu*g1*g2*Cos(TW)*ZP(gt1,2))/2._dp
-res = res+(dg2*g1*vu*Cos(TW)*ZP(gt1,2))/2._dp
-res = res+(dg1*g2*vu*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(g1*g2*v*Cos(TW)*dZP(gt1,1))/2._dp
+res = res+(g1*g2*v2*Cos(TW)*dZP(gt1,2))/2._dp
+res = res+(dCosTW*g1*g2*v*ZP(gt1,1))/2._dp
+res = res+(dv*g1*g2*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dg2*g1*v*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dg1*g2*v*Cos(TW)*ZP(gt1,1))/2._dp
+res = res+(dCosTW*g1*g2*v2*ZP(gt1,2))/2._dp
+res = res+(dv2*g1*g2*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(dg2*g1*v2*Cos(TW)*ZP(gt1,2))/2._dp
+res = res+(dg1*g2*v2*Cos(TW)*ZP(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 
@@ -2445,13 +2445,13 @@ Iname = Iname - 1
 End Subroutine CT_CouplingcHmVPVWm  
  
  
-Subroutine CT_CouplingcHmVWmVZ(gt1,g1,g2,vd,vu,ZP,TW,dg1,dg2,dvd,dvu,dZP,             & 
+Subroutine CT_CouplingcHmVWmVZ(gt1,g1,g2,v,v2,ZP,TW,dg1,dg2,dv,dv2,dZP,               & 
 & dSinTW,dCosTW,dTanTW,res)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1
-Real(dp), Intent(in) :: g1,g2,vd,vu,ZP(2,2),TW,dg1,dg2,dvd,dvu,dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp), Intent(in) :: g1,g2,v,v2,ZP(2,2),TW,dg1,dg2,dv,dv2,dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp), Intent(out) :: res 
  
@@ -2468,16 +2468,16 @@ If ((gt1.Lt.1).Or.(gt1.Gt.2)) Then
 End If 
 
 res = 0._dp 
-res = res-(g1*g2*vd*dZP(gt1,1)*Sin(TW))/2._dp
-res = res-(g1*g2*vu*dZP(gt1,2)*Sin(TW))/2._dp
-res = res-(dSinTW*g1*g2*vd*ZP(gt1,1))/2._dp
-res = res-(dvd*g1*g2*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dg2*g1*vd*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dg1*g2*vd*Sin(TW)*ZP(gt1,1))/2._dp
-res = res-(dSinTW*g1*g2*vu*ZP(gt1,2))/2._dp
-res = res-(dvu*g1*g2*Sin(TW)*ZP(gt1,2))/2._dp
-res = res-(dg2*g1*vu*Sin(TW)*ZP(gt1,2))/2._dp
-res = res-(dg1*g2*vu*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(g1*g2*v*dZP(gt1,1)*Sin(TW))/2._dp
+res = res-(g1*g2*v2*dZP(gt1,2)*Sin(TW))/2._dp
+res = res-(dSinTW*g1*g2*v*ZP(gt1,1))/2._dp
+res = res-(dv*g1*g2*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dg2*g1*v*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dg1*g2*v*Sin(TW)*ZP(gt1,1))/2._dp
+res = res-(dSinTW*g1*g2*v2*ZP(gt1,2))/2._dp
+res = res-(dv2*g1*g2*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(dg2*g1*v2*Sin(TW)*ZP(gt1,2))/2._dp
+res = res-(dg1*g2*v2*Sin(TW)*ZP(gt1,2))/2._dp
 If (Real(res,dp).ne.Real(res,dp)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
  Call TerminateProgram 

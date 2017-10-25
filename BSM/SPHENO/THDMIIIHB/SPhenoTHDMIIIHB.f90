@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:29 on 22.10.2017   
+! File created at 17:31 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -174,8 +174,8 @@ Call ReadingData(kont)
  HighScaleModel = "LOW" 
 If (.not.DecoupleAtRenScale) Then ! No longer used by default 
  ! Setting values 
- vd = vdIN 
- vu = vuIN 
+ v = vIN 
+ v2 = v2IN 
  g1 = g1IN 
  g2 = g2IN 
  g3 = g3IN 
@@ -203,12 +203,11 @@ Lam5 = Lambda5Input
 Lam6 = Lambda6Input
 Lam7 = Lambda7Input
 M12 = M12input
-tanbetaMZ = tanbeta 
 
  
  ! Setting VEVs used for low energy constraints 
- vdMZ = vd 
- vuMZ = vu 
+ vMZ = v 
+ v2MZ = v2 
  If (SMrunningLowScaleInput) Then 
   Qin=sqrt(getRenormalizationScale()) 
   Call RunSMohdm(Qin,deltaM,g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM) 
@@ -227,7 +226,7 @@ Else
 End if 
 
  ! Setting Boundary conditions 
- Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,vd,vu,g1,g2,             & 
+ Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,g1,g2,              & 
 & g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,.False.)
 
 Lam1 = Lambda1Input
@@ -239,12 +238,12 @@ Lam6 = Lambda6Input
 Lam7 = Lambda7Input
 M12 = M12input
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call OneLoopMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,             & 
-& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,               & 
-& ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,             & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
+& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,              & 
+& ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,              & 
+& epYD,epYE,M12,M112,M222,kont)
 
 
  If (SignOfMassChanged) Then  
@@ -284,8 +283,8 @@ GuessTwoLoopMatchingBSM = .false.
 End if 
 Call CalculateSpectrum(n_run,delta_mass,WriteOut,kont,MAh,MAh2,MFd,MFd2,              & 
 & MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,              & 
-& TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,             & 
-& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
+& TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,            & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
 
 n_tot =1
 mass_uncertainty_Yt(n_tot:n_tot+1) = Mhh! difference will be taken later 
@@ -311,14 +310,14 @@ End if
   End if 
  Call CalculateSpectrum(n_run,delta_mass,WriteOut,kont,MAh,MAh2,MFd,MFd2,              & 
 & MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,              & 
-& TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,             & 
-& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
+& TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,            & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
 
   If (GetMassUncertainty) Then 
  Call GetScaleUncertainty(delta_mass,WriteOut,kont,MAh,MAh2,MFd,MFd2,MFe,              & 
 & MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,               & 
-& ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,Lam5,           & 
-& Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mass_uncertainty_Q)
+& ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,               & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mass_uncertainty_Q)
 
   End if 
  End If 
@@ -328,16 +327,14 @@ Mhh2L = MhhL**2
 MAhL = Msigma1
 MAh2L = MAhL**2 
  
-v = Sqrt(vd**2 + vu**2)
-betaH = ASin(Abs(ZP(1,2)))
-alphaH = ATan(ZH(2,2)/ZH(1,2))
+alphaH = ACos(ZH(1,2))
 TW = ACos(Abs(ZZ(1,1)))
 If ((L_BR).And.(kont.Eq.0)) Then 
  Call CalculateBR(CalcTBD,ratioWoM,epsI,deltaM,kont,MAh,MAh2,MFd,MFd2,MFe,             & 
 & MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,               & 
-& ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,Lam5,           & 
-& Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,gPFu,gTFu,              & 
-& BRFu,gPFe,gTFe,BRFe,gPFd,gTFd,BRFd,gPhh,gThh,BRhh,gPAh,gTAh,BRAh,gPHm,gTHm,BRHm)
+& ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,               & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,gPFu,gTFu,BRFu,              & 
+& gPFe,gTFe,BRFe,gPFd,gTFd,BRFd,gPhh,gThh,BRhh,gPAh,gTAh,BRAh,gPHm,gTHm,BRHm)
 
 Call HiggsCrossSections(Mhh,ratioGG,ratioPP,rHB_S_VWm,rHB_S_VZ,rHB_S_S_Fu(:,3)        & 
 & ,CS_Higgs_LHC,kont)
@@ -346,7 +343,7 @@ End If
  
  If (CalculateLowEnergy) then 
 Call CalculateLowEnergyConstraints(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,            & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,Tpar,Spar,Upar,ae,amu,atau,           & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tpar,Spar,Upar,ae,amu,atau,            & 
 & EDMe,EDMmu,EDMtau,dRho,BrBsGamma,ratioBsGamma,BrDmunu,ratioDmunu,BrDsmunu,             & 
 & ratioDsmunu,BrDstaunu,ratioDstaunu,BrBmunu,ratioBmunu,BrBtaunu,ratioBtaunu,            & 
 & BrKmunu,ratioKmunu,RK,RKSM,muEgamma,tauEgamma,tauMuGamma,CRmuEAl,CRmuETi,              & 
@@ -366,9 +363,9 @@ MVWm = mW
 MVWm2 = mW2 
 If (WriteParametersAtQ) Then 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
 End If 
  
@@ -376,11 +373,11 @@ End if
  
 If ((FoundIterativeSolution).or.(WriteOutputForNonConvergence)) Then 
 If (OutputForMO) Then 
-Call RunningFermionMasses(MFe,MFe2,MFd,MFd2,MFu,MFu2,vd,vu,g1,g2,g3,Lam6,             & 
+Call RunningFermionMasses(MFe,MFe2,MFd,MFd2,MFu,MFu2,v,v2,g1,g2,g3,Lam6,              & 
 & Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
 
 End if 
-Call ScatteringEigenvalues(vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,              & 
+Call ScatteringEigenvalues(v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,               & 
 & Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
 
 Write(*,*) "Writing output files" 
@@ -404,8 +401,8 @@ Contains
  
 Subroutine CalculateSpectrum(n_run,delta,WriteOut,kont,MAh,MAh2,MFd,MFd2,             & 
 & MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,              & 
-& TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,             & 
-& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
+& TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,            & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,mGUT)
 
 Implicit None 
 Integer, Intent(in) :: n_run 
@@ -419,18 +416,17 @@ Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp),Intent(inout) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp),Intent(inout) :: vd,vu
+Real(dp),Intent(inout) :: v,v2
 
 kont = 0 
 Call FirstGuess(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,kont)
 
 !If (kont.ne.0) Call TerminateProgram 
  
@@ -440,9 +436,9 @@ If (.Not.UseFixedScale) Then
  Call SetRGEScale(160._dp**2) 
 End If
 Call Match_and_Run(delta,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,            & 
-& MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,             & 
-& ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,             & 
-& Yd,Ye,epYD,epYE,M12,M112,M222,mGut,kont,WriteOut,n_run)
+& MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,               & 
+& ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,             & 
+& epYD,epYE,M12,M112,M222,mGut,kont,WriteOut,n_run)
 
 If (kont.ne.0) Then 
  Write(*,*) "Error appeared in calculation of masses "
@@ -474,8 +470,8 @@ End Subroutine ReadingData
  
 Subroutine CalculateLowEnergyConstraints(g1input,g2input,g3input,Lam6input,           & 
 & Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,         & 
-& Ydinput,Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vdinput,              & 
-& vuinput,Tpar,Spar,Upar,ae,amu,atau,EDMe,EDMmu,EDMtau,dRho,BrBsGamma,ratioBsGamma,      & 
+& Ydinput,Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vinput,               & 
+& v2input,Tpar,Spar,Upar,ae,amu,atau,EDMe,EDMmu,EDMtau,dRho,BrBsGamma,ratioBsGamma,      & 
 & BrDmunu,ratioDmunu,BrDsmunu,ratioDsmunu,BrDstaunu,ratioDstaunu,BrBmunu,ratioBmunu,     & 
 & BrBtaunu,ratioBtaunu,BrKmunu,ratioKmunu,RK,RKSM,muEgamma,tauEgamma,tauMuGamma,         & 
 & CRmuEAl,CRmuETi,CRmuESr,CRmuESb,CRmuEAu,CRmuEPb,BRmuTo3e,BRtauTo3e,BRtauTo3mu,         & 
@@ -488,19 +484,18 @@ Subroutine CalculateLowEnergyConstraints(g1input,g2input,g3input,Lam6input,     
 & BrBtoDnunu,ratioBtoDnunu,BrKptoPipnunu,ratioKptoPipnunu,BrKltoPinunu,ratioKltoPinunu,  & 
 & DelMK,ratioDelMK,epsK,ratioepsK)
 
-Real(dp),Intent(inout) :: g1input,g2input,g3input,vdinput,vuinput
+Real(dp),Intent(inout) :: g1input,g2input,g3input,vinput,v2input
 
 Complex(dp),Intent(inout) :: Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput(3,3), & 
 & Yuinput(3,3),Ydinput(3,3),Yeinput(3,3),epYDinput(3,3),epYEinput(3,3),M12input,         & 
 & M112input,M222input
 
 Real(dp) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp) :: g1,g2,g3,vd,vu
+Real(dp) :: g1,g2,g3,v,v2
 
 Complex(dp) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
@@ -857,20 +852,20 @@ Qin=sqrt(getRenormalizationScale())
 scale_save = Qin 
 Call RunSM_and_SUSY_RGEs(160._dp,g1input,g2input,g3input,Lam6input,Lam5input,         & 
 & Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,           & 
-& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vdinput,vuinput,              & 
+& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,               & 
 & g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
-& M112,M222,vd,vu,CKM_160,sinW2_160,Alpha_160,AlphaS_160,.false.)
+& M112,M222,v,v2,CKM_160,sinW2_160,Alpha_160,AlphaS_160,.false.)
 
 
 ! ## All contributions ## 
 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
  mf_d_160 = MFd(1:3) 
  mf_d2_160 = MFd(1:3)**2 
@@ -899,8 +894,8 @@ epYEinput = epYE
 M12input = M12
 M112input = M112
 M222input = M222
-vdinput = vd
-vuinput = vu
+vinput = v
+v2input = v2
 End If 
  
 Mhh= MhhL 
@@ -911,13 +906,13 @@ Msigma1=MVZ
 Msigma12=MVZ2
 MHm(1)=MVWm
 MHm2(1)=MVWm2
-Call AllCouplings(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,g1,g2,               & 
-& TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,             & 
-& cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
-& cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
-& cplAhhhVZ,cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,               & 
-& cplHmsigma1cVWm,cplHmcHmVP,cplHmcHmVZ,cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,          & 
-& cplHmcVWmVP,cplHmcVWmVZ,cplcHmVPVWm,cplcHmVWmVZ,cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,   & 
+Call AllCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,g1,g2,TW,             & 
+& g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,  & 
+& cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,cplhhhhsigma1,          & 
+& cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,cplAhhhVZ,           & 
+& cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,cplHmsigma1cVWm,         & 
+& cplHmcHmVP,cplHmcHmVZ,cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,cplHmcVWmVP,              & 
+& cplHmcVWmVZ,cplcHmVPVWm,cplcHmVWmVZ,cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,               & 
 & cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,               & 
 & cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFuFdcHmL,cplcFuFdcHmR,     & 
 & cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,cplcFvFecHmL,cplcFvFecHmR,     & 
@@ -2930,17 +2925,17 @@ CKM = CKMsave
 
 Call RunSM_and_SUSY_RGEs(mz,g1input,g2input,g3input,Lam6input,Lam5input,              & 
 & Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,           & 
-& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vdinput,vuinput,              & 
+& Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,               & 
 & g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
-& M112,M222,vd,vu,CKM_MZ,sinW2_MZ,Alpha_MZ,AlphaS_MZ,.true.)
+& M112,M222,v,v2,CKM_MZ,sinW2_MZ,Alpha_MZ,AlphaS_MZ,.true.)
 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
 mzsave  = sqrt(mz2) 
  mf_d_mz = MFd(1:3) 
@@ -2949,13 +2944,13 @@ mzsave  = sqrt(mz2)
  mf_u2_mz = MFu(1:3)**2 
  mf_l_MZ = MFe(1:3) 
  mf_l2_MZ = MFe(1:3)**2 
-Call AllCouplings(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,g1,g2,               & 
-& TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,             & 
-& cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
-& cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
-& cplAhhhVZ,cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,               & 
-& cplHmsigma1cVWm,cplHmcHmVP,cplHmcHmVZ,cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,          & 
-& cplHmcVWmVP,cplHmcVWmVZ,cplcHmVPVWm,cplcHmVWmVZ,cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,   & 
+Call AllCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,g1,g2,TW,             & 
+& g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,  & 
+& cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,cplhhhhsigma1,          & 
+& cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,cplAhhhVZ,           & 
+& cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,cplHmsigma1cVWm,         & 
+& cplHmcHmVP,cplHmcHmVZ,cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,cplHmcVWmVP,              & 
+& cplHmcVWmVZ,cplcHmVPVWm,cplcHmVWmVZ,cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,               & 
 & cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,               & 
 & cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFuFdcHmL,cplcFuFdcHmR,     & 
 & cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,cplcFvFecHmL,cplcFvFecHmR,     & 
@@ -3819,18 +3814,18 @@ YeSM=0._dp
       YeSM(i1,i1)=sqrt(2._dp)*mf_l(i1)/vSM 
       YdSM(i1,i1)=sqrt(2._dp)*mf_d(i1)/vSM 
     End Do 
-Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,vd,vu,g1,g2,             & 
+Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,g1,g2,              & 
 & g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,.False.)
 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
-Call CouplingsForVectorBosons(g1,g2,ZH,TW,ZP,vd,vu,ZDL,ZUL,ZEL,cplhhsigma1VZ,         & 
+Call CouplingsForVectorBosons(g1,g2,ZH,TW,ZP,v,v2,ZDL,ZUL,ZEL,cplhhsigma1VZ,          & 
 & cplHmsigma1cVWm,cplsigma1sigma1cVWmVWm,cplsigma1sigma1VZVZ,cplAhhhVZ,cplAhHmcVWm,      & 
 & cplAhAhcVWmVWm,cplAhAhVZVZ,cplcFdFdVPL,cplcFdFdVPR,cplcFeFeVPL,cplcFeFeVPR,            & 
 & cplcFuFuVPL,cplcFuFuVPR,cplcgWmgWmVP,cplcgWpCgWpCVP,cplHmcHmVP,cplHmcVWmVP,            & 
@@ -3879,7 +3874,7 @@ mz = mzsave
 End subroutine CalculateLowEnergyConstraints 
  
  
-Subroutine ScatteringEigenvalues(vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,             & 
+Subroutine ScatteringEigenvalues(v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,              & 
 & Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
 
 Implicit None 
@@ -3890,7 +3885,7 @@ Real(dp),Intent(in) :: g1,g2,g3
 Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
-Real(dp),Intent(in) :: vd,vu
+Real(dp),Intent(in) :: v,v2
 
 Complex(dp) :: scatter_matrix(36,36) 
 Complex(dp) :: rot_matrix(36,36) 
@@ -4069,11 +4064,10 @@ End Subroutine ScatteringEigenvalues
 Subroutine GetScaleUncertainty(delta,WriteOut,kont,MAhinput,MAh2input,MFdinput,       & 
 & MFd2input,MFeinput,MFe2input,MFuinput,MFu2input,Mhhinput,Mhh2input,MHminput,           & 
 & MHm2input,Msigma1input,Msigma12input,MVWminput,MVWm2input,MVZinput,MVZ2input,          & 
-& TWinput,ZDRinput,ZERinput,ZURinput,vinput,ZDLinput,ZELinput,ZULinput,ZHinput,          & 
-& ZPinput,ZWinput,ZZinput,alphaHinput,betaHinput,vdinput,vuinput,g1input,g2input,        & 
-& g3input,Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,         & 
-& epYUinput,Yuinput,Ydinput,Yeinput,epYDinput,epYEinput,M12input,M112input,              & 
-& M222input,mass_Qerror)
+& TWinput,ZDRinput,ZERinput,ZURinput,ZDLinput,ZELinput,ZULinput,ZHinput,ZPinput,         & 
+& ZWinput,ZZinput,alphaHinput,vinput,v2input,g1input,g2input,g3input,Lam6input,          & 
+& Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,         & 
+& Ydinput,Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,mass_Qerror)
 
 Implicit None 
 Integer, Intent(inout) :: kont 
@@ -4091,13 +4085,13 @@ Complex(dp),Intent(in) :: Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3
 
 Real(dp),Intent(in) :: MAhinput,MAh2input,MFdinput(3),MFd2input(3),MFeinput(3),MFe2input(3),MFuinput(3),     & 
 & MFu2input(3),Mhhinput(2),Mhh2input(2),MHminput(2),MHm2input(2),Msigma1input,           & 
-& Msigma12input,MVWminput,MVWm2input,MVZinput,MVZ2input,TWinput,vinput,ZHinput(2,2),     & 
-& ZPinput(2,2),ZZinput(2,2),alphaHinput,betaHinput
+& Msigma12input,MVWminput,MVWm2input,MVZinput,MVZ2input,TWinput,ZHinput(2,2),            & 
+& ZPinput(2,2),ZZinput(2,2),alphaHinput
 
 Complex(dp),Intent(in) :: ZDRinput(3,3),ZERinput(3,3),ZURinput(3,3),ZDLinput(3,3),ZELinput(3,3),ZULinput(3,3),  & 
 & ZWinput(2,2)
 
-Real(dp),Intent(in) :: vdinput,vuinput
+Real(dp),Intent(in) :: vinput,v2input
 
 Real(dp) :: g1,g2,g3
 
@@ -4105,12 +4099,11 @@ Complex(dp) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3
 & epYE(3,3),M12,M112,M222
 
 Real(dp) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp) :: vd,vu
+Real(dp) :: v,v2
 
 kont = 0 
 Write(*,*) "Check scale uncertainty" 
@@ -4152,8 +4145,8 @@ epYE = epYEinput
 M12 = M12input
 M112 = M112input
 M222 = M222input
-vd = vdinput
-vu = vuinput
+v = vinput
+v2 = v2input
 
  
  ! --- GUT normalize gauge couplings --- 
@@ -4161,7 +4154,7 @@ g1 = Sqrt(5._dp/3._dp)*g1
 ! ----------------------- 
  
 Call ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,               & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,gD)
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,gD)
 
 If (iupdown.eq.1) Then 
  tz=Log(Q/Qsave)
@@ -4173,7 +4166,7 @@ Else
  Call odeint(gD,133,tz,0._dp,0.1_dp*delta,dt,0._dp,rge133,kont)
 End if 
 Call GToParameters133(gD,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,            & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu)
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 
  
@@ -4182,12 +4175,12 @@ g1 = Sqrt(3._dp/5._dp)*g1
 ! ----------------------- 
  
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call OneLoopMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,             & 
-& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,               & 
-& ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,             & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
+& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,              & 
+& ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,              & 
+& epYD,epYE,M12,M112,M222,kont)
 
 If (((Calculate_mh_within_SM).and.(Mhh(2).gt.300._dp)).OR.(Force_mh_within_SM))Then
 g_SM=g_SM_save 

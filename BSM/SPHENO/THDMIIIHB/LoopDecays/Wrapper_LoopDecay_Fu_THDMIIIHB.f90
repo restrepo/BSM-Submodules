@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:26 on 22.10.2017   
+! File created at 17:28 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -22,34 +22,33 @@ Subroutine OneLoopDecay_Fu(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,        
 & MFu2OS,MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,             & 
 & MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,               & 
 & MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,              & 
-& TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,              & 
-& Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,              & 
-& dg2,dg3,dM12,depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,              & 
-& dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,          & 
-& dCosTW,dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,             & 
-& ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,       & 
-& cplAhhhhh,cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,            & 
-& cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,       & 
-& cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,               & 
-& cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,           & 
-& cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,           & 
-& cplcFuFusigma1L,cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,       & 
-& cplcFuFuVZL,cplcFuFuVZR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,             & 
-& cplhhcHmVWm,cplhhcVWmVWm,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,               & 
-& cplhhsigma1sigma1,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,           & 
-& cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,cplsigma1cHmVWm,cplsigma1sigma1sigma1,      & 
-& cplVGVGVG,ctcplcFuFdcHmL,ctcplcFuFdcHmR,ctcplcFuFdcVWmL,ctcplcFuFdcVWmR,               & 
-& ctcplcFuFuAhL,ctcplcFuFuAhR,ctcplcFuFuhhL,ctcplcFuFuhhR,ctcplcFuFusigma1L,             & 
-& ctcplcFuFusigma1R,ctcplcFuFuVGL,ctcplcFuFuVGR,ctcplcFuFuVPL,ctcplcFuFuVPR,             & 
-& ctcplcFuFuVZL,ctcplcFuFuVZR,GcplcFuFdcHmL,GcplcFuFdcHmR,GcplcHmVPVWm,GcplHmcVWmVP,     & 
-& GosZcplcFuFdcHmL,GosZcplcFuFdcHmR,GosZcplcHmVPVWm,GosZcplHmcVWmVP,GZcplcFuFdcHmL,      & 
-& GZcplcFuFdcHmR,GZcplcHmVPVWm,GZcplHmcVWmVP,ZcplcFdFdVGL,ZcplcFdFdVGR,ZcplcFdFdVPL,     & 
-& ZcplcFdFdVPR,ZcplcFdFuHmL,ZcplcFdFuHmR,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,      & 
-& ZcplcFuFdcHmR,ZcplcFuFdcVWmL,ZcplcFuFdcVWmR,ZcplcFuFuAhL,ZcplcFuFuAhR,ZcplcFuFuhhL,    & 
-& ZcplcFuFuhhR,ZcplcFuFusigma1L,ZcplcFuFusigma1R,ZcplcFuFuVGL,ZcplcFuFuVGR,              & 
-& ZcplcFuFuVPL,ZcplcFuFuVPR,ZcplcFuFuVZL,ZcplcFuFuVZR,ZcplcHmVPVWm,ZcplcVWmVPVWm,        & 
-& ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,               & 
-& ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFu)
+& TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,            & 
+& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,            & 
+& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
+& dLam3,dLam2,dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,         & 
+& ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,            & 
+& ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,cplAhhhhh,            & 
+& cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,cplcFdFdAhL,          & 
+& cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,       & 
+& cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,               & 
+& cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,         & 
+& cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,         & 
+& cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,           & 
+& cplcFuFuVZR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,             & 
+& cplhhcVWmVWm,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,cplhhsigma1sigma1,         & 
+& cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,cplHmcVWmVZ,cplHmsigma1cHm,  & 
+& cplHmsigma1cVWm,cplsigma1cHmVWm,cplsigma1sigma1sigma1,cplVGVGVG,ctcplcFuFdcHmL,        & 
+& ctcplcFuFdcHmR,ctcplcFuFdcVWmL,ctcplcFuFdcVWmR,ctcplcFuFuAhL,ctcplcFuFuAhR,            & 
+& ctcplcFuFuhhL,ctcplcFuFuhhR,ctcplcFuFusigma1L,ctcplcFuFusigma1R,ctcplcFuFuVGL,         & 
+& ctcplcFuFuVGR,ctcplcFuFuVPL,ctcplcFuFuVPR,ctcplcFuFuVZL,ctcplcFuFuVZR,GcplcFuFdcHmL,   & 
+& GcplcFuFdcHmR,GcplcHmVPVWm,GcplHmcVWmVP,GosZcplcFuFdcHmL,GosZcplcFuFdcHmR,             & 
+& GosZcplcHmVPVWm,GosZcplHmcVWmVP,GZcplcFuFdcHmL,GZcplcFuFdcHmR,GZcplcHmVPVWm,           & 
+& GZcplHmcVWmVP,ZcplcFdFdVGL,ZcplcFdFdVGR,ZcplcFdFdVPL,ZcplcFdFdVPR,ZcplcFdFuHmL,        & 
+& ZcplcFdFuHmR,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,ZcplcFuFdcHmR,ZcplcFuFdcVWmL,   & 
+& ZcplcFuFdcVWmR,ZcplcFuFuAhL,ZcplcFuFuAhR,ZcplcFuFuhhL,ZcplcFuFuhhR,ZcplcFuFusigma1L,   & 
+& ZcplcFuFusigma1R,ZcplcFuFuVGL,ZcplcFuFuVGR,ZcplcFuFuVPL,ZcplcFuFuVPR,ZcplcFuFuVZL,     & 
+& ZcplcFuFuVZR,ZcplcHmVPVWm,ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,           & 
+& ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFu)
 
 Implicit None 
 Real(dp),Intent(in) :: g1,g2,g3
@@ -57,15 +56,14 @@ Real(dp),Intent(in) :: g1,g2,g3
 Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
-Real(dp),Intent(in) :: vd,vu
+Real(dp),Intent(in) :: v,v2
 
 Real(dp),Intent(in) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp),Intent(in) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp),Intent(in) :: dg1,dg2,dg3,dvd,dvu,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp),Intent(in) :: dg1,dg2,dg3,dv,dv2,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp),Intent(in) :: dM12,depYU(3,3),dYu(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
 & dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,dZDL(3,3),dZDR(3,3),dZUL(3,3),         & 

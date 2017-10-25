@@ -3,7 +3,7 @@
 # SARAH References: arXiv:0806.0538, arXiv:0909.2863, arXiv:1002.0840    
 # (c) Florian Staub, 2011  
 # ----------------------------------------------------------------------  
-# File created at 12:29 on 22.10.2017   
+# File created at 17:32 on 25.10.2017   
 # ----------------------------------------------------------------------  
  
  
@@ -2033,13 +2033,21 @@ alphaH = 	 Parameter(name='alphaH',
 	 lhablock = 'HMIX', 
 	 lhacode = [11] ) 
  
-betaH = 	 Parameter(name='betaH', 
+rbeta = 	 Parameter(name='rbeta', 
 	 nature = 'external', 
 	 type = 'real', 
-	 value = 1., 
-	 texname = '\\text{betaH}', 
-	 lhablock = 'HMIX', 
-	 lhacode = [10] ) 
+	 value = 0., 
+	 texname = '\\text{beta}', 
+	 lhablock = 'None', 
+	 lhacode = [1] ) 
+ 
+ibeta = 	 Parameter(name='ibeta', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{beta}', 
+	 lhablock = 'IMNone', 
+	 lhacode = [1] ) 
  
 aS = 	 Parameter(name='aS', 
 	 nature = 'external', 
@@ -2755,11 +2763,23 @@ ZER33 = 	 Parameter(name='ZER33',
 	 value = 'rZER33 + complex(0,1)*iZER33', 
 	 texname = '\\text{ZER33}' ) 
  
+beta = 	 Parameter(name='beta', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'rbeta + complex(0,1)*ibeta', 
+	 texname = '\\text{beta}' ) 
+ 
 G = 	 Parameter(name='G', 
 	 nature = 'internal', 
 	 type = 'real', 
 	 value = '2*cmath.sqrt(aS)*cmath.sqrt(cmath.pi)', 
 	 texname = 'G') 
+ 
+v2 = 	 Parameter(name='v2', 
+	 nature = 'internal', 
+	 type = 'real', 
+	 value = '1.*(0)', 
+	 texname = 'v2') 
  
 ZH11 = 	 Parameter(name='ZH11', 
 	 nature = 'internal', 
@@ -2788,25 +2808,25 @@ ZH22 = 	 Parameter(name='ZH22',
 ZP11 = 	 Parameter(name='ZP11', 
 	 nature = 'internal', 
 	 type = 'real', 
-	 value = '-cmath.cos(betaH)', 
+	 value = '-cmath.cos(beta)', 
 	 texname = 'ZP11') 
  
 ZP12 = 	 Parameter(name='ZP12', 
 	 nature = 'internal', 
 	 type = 'real', 
-	 value = 'cmath.sin(betaH)', 
+	 value = 'cmath.sin(beta)', 
 	 texname = 'ZP12') 
  
 ZP21 = 	 Parameter(name='ZP21', 
 	 nature = 'internal', 
 	 type = 'real', 
-	 value = 'cmath.sin(betaH)', 
+	 value = 'cmath.sin(beta)', 
 	 texname = 'ZP21') 
  
 ZP22 = 	 Parameter(name='ZP22', 
 	 nature = 'internal', 
 	 type = 'real', 
-	 value = 'cmath.cos(betaH)', 
+	 value = 'cmath.cos(beta)', 
 	 texname = 'ZP22') 
  
 el = 	 Parameter(name='el', 
@@ -2844,18 +2864,6 @@ v = 	 Parameter(name='v',
 	 type = 'real', 
 	 value = '2*cmath.sqrt(MWm**2/g2**2)', 
 	 texname = 'v') 
- 
-vd = 	 Parameter(name='vd', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = 'v*cmath.cos(betaH)', 
-	 texname = 'vd') 
- 
-vu = 	 Parameter(name='vu', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = 'v*cmath.sin(betaH)', 
-	 texname = 'vu') 
  
 RXiWm = 	 Parameter(name='RXiWm', 
 	 nature = 'internal', 

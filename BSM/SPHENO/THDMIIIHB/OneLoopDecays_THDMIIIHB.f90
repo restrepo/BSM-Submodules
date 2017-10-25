@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:26 on 22.10.2017   
+! File created at 17:28 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -28,7 +28,7 @@ Use Wrapper_OneLoopDecay_Hm_THDMIIIHB
  
 Contains 
  
-Subroutine getZCouplings(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,              & 
+Subroutine getZCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,               & 
 & g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,       & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
@@ -97,7 +97,7 @@ Subroutine getZCouplings(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,        
 
 Implicit None
 
-Real(dp), Intent(in) :: vd,vu,ZH(2,2),ZP(2,2),g1,g2,TW,g3
+Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g1,g2,TW,g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
 & ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
@@ -2046,17 +2046,17 @@ Subroutine getGBCouplings(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,         
 & MFu2OS,MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,             & 
 & MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,               & 
 & MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,              & 
-& TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,cplAhcHmVWm,cplcFdFuVWmL,        & 
-& cplcFdFuVWmR,cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFvFecVWmL,      & 
-& cplcFvFecVWmR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,           & 
-& cplhhcVWmVWm,cplsigma1cHmVWm,ZcplAhcHmVWm,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFeFvVWmL,   & 
-& ZcplcFeFvVWmR,ZcplcFuFdcVWmL,ZcplcFuFdcVWmR,ZcplcFvFecVWmL,ZcplcFvFecVWmR,             & 
-& ZcplcHmVPVWm,ZcplcHmVWmVZ,ZcplcVWmVPVWm,ZcplcVWmVWmVZ,ZcplhhcHmVWm,ZcplhhcVWmVWm,      & 
-& Zcplsigma1cHmVWm,GcplAhHmcHm,GcplhhHmcHm,GcplHmsigma1cHm,GcplAhHmcVWm,GcplAhcHmVWm,    & 
-& GcplhhHmcVWm,GcplhhcHmVWm,GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,   & 
-& GcplHmcVWmVP,GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,       & 
-& GcplcFvFecHmL,GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,       & 
-& GZcplAhHmcHm,GZcplhhHmcHm,GZcplHmsigma1cHm,GZcplAhHmcVWm,GZcplAhcHmVWm,GZcplhhHmcVWm,  & 
+& TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,cplAhcHmVWm,cplcFdFuVWmL,cplcFdFuVWmR,   & 
+& cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFvFecVWmL,cplcFvFecVWmR,     & 
+& cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,cplhhcVWmVWm,            & 
+& cplsigma1cHmVWm,ZcplAhcHmVWm,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFeFvVWmL,ZcplcFeFvVWmR,  & 
+& ZcplcFuFdcVWmL,ZcplcFuFdcVWmR,ZcplcFvFecVWmL,ZcplcFvFecVWmR,ZcplcHmVPVWm,              & 
+& ZcplcHmVWmVZ,ZcplcVWmVPVWm,ZcplcVWmVWmVZ,ZcplhhcHmVWm,ZcplhhcVWmVWm,Zcplsigma1cHmVWm,  & 
+& GcplAhHmcHm,GcplhhHmcHm,GcplHmsigma1cHm,GcplAhHmcVWm,GcplAhcHmVWm,GcplhhHmcVWm,        & 
+& GcplhhcHmVWm,GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,GcplHmcVWmVP,   & 
+& GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,GcplcFvFecHmL,      & 
+& GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,GZcplAhHmcHm,        & 
+& GZcplhhHmcHm,GZcplHmsigma1cHm,GZcplAhHmcVWm,GZcplAhcHmVWm,GZcplhhHmcVWm,               & 
 & GZcplhhcHmVWm,GZcplHmsigma1cVWm,GZcplHmcHmVP,GZcplHmcHmVZ,GZcplsigma1cHmVWm,           & 
 & GZcplHmcVWmVP,GZcplHmcVWmVZ,GZcplcHmVPVWm,GZcplcHmVWmVZ,GZcplcFuFdcHmL,GZcplcFuFdcHmR, & 
 & GZcplcFvFecHmL,GZcplcFvFecHmR,GZcplcFdFuHmL,GZcplcFdFuHmR,GZcplcFeFvHmL,               & 
@@ -2075,8 +2075,7 @@ Real(dp), Intent(in) :: MhhOS(2),Mhh2OS(2),MHmOS(2),MHm2OS(2),MFdOS(3),MFd2OS(3)
 Complex(dp), Intent(in) :: ZDLOS(3,3),ZDROS(3,3),ZULOS(3,3),ZUROS(3,3),ZELOS(3,3),ZEROS(3,3)
 
 Real(dp), Intent(in) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp), Intent(in) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
@@ -2217,50 +2216,49 @@ Subroutine WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,         
 & MFd2OS,MFuOS,MFu2OS,MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,              & 
 & MVZ2OS,MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,               & 
 & MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,               & 
-& MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,               & 
-& g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,             & 
-& M222,vd,vu,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,       & 
-& cplAhsigma1sigma1,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm, & 
-& cplsigma1sigma1sigma1,cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,             & 
-& cplAhAhhhsigma1,cplAhAhHmcHm,cplAhAhsigma1sigma1,cplAhhhhhhh,cplAhhhhhsigma1,          & 
-& cplAhhhHmcHm,cplAhhhsigma1sigma1,cplAhHmsigma1cHm,cplAhsigma1sigma1sigma1,             & 
-& cplhhhhhhhh,cplhhhhhhsigma1,cplhhhhHmcHm,cplhhhhsigma1sigma1,cplhhHmsigma1cHm,         & 
-& cplhhsigma1sigma1sigma1,cplHmHmcHmcHm,cplHmsigma1sigma1cHm,cplsigma1sigma1sigma1sigma1,& 
-& cplAhhhVZ,cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,               & 
-& cplHmsigma1cVWm,cplHmcHmVP,cplHmcHmVZ,cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,          & 
-& cplHmcVWmVP,cplHmcVWmVZ,cplcHmVPVWm,cplcHmVWmVZ,cplAhAhcVWmVWm,cplAhAhVZVZ,            & 
-& cplAhHmcVWmVP,cplAhHmcVWmVZ,cplAhcHmVPVWm,cplAhcHmVWmVZ,cplhhhhcVWmVWm,cplhhhhVZVZ,    & 
-& cplhhHmcVWmVP,cplhhHmcVWmVZ,cplhhcHmVPVWm,cplhhcHmVWmVZ,cplHmsigma1cVWmVP,             & 
-& cplHmsigma1cVWmVZ,cplHmcHmVPVP,cplHmcHmVPVZ,cplHmcHmcVWmVWm,cplHmcHmVZVZ,              & 
-& cplsigma1sigma1cVWmVWm,cplsigma1sigma1VZVZ,cplsigma1cHmVPVWm,cplsigma1cHmVWmVZ,        & 
-& cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,               & 
-& cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,           & 
-& cplcFdFdsigma1R,cplcFuFdcHmL,cplcFuFdcHmR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,     & 
-& cplcFeFesigma1R,cplcFvFecHmL,cplcFvFecHmR,cplcFuFuhhL,cplcFuFuhhR,cplcFdFuHmL,         & 
-& cplcFdFuHmR,cplcFuFusigma1L,cplcFuFusigma1R,cplcFeFvHmL,cplcFeFvHmR,cplcFdFdVGL,       & 
-& cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFuFdcVWmL,             & 
-& cplcFuFdcVWmR,cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFvFecVWmL,           & 
-& cplcFvFecVWmR,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFdFuVWmL,            & 
-& cplcFdFuVWmR,cplcFuFuVZL,cplcFuFuVZR,cplcFeFvVWmL,cplcFeFvVWmR,cplcFvFvVZL,            & 
-& cplcFvFvVZR,cplVGVGVGVG1,cplVGVGVGVG2,cplVGVGVGVG3,cplcVWmVPVPVWm1,cplcVWmVPVPVWm2,    & 
-& cplcVWmVPVPVWm3,cplcVWmVPVWmVZ1,cplcVWmVPVWmVZ2,cplcVWmVPVWmVZ3,cplcVWmcVWmVWmVWm1,    & 
-& cplcVWmcVWmVWmVWm2,cplcVWmcVWmVWmVWm3,cplcVWmVWmVZVZ1,cplcVWmVWmVZVZ2,cplcVWmVWmVZVZ3, & 
-& cplcgGgGVG,cplcgWmgAVWm,cplcgWpCgAcVWm,cplcgWmgWmVP,cplcgWmgWmVZ,cplcgAgWmcVWm,        & 
-& cplcgZgWmcVWm,cplcgWpCgWpCVP,cplcgAgWpCVWm,cplcgZgWpCVWm,cplcgWpCgWpCVZ,               & 
-& cplcgWmgZVWm,cplcgWpCgZcVWm,cplcgWmgWmAh,cplcgWpCgWpCAh,cplcgZgAhh,cplcgWmgAHm,        & 
-& cplcgWpCgAcHm,cplcgWmgWmhh,cplcgWmgWmsigma1,cplcgZgWmcHm,cplcgWpCgWpChh,               & 
-& cplcgZgWpCHm,cplcgWpCgWpCsigma1,cplcgZgZhh,cplcgWmgZHm,cplcgWpCgZcHm,GcplAhHmcHm,      & 
-& GcplhhHmcHm,GcplHmsigma1cHm,GcplAhHmcVWm,GcplAhcHmVWm,GcplhhHmcVWm,GcplhhcHmVWm,       & 
-& GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,GcplHmcVWmVP,GcplHmcVWmVZ,   & 
-& GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,GcplcFvFecHmL,GcplcFvFecHmR,     & 
-& GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,dg1,dg2,dg3,dM12,depYU,            & 
-& dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,               & 
-& dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,              & 
-& ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,            & 
-& ZfER,ZfVPVZ,ZfVZVP,ctcplAhAhAh,ctcplAhAhhh,ctcplAhAhsigma1,ctcplAhhhhh,ctcplAhhhsigma1,& 
-& ctcplAhHmcHm,ctcplAhsigma1sigma1,ctcplhhhhhh,ctcplhhhhsigma1,ctcplhhHmcHm,             & 
-& ctcplhhsigma1sigma1,ctcplHmsigma1cHm,ctcplsigma1sigma1sigma1,ctcplAhhhVZ,              & 
-& ctcplAhHmcVWm,ctcplAhcHmVWm,ctcplhhHmcVWm,ctcplhhsigma1VZ,ctcplhhcHmVWm,               & 
+& MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,            & 
+& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,              & 
+& cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,& 
+& cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,& 
+& cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
+& cplAhAhsigma1sigma1,cplAhhhhhhh,cplAhhhhhsigma1,cplAhhhHmcHm,cplAhhhsigma1sigma1,      & 
+& cplAhHmsigma1cHm,cplAhsigma1sigma1sigma1,cplhhhhhhhh,cplhhhhhhsigma1,cplhhhhHmcHm,     & 
+& cplhhhhsigma1sigma1,cplhhHmsigma1cHm,cplhhsigma1sigma1sigma1,cplHmHmcHmcHm,            & 
+& cplHmsigma1sigma1cHm,cplsigma1sigma1sigma1sigma1,cplAhhhVZ,cplAhHmcVWm,cplAhcHmVWm,    & 
+& cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,cplHmsigma1cVWm,cplHmcHmVP,cplHmcHmVZ,           & 
+& cplsigma1cHmVWm,cplhhcVWmVWm,cplhhVZVZ,cplHmcVWmVP,cplHmcVWmVZ,cplcHmVPVWm,            & 
+& cplcHmVWmVZ,cplAhAhcVWmVWm,cplAhAhVZVZ,cplAhHmcVWmVP,cplAhHmcVWmVZ,cplAhcHmVPVWm,      & 
+& cplAhcHmVWmVZ,cplhhhhcVWmVWm,cplhhhhVZVZ,cplhhHmcVWmVP,cplhhHmcVWmVZ,cplhhcHmVPVWm,    & 
+& cplhhcHmVWmVZ,cplHmsigma1cVWmVP,cplHmsigma1cVWmVZ,cplHmcHmVPVP,cplHmcHmVPVZ,           & 
+& cplHmcHmcVWmVWm,cplHmcHmVZVZ,cplsigma1sigma1cVWmVWm,cplsigma1sigma1VZVZ,               & 
+& cplsigma1cHmVPVWm,cplsigma1cHmVWmVZ,cplVGVGVG,cplcVWmVPVWm,cplcVWmVWmVZ,               & 
+& cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,               & 
+& cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFuFdcHmL,cplcFuFdcHmR,     & 
+& cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,cplcFvFecHmL,cplcFvFecHmR,     & 
+& cplcFuFuhhL,cplcFuFuhhR,cplcFdFuHmL,cplcFdFuHmR,cplcFuFusigma1L,cplcFuFusigma1R,       & 
+& cplcFeFvHmL,cplcFeFvHmR,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,               & 
+& cplcFdFdVZL,cplcFdFdVZR,cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFeFeVPL,cplcFeFeVPR,           & 
+& cplcFeFeVZL,cplcFeFeVZR,cplcFvFecVWmL,cplcFvFecVWmR,cplcFuFuVGL,cplcFuFuVGR,           & 
+& cplcFuFuVPL,cplcFuFuVPR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFuVZL,cplcFuFuVZR,             & 
+& cplcFeFvVWmL,cplcFeFvVWmR,cplcFvFvVZL,cplcFvFvVZR,cplVGVGVGVG1,cplVGVGVGVG2,           & 
+& cplVGVGVGVG3,cplcVWmVPVPVWm1,cplcVWmVPVPVWm2,cplcVWmVPVPVWm3,cplcVWmVPVWmVZ1,          & 
+& cplcVWmVPVWmVZ2,cplcVWmVPVWmVZ3,cplcVWmcVWmVWmVWm1,cplcVWmcVWmVWmVWm2,cplcVWmcVWmVWmVWm3,& 
+& cplcVWmVWmVZVZ1,cplcVWmVWmVZVZ2,cplcVWmVWmVZVZ3,cplcgGgGVG,cplcgWmgAVWm,               & 
+& cplcgWpCgAcVWm,cplcgWmgWmVP,cplcgWmgWmVZ,cplcgAgWmcVWm,cplcgZgWmcVWm,cplcgWpCgWpCVP,   & 
+& cplcgAgWpCVWm,cplcgZgWpCVWm,cplcgWpCgWpCVZ,cplcgWmgZVWm,cplcgWpCgZcVWm,cplcgWmgWmAh,   & 
+& cplcgWpCgWpCAh,cplcgZgAhh,cplcgWmgAHm,cplcgWpCgAcHm,cplcgWmgWmhh,cplcgWmgWmsigma1,     & 
+& cplcgZgWmcHm,cplcgWpCgWpChh,cplcgZgWpCHm,cplcgWpCgWpCsigma1,cplcgZgZhh,cplcgWmgZHm,    & 
+& cplcgWpCgZcHm,GcplAhHmcHm,GcplhhHmcHm,GcplHmsigma1cHm,GcplAhHmcVWm,GcplAhcHmVWm,       & 
+& GcplhhHmcVWm,GcplhhcHmVWm,GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,   & 
+& GcplHmcVWmVP,GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,       & 
+& GcplcFvFecHmL,GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,       & 
+& dg1,dg2,dg3,dM12,depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
+& dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,           & 
+& dCosTW,dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,             & 
+& ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,ctcplAhAhAh,ctcplAhAhhh,ctcplAhAhsigma1,             & 
+& ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhHmcHm,ctcplAhsigma1sigma1,ctcplhhhhhh,              & 
+& ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhsigma1sigma1,ctcplHmsigma1cHm,ctcplsigma1sigma1sigma1,& 
+& ctcplAhhhVZ,ctcplAhHmcVWm,ctcplAhcHmVWm,ctcplhhHmcVWm,ctcplhhsigma1VZ,ctcplhhcHmVWm,   & 
 & ctcplHmsigma1cVWm,ctcplHmcHmVP,ctcplHmcHmVZ,ctcplsigma1cHmVWm,ctcplhhcVWmVWm,          & 
 & ctcplhhVZVZ,ctcplHmcVWmVP,ctcplHmcVWmVZ,ctcplcHmVPVWm,ctcplcHmVWmVZ,ctcplVGVGVG,       & 
 & ctcplcVWmVPVWm,ctcplcVWmVWmVZ,ctcplcFdFdAhL,ctcplcFdFdAhR,ctcplcFeFeAhL,               & 
@@ -2281,7 +2279,7 @@ Real(dp),Intent(inout) :: g1,g2,g3
 Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
-Real(dp),Intent(inout) :: vd,vu
+Real(dp),Intent(inout) :: v,v2
 
 Complex(dp),Intent(in) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -2322,8 +2320,7 @@ Complex(dp),Intent(in) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cp
 & cplcgZgZhh(2),cplcgWmgZHm(2),cplcgWpCgZcHm(2)
 
 Real(dp),Intent(in) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp),Intent(in) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
@@ -2397,7 +2394,7 @@ Complex(dp) :: PihhOS(2,2,2),DerPihhOS(2,2,2),PiHmOS(2,2,2),DerPiHmOS(2,2,2),Sig
 Real(dp), Intent(in) :: MLambda, deltaM 
 
 Integer, Intent(out) :: kont 
-Real(dp),Intent(out) :: dg1,dg2,dg3,dvd,dvu,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp),Intent(out) :: dg1,dg2,dg3,dv,dv2,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp),Intent(out) :: dM12,depYU(3,3),dYu(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
 & dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,dZDL(3,3),dZDR(3,3),dZUL(3,3),         & 
@@ -2447,15 +2444,15 @@ MVP = MLambda
 MVG2 = MLambda**2 
 MVP2 = MLambda**2 
 
-Call OneLoopTadpoleshh(vd,vu,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,            & 
+Call OneLoopTadpoleshh(v,v2,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,             & 
 & MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,cplAhAhhh,cplcFdFdhhL,cplcFdFdhhR,       & 
 & cplcFeFehhL,cplcFeFehhR,cplcFuFuhhL,cplcFuFuhhR,cplcgWmgWmhh,cplcgWpCgWpChh,           & 
 & cplcgZgZhh,cplhhhhhh,cplhhHmcHm,cplhhsigma1sigma1,cplhhcVWmVWm,cplhhVZVZ,              & 
 & Tad1Loop(1:2))
 
 Tad1Loop(1:2) = MatMul(ZH,Tad1Loop(1:2)) 
-Tad1Loop(1) = Tad1Loop(1)/vd 
-Tad1Loop(2) = Tad1Loop(2)/vu 
+Tad1Loop(1) = Tad1Loop(1)/v 
+Tad1Loop(2) = Tad1Loop(2)/v2 
 Do i1=1,2
 MatTad_hh(i1,i1) = Tad1Loop(0+ i1) 
 End Do 
@@ -3644,14 +3641,14 @@ g1 = Sqrt(5._dp/3._dp)*g1
 ! ----------------------- 
  
 Call ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,               & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,g1D)
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g1D)
 
 TwoLoopRGEsave=TwoLoopRGE 
 TwoLoopRGE=.False. 
 Call rge133(133,0._dp,g1D,g1D) 
 TwoLoopRGE=TwoLoopRGEsave 
 Call GToParameters133(g1D,dg1,dg2,dg3,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,            & 
-& dLam2,depYU,dYu,dYd,dYe,depYD,depYE,dM12,dM112,dM222,dvd,dvu)
+& dLam2,depYU,dYu,dYd,dYe,depYD,depYE,dM12,dM112,dM222,dv,dv2)
 
 
  
@@ -3684,8 +3681,8 @@ dLam1 = 0.5_dp*divergence*dLam1
 dLam4 = 0.5_dp*divergence*dLam4 
 dLam3 = 0.5_dp*divergence*dLam3 
 dLam2 = 0.5_dp*divergence*dLam2 
-dvd = 0.5_dp*divergence*dvd 
-dvu = 0.5_dp*divergence*dvu 
+dv = 0.5_dp*divergence*dv 
+dv2 = 0.5_dp*divergence*dv2 
 dZH = 0._dp 
 dZP = 0._dp 
 dZDL = 0._dp 
@@ -3717,9 +3714,9 @@ dZP = 0.25_dp*MatMul(ZfHm- Conjg(Transpose(ZfHm)),ZP)
 ! -----------------------------------------------------------
 ! Calculating the CT vertices 
 ! -----------------------------------------------------------
-Call CalculateCouplingCT(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,              & 
-& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,dLam7,dvd,dLam5,           & 
-& dLam4,dLam3,dLam2,dvu,dZH,dLam6,dZP,dLam1,dg1,dg2,dSinTW,dCosTW,dTanTW,dg3,            & 
+Call CalculateCouplingCT(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,               & 
+& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,dLam7,dv,dLam5,            & 
+& dLam4,dLam3,dLam2,dv2,dZH,dLam6,dZP,dLam1,dg1,dg2,dSinTW,dCosTW,dTanTW,dg3,            & 
 & depYD,dZDL,dZDR,depYE,dZEL,dZER,dYu,dZUL,dZUR,dYd,depYU,dYe,ctcplAhAhAh,               & 
 & ctcplAhAhhh,ctcplAhAhsigma1,ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhHmcHm,ctcplAhsigma1sigma1,& 
 & ctcplhhhhhh,ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhsigma1sigma1,ctcplHmsigma1cHm,         & 
@@ -3742,7 +3739,7 @@ End Subroutine WaveFunctionRenormalisation
 Subroutine CalculateOneLoopDecays(gP1LFu,gP1LFe,gP1LFd,gP1Lhh,gP1LAh,gP1LHm,          & 
 & MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,MFeOS,MFe2OS,Msigma1OS,            & 
 & Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,             & 
-& ZULOS,ZUROS,ZELOS,ZEROS,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,             & 
+& ZULOS,ZUROS,ZELOS,ZEROS,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,              & 
 & epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,epsI,deltaM,kont)
 
 Implicit None 
@@ -3756,9 +3753,9 @@ Real(dp),Intent(inout) :: g1,g2,g3
 Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
-Real(dp),Intent(inout) :: vd,vu
+Real(dp),Intent(inout) :: v,v2
 
-Real(dp) :: dg1,dg2,dg3,dvd,dvu,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
+Real(dp) :: dg1,dg2,dg3,dv,dv2,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
 
 Complex(dp) :: dM12,depYU(3,3),dYu(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
 & dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,dZDL(3,3),dZDR(3,3),dZUL(3,3),         & 
@@ -3775,8 +3772,7 @@ Complex(dp),Intent(in) :: ZDLOS(3,3),ZDROS(3,3),ZULOS(3,3),ZUROS(3,3),ZELOS(3,3)
 
 Real(dp) :: p2, q2, q2_save 
 Real(dp) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
@@ -3955,8 +3951,7 @@ sinW2=1._dp-mW2/mZ2
 g1SM=sqrt(4*Pi*Alpha_MZ/(1-sinW2)) 
 g2SM=sqrt(4*Pi*Alpha_MZ/Sinw2) 
 vSM=sqrt(mz2*4._dp/(g1SM**2+g2SM**2)) 
-vd=vSM 
-vu=0 
+v=vSM 
 g1=g1SM 
 g2=g2SM 
  If (yukOSinDecays) Then !! Allow OS Yukawas only together with vSM 
@@ -3982,12 +3977,12 @@ End if
 
 ! DR parameters 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
 ! Stabilize numerics 
 If (Abs(Msigma1).lt.1.0E-15_dp) Msigma1=0._dp
@@ -4033,7 +4028,7 @@ ZRUVe = MatMul(ZELOS, Conjg(Transpose(ZEL)))
 ZRUUe = MatMul(ZEROS, Conjg(Transpose(ZER)))
 End if 
 ! Couplings 
-Call AllCouplingsReallyAll(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,            & 
+Call AllCouplingsReallyAll(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,             & 
 & g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,       & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
@@ -4085,7 +4080,7 @@ Call CouplingsColoredQuartics(Lam2,Lam7,ZH,Lam5,Lam4,Lam3,ZP,Lam6,Lam1,         
 & cplcVWmVWmVZVZ1Q,cplcVWmVWmVZVZ2Q,cplcVWmVWmVZVZ3Q)
 
 If (externalZfactors) Then 
-Call getZCouplings(Lam7,vd,Lam5,Lam4,Lam3,Lam2,vu,ZH,Lam6,ZP,Lam1,g1,g2,              & 
+Call getZCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,g1,g2,               & 
 & TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,             & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
@@ -4157,7 +4152,7 @@ Call getGBCouplings(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,        
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,cplAhcHmVWm,cplcFdFuVWmL,cplcFdFuVWmR,      & 
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,cplAhcHmVWm,cplcFdFuVWmL,cplcFdFuVWmR,              & 
 & cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFvFecVWmL,cplcFvFecVWmR,     & 
 & cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,cplhhcVWmVWm,            & 
 & cplsigma1cHmVWm,ZcplAhcHmVWm,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFeFvVWmL,ZcplcFeFvVWmR,  & 
@@ -4182,9 +4177,9 @@ Call WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,        
 & MFuOS,MFu2OS,MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,              & 
 & MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,             & 
 & MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,              & 
-& MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,              & 
-& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,             & 
-& cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,& 
+& MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,            & 
+& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplAhAhAh,              & 
+& cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,          & 
 & cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,& 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
 & cplAhAhsigma1sigma1,cplAhhhhhhh,cplAhhhhhsigma1,cplAhhhHmcHm,cplAhhhsigma1sigma1,      & 
@@ -4219,7 +4214,7 @@ Call WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,        
 & GcplHmcVWmVP,GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,       & 
 & GcplcFvFecHmL,GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,       & 
 & dg1,dg2,dg3,dM12,depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
-& dLam1,dLam4,dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,          & 
+& dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,           & 
 & dCosTW,dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,             & 
 & ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,ctcplAhAhAh,ctcplAhAhhh,ctcplAhAhsigma1,             & 
 & ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhHmcHm,ctcplAhsigma1sigma1,ctcplhhhhhh,              & 
@@ -4249,34 +4244,33 @@ Call OneLoopDecay_Fu(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,            & 
-& cplAhhhhh,cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,            & 
-& cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,       & 
-& cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,               & 
-& cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,           & 
-& cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,           & 
-& cplcFuFusigma1L,cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,       & 
-& cplcFuFuVZL,cplcFuFuVZR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,             & 
-& cplhhcHmVWm,cplhhcVWmVWm,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,               & 
-& cplhhsigma1sigma1,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,           & 
-& cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,cplsigma1cHmVWm,cplsigma1sigma1sigma1,      & 
-& cplVGVGVG,ctcplcFuFdcHmL,ctcplcFuFdcHmR,ctcplcFuFdcVWmL,ctcplcFuFdcVWmR,               & 
-& ctcplcFuFuAhL,ctcplcFuFuAhR,ctcplcFuFuhhL,ctcplcFuFuhhR,ctcplcFuFusigma1L,             & 
-& ctcplcFuFusigma1R,ctcplcFuFuVGL,ctcplcFuFuVGR,ctcplcFuFuVPL,ctcplcFuFuVPR,             & 
-& ctcplcFuFuVZL,ctcplcFuFuVZR,GcplcFuFdcHmL,GcplcFuFdcHmR,GcplcHmVPVWm,GcplHmcVWmVP,     & 
-& GosZcplcFuFdcHmL,GosZcplcFuFdcHmR,GosZcplcHmVPVWm,GosZcplHmcVWmVP,GZcplcFuFdcHmL,      & 
-& GZcplcFuFdcHmR,GZcplcHmVPVWm,GZcplHmcVWmVP,ZcplcFdFdVGL,ZcplcFdFdVGR,ZcplcFdFdVPL,     & 
-& ZcplcFdFdVPR,ZcplcFdFuHmL,ZcplcFdFuHmR,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,      & 
-& ZcplcFuFdcHmR,ZcplcFuFdcVWmL,ZcplcFuFdcVWmR,ZcplcFuFuAhL,ZcplcFuFuAhR,ZcplcFuFuhhL,    & 
-& ZcplcFuFuhhR,ZcplcFuFusigma1L,ZcplcFuFusigma1R,ZcplcFuFuVGL,ZcplcFuFuVGR,              & 
-& ZcplcFuFuVPL,ZcplcFuFuVPR,ZcplcFuFuVZL,ZcplcFuFuVZR,ZcplcHmVPVWm,ZcplcVWmVPVWm,        & 
-& ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,               & 
-& ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFu)
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,cplAhhhhh,cplAhhhsigma1,          & 
+& cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,cplcFdFdAhL,cplcFdFdAhR,            & 
+& cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,       & 
+& cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,               & 
+& cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,       & 
+& cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,cplcFuFusigma1R,       & 
+& cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,cplcFuFuVZR,               & 
+& cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,cplhhcVWmVWm,            & 
+& cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,cplhhsigma1sigma1,cplhhsigma1VZ,        & 
+& cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,& 
+& cplsigma1cHmVWm,cplsigma1sigma1sigma1,cplVGVGVG,ctcplcFuFdcHmL,ctcplcFuFdcHmR,         & 
+& ctcplcFuFdcVWmL,ctcplcFuFdcVWmR,ctcplcFuFuAhL,ctcplcFuFuAhR,ctcplcFuFuhhL,             & 
+& ctcplcFuFuhhR,ctcplcFuFusigma1L,ctcplcFuFusigma1R,ctcplcFuFuVGL,ctcplcFuFuVGR,         & 
+& ctcplcFuFuVPL,ctcplcFuFuVPR,ctcplcFuFuVZL,ctcplcFuFuVZR,GcplcFuFdcHmL,GcplcFuFdcHmR,   & 
+& GcplcHmVPVWm,GcplHmcVWmVP,GosZcplcFuFdcHmL,GosZcplcFuFdcHmR,GosZcplcHmVPVWm,           & 
+& GosZcplHmcVWmVP,GZcplcFuFdcHmL,GZcplcFuFdcHmR,GZcplcHmVPVWm,GZcplHmcVWmVP,             & 
+& ZcplcFdFdVGL,ZcplcFdFdVGR,ZcplcFdFdVPL,ZcplcFdFdVPR,ZcplcFdFuHmL,ZcplcFdFuHmR,         & 
+& ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,ZcplcFuFdcHmR,ZcplcFuFdcVWmL,ZcplcFuFdcVWmR, & 
+& ZcplcFuFuAhL,ZcplcFuFuAhR,ZcplcFuFuhhL,ZcplcFuFuhhR,ZcplcFuFusigma1L,ZcplcFuFusigma1R, & 
+& ZcplcFuFuVGL,ZcplcFuFuVGR,ZcplcFuFuVPL,ZcplcFuFuVPR,ZcplcFuFuVZL,ZcplcFuFuVZR,         & 
+& ZcplcHmVPVWm,ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,ZRUZH,ZRUZP,            & 
+& ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFu)
 
 End if 
 ! Fe
@@ -4285,30 +4279,29 @@ Call OneLoopDecay_Fe(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,            & 
-& cplAhhhhh,cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,            & 
-& cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,       & 
-& cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,               & 
-& cplcFeFvVWmL,cplcFeFvVWmR,cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,       & 
-& cplcFvFvVZL,cplcFvFvVZR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,             & 
-& cplhhcHmVWm,cplhhcVWmVWm,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,               & 
-& cplhhsigma1sigma1,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,           & 
-& cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,cplsigma1cHmVWm,cplsigma1sigma1sigma1,      & 
-& ctcplcFeFeAhL,ctcplcFeFeAhR,ctcplcFeFehhL,ctcplcFeFehhR,ctcplcFeFesigma1L,             & 
-& ctcplcFeFesigma1R,ctcplcFeFeVPL,ctcplcFeFeVPR,ctcplcFeFeVZL,ctcplcFeFeVZR,             & 
-& ctcplcFeFvHmL,ctcplcFeFvHmR,ctcplcFeFvVWmL,ctcplcFeFvVWmR,GcplcFeFvHmL,GcplcFeFvHmR,   & 
-& GcplcHmVPVWm,GcplHmcVWmVP,GosZcplcFeFvHmL,GosZcplcFeFvHmR,GosZcplcHmVPVWm,             & 
-& GosZcplHmcVWmVP,GZcplcFeFvHmL,GZcplcFeFvHmR,GZcplcHmVPVWm,GZcplHmcVWmVP,               & 
-& ZcplcFeFeAhL,ZcplcFeFeAhR,ZcplcFeFehhL,ZcplcFeFehhR,ZcplcFeFesigma1L,ZcplcFeFesigma1R, & 
-& ZcplcFeFeVPL,ZcplcFeFeVPR,ZcplcFeFeVZL,ZcplcFeFeVZR,ZcplcFeFvHmL,ZcplcFeFvHmR,         & 
-& ZcplcFeFvVWmL,ZcplcFeFvVWmR,ZcplcFvFecHmL,ZcplcFvFecHmR,ZcplcFvFecVWmL,ZcplcFvFecVWmR, & 
-& ZcplcHmVPVWm,ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZRUZH,ZRUZP,ZRUVd,ZRUUd,           & 
-& ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFe)
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,cplAhhhhh,cplAhhhsigma1,          & 
+& cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,cplcFeFeAhL,cplcFeFeAhR,            & 
+& cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,cplcFeFeVPL,cplcFeFeVPR,       & 
+& cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,             & 
+& cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcFvFvVZL,cplcFvFvVZR,         & 
+& cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,cplhhcVWmVWm,            & 
+& cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,cplhhsigma1sigma1,cplhhsigma1VZ,        & 
+& cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,& 
+& cplsigma1cHmVWm,cplsigma1sigma1sigma1,ctcplcFeFeAhL,ctcplcFeFeAhR,ctcplcFeFehhL,       & 
+& ctcplcFeFehhR,ctcplcFeFesigma1L,ctcplcFeFesigma1R,ctcplcFeFeVPL,ctcplcFeFeVPR,         & 
+& ctcplcFeFeVZL,ctcplcFeFeVZR,ctcplcFeFvHmL,ctcplcFeFvHmR,ctcplcFeFvVWmL,ctcplcFeFvVWmR, & 
+& GcplcFeFvHmL,GcplcFeFvHmR,GcplcHmVPVWm,GcplHmcVWmVP,GosZcplcFeFvHmL,GosZcplcFeFvHmR,   & 
+& GosZcplcHmVPVWm,GosZcplHmcVWmVP,GZcplcFeFvHmL,GZcplcFeFvHmR,GZcplcHmVPVWm,             & 
+& GZcplHmcVWmVP,ZcplcFeFeAhL,ZcplcFeFeAhR,ZcplcFeFehhL,ZcplcFeFehhR,ZcplcFeFesigma1L,    & 
+& ZcplcFeFesigma1R,ZcplcFeFeVPL,ZcplcFeFeVPR,ZcplcFeFeVZL,ZcplcFeFeVZR,ZcplcFeFvHmL,     & 
+& ZcplcFeFvHmR,ZcplcFeFvVWmL,ZcplcFeFvVWmR,ZcplcFvFecHmL,ZcplcFvFecHmR,ZcplcFvFecVWmL,   & 
+& ZcplcFvFecVWmR,ZcplcHmVPVWm,ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZRUZH,              & 
+& ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFe)
 
 End if 
 ! Fd
@@ -4317,33 +4310,33 @@ Call OneLoopDecay_Fd(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,            & 
-& cplAhhhhh,cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,            & 
-& cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,       & 
-& cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,               & 
-& cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,           & 
-& cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,           & 
-& cplcFuFusigma1L,cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,       & 
-& cplcFuFuVZL,cplcFuFuVZR,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,             & 
-& cplhhcHmVWm,cplhhcVWmVWm,cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,               & 
-& cplhhsigma1sigma1,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,           & 
-& cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,cplsigma1cHmVWm,cplsigma1sigma1sigma1,      & 
-& cplVGVGVG,ctcplcFdFdAhL,ctcplcFdFdAhR,ctcplcFdFdhhL,ctcplcFdFdhhR,ctcplcFdFdsigma1L,   & 
-& ctcplcFdFdsigma1R,ctcplcFdFdVGL,ctcplcFdFdVGR,ctcplcFdFdVPL,ctcplcFdFdVPR,             & 
-& ctcplcFdFdVZL,ctcplcFdFdVZR,ctcplcFdFuHmL,ctcplcFdFuHmR,ctcplcFdFuVWmL,ctcplcFdFuVWmR, & 
-& GcplcFdFuHmL,GcplcFdFuHmR,GcplcHmVPVWm,GcplHmcVWmVP,GosZcplcFdFuHmL,GosZcplcFdFuHmR,   & 
-& GosZcplcHmVPVWm,GosZcplHmcVWmVP,GZcplcFdFuHmL,GZcplcFdFuHmR,GZcplcHmVPVWm,             & 
-& GZcplHmcVWmVP,ZcplcFdFdAhL,ZcplcFdFdAhR,ZcplcFdFdhhL,ZcplcFdFdhhR,ZcplcFdFdsigma1L,    & 
-& ZcplcFdFdsigma1R,ZcplcFdFdVGL,ZcplcFdFdVGR,ZcplcFdFdVPL,ZcplcFdFdVPR,ZcplcFdFdVZL,     & 
-& ZcplcFdFdVZR,ZcplcFdFuHmL,ZcplcFdFuHmR,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,      & 
-& ZcplcFuFdcHmR,ZcplcFuFdcVWmL,ZcplcFuFdcVWmR,ZcplcFuFuVGL,ZcplcFuFuVGR,ZcplcFuFuVPL,    & 
-& ZcplcFuFuVPR,ZcplcHmVPVWm,ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,           & 
-& ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFd)
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhcHmVWm,cplAhhhhh,cplAhhhsigma1,          & 
+& cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,cplcFdFdAhL,cplcFdFdAhR,            & 
+& cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,       & 
+& cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,               & 
+& cplcFdFuVWmL,cplcFdFuVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,       & 
+& cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,cplcFuFusigma1R,       & 
+& cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,cplcFuFuVZR,               & 
+& cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVWm,cplhhcVWmVWm,            & 
+& cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,cplhhsigma1sigma1,cplhhsigma1VZ,        & 
+& cplhhVZVZ,cplHmcHmVP,cplHmcHmVZ,cplHmcVWmVP,cplHmcVWmVZ,cplHmsigma1cHm,cplHmsigma1cVWm,& 
+& cplsigma1cHmVWm,cplsigma1sigma1sigma1,cplVGVGVG,ctcplcFdFdAhL,ctcplcFdFdAhR,           & 
+& ctcplcFdFdhhL,ctcplcFdFdhhR,ctcplcFdFdsigma1L,ctcplcFdFdsigma1R,ctcplcFdFdVGL,         & 
+& ctcplcFdFdVGR,ctcplcFdFdVPL,ctcplcFdFdVPR,ctcplcFdFdVZL,ctcplcFdFdVZR,ctcplcFdFuHmL,   & 
+& ctcplcFdFuHmR,ctcplcFdFuVWmL,ctcplcFdFuVWmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcHmVPVWm,    & 
+& GcplHmcVWmVP,GosZcplcFdFuHmL,GosZcplcFdFuHmR,GosZcplcHmVPVWm,GosZcplHmcVWmVP,          & 
+& GZcplcFdFuHmL,GZcplcFdFuHmR,GZcplcHmVPVWm,GZcplHmcVWmVP,ZcplcFdFdAhL,ZcplcFdFdAhR,     & 
+& ZcplcFdFdhhL,ZcplcFdFdhhR,ZcplcFdFdsigma1L,ZcplcFdFdsigma1R,ZcplcFdFdVGL,              & 
+& ZcplcFdFdVGR,ZcplcFdFdVPL,ZcplcFdFdVPR,ZcplcFdFdVZL,ZcplcFdFdVZR,ZcplcFdFuHmL,         & 
+& ZcplcFdFuHmR,ZcplcFdFuVWmL,ZcplcFdFuVWmR,ZcplcFuFdcHmL,ZcplcFuFdcHmR,ZcplcFuFdcVWmL,   & 
+& ZcplcFuFdcVWmR,ZcplcFuFuVGL,ZcplcFuFuVGR,ZcplcFuFuVPL,ZcplcFuFuVPR,ZcplcHmVPVWm,       & 
+& ZcplcVWmVPVWm,ZcplHmcHmVP,ZcplHmcVWmVP,ZcplVGVGVG,ZRUZH,ZRUZP,ZRUVd,ZRUUd,             & 
+& ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LFd)
 
 End if 
 ! hh
@@ -4352,52 +4345,51 @@ Call OneLoopDecay_hh(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhAhAh1,cplAhAhAhhh1,cplAhAhAhsigma11,     & 
-& cplAhAhcVWmVWm1,cplAhAhhh,cplAhAhhhhh1,cplAhAhhhsigma11,cplAhAhHmcHm1,cplAhAhsigma1,   & 
-& cplAhAhsigma1sigma11,cplAhAhVZVZ1,cplAhcHmVPVWm1,cplAhcHmVWm,cplAhcHmVWmVZ1,           & 
-& cplAhhhhh,cplAhhhhhhh1,cplAhhhhhsigma11,cplAhhhHmcHm1,cplAhhhsigma1,cplAhhhsigma1sigma11,& 
-& cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,cplAhHmsigma1cHm1,      & 
-& cplAhsigma1sigma1,cplAhsigma1sigma1sigma11,cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,        & 
-& cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,       & 
-& cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,              & 
-& cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,          & 
-& cplcFeFesigma1R,cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,           & 
-& cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,         & 
-& cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,         & 
-& cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,           & 
-& cplcFuFuVZR,cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcFvFvVZL,         & 
-& cplcFvFvVZR,cplcgAgWmcVWm,cplcgAgWpCVWm,cplcgWmgAHm,cplcgWmgAVWm,cplcgWmgWmAh,         & 
-& cplcgWmgWmhh,cplcgWmgWmsigma1,cplcgWmgWmVP,cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,      & 
-& cplcgWpCgAcVWm,cplcgWpCgWpCAh,cplcgWpCgWpChh,cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,        & 
-& cplcgWpCgWpCVZ,cplcgWpCgZcHm,cplcgWpCgZcVWm,cplcgZgAhh,cplcgZgWmcHm,cplcgZgWmcVWm,     & 
-& cplcgZgWpCHm,cplcgZgWpCVWm,cplcgZgZhh,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmcVWmVWmVWm1Q,     & 
-& cplcVWmcVWmVWmVWm2Q,cplcVWmcVWmVWmVWm3Q,cplcVWmVPVPVWm1Q,cplcVWmVPVPVWm2Q,             & 
-& cplcVWmVPVPVWm3Q,cplcVWmVPVWm,cplcVWmVPVWmVZ1Q,cplcVWmVPVWmVZ2Q,cplcVWmVPVWmVZ3Q,      & 
-& cplcVWmVWmVZ,cplcVWmVWmVZVZ1Q,cplcVWmVWmVZVZ2Q,cplcVWmVWmVZVZ3Q,cplhhcHmVPVWm1,        & 
-& cplhhcHmVWm,cplhhcHmVWmVZ1,cplhhcVWmVWm,cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhhhhh1,        & 
-& cplhhhhhhsigma11,cplhhhhHmcHm1,cplhhhhsigma1,cplhhhhsigma1sigma11,cplhhhhVZVZ1,        & 
-& cplhhHmcHm,cplhhHmcVWm,cplhhHmcVWmVP1,cplhhHmcVWmVZ1,cplhhHmsigma1cHm1,cplhhsigma1sigma1,& 
-& cplhhsigma1sigma1sigma11,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmcVWmVWm1,cplHmcHmVP,          & 
-& cplHmcHmVPVP1,cplHmcHmVPVZ1,cplHmcHmVZ,cplHmcHmVZVZ1,cplHmcVWmVP,cplHmcVWmVZ,          & 
-& cplHmHmcHmcHm1,cplHmsigma1cHm,cplHmsigma1cVWm,cplHmsigma1cVWmVP1,cplHmsigma1cVWmVZ1,   & 
-& cplHmsigma1sigma1cHm1,cplsigma1cHmVPVWm1,cplsigma1cHmVWm,cplsigma1cHmVWmVZ1,           & 
-& cplsigma1sigma1cVWmVWm1,cplsigma1sigma1sigma1,cplsigma1sigma1sigma1sigma11,            & 
-& cplsigma1sigma1VZVZ1,ctcplAhAhhh,ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhhhVZ,              & 
-& ctcplcFdFdhhL,ctcplcFdFdhhR,ctcplcFeFehhL,ctcplcFeFehhR,ctcplcFuFuhhL,ctcplcFuFuhhR,   & 
-& ctcplhhcVWmVWm,ctcplhhhhhh,ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhHmcVWm,ctcplhhsigma1sigma1,& 
-& ctcplhhsigma1VZ,ctcplhhVZVZ,GcplcHmVPVWm,GcplhhcHmVWm,GcplhhHmcHm,GcplhhHmcVWm,        & 
-& GcplHmcVWmVP,GosZcplcHmVPVWm,GosZcplhhcHmVWm,GosZcplhhHmcHm,GosZcplhhHmcVWm,           & 
-& GosZcplHmcVWmVP,GZcplcHmVPVWm,GZcplhhcHmVWm,GZcplhhHmcHm,GZcplhhHmcVWm,GZcplHmcVWmVP,  & 
-& ZcplAhAhhh,ZcplAhhhhh,ZcplAhhhsigma1,ZcplAhhhVZ,ZcplcFdFdhhL,ZcplcFdFdhhR,             & 
-& ZcplcFeFehhL,ZcplcFeFehhR,ZcplcFuFuhhL,ZcplcFuFuhhR,ZcplhhcVWmVWm,Zcplhhhhhh,          & 
-& Zcplhhhhsigma1,ZcplhhHmcHm,ZcplhhHmcVWm,Zcplhhsigma1sigma1,Zcplhhsigma1VZ,             & 
-& ZcplhhVZVZ,ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,              & 
-& deltaM,kont,gP1Lhh)
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhAhAh1,cplAhAhAhhh1,cplAhAhAhsigma11,cplAhAhcVWmVWm1,           & 
+& cplAhAhhh,cplAhAhhhhh1,cplAhAhhhsigma11,cplAhAhHmcHm1,cplAhAhsigma1,cplAhAhsigma1sigma11,& 
+& cplAhAhVZVZ1,cplAhcHmVPVWm1,cplAhcHmVWm,cplAhcHmVWmVZ1,cplAhhhhh,cplAhhhhhhh1,         & 
+& cplAhhhhhsigma11,cplAhhhHmcHm1,cplAhhhsigma1,cplAhhhsigma1sigma11,cplAhhhVZ,           & 
+& cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,cplAhHmsigma1cHm1,cplAhsigma1sigma1,& 
+& cplAhsigma1sigma1sigma11,cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,              & 
+& cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,       & 
+& cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,             & 
+& cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,       & 
+& cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,               & 
+& cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,       & 
+& cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,cplcFuFusigma1R,       & 
+& cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,cplcFuFuVZR,               & 
+& cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcFvFvVZL,cplcFvFvVZR,         & 
+& cplcgAgWmcVWm,cplcgAgWpCVWm,cplcgWmgAHm,cplcgWmgAVWm,cplcgWmgWmAh,cplcgWmgWmhh,        & 
+& cplcgWmgWmsigma1,cplcgWmgWmVP,cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,cplcgWpCgAcVWm,    & 
+& cplcgWpCgWpCAh,cplcgWpCgWpChh,cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,cplcgWpCgWpCVZ,        & 
+& cplcgWpCgZcHm,cplcgWpCgZcVWm,cplcgZgAhh,cplcgZgWmcHm,cplcgZgWmcVWm,cplcgZgWpCHm,       & 
+& cplcgZgWpCVWm,cplcgZgZhh,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmcVWmVWmVWm1Q,cplcVWmcVWmVWmVWm2Q,& 
+& cplcVWmcVWmVWmVWm3Q,cplcVWmVPVPVWm1Q,cplcVWmVPVPVWm2Q,cplcVWmVPVPVWm3Q,cplcVWmVPVWm,   & 
+& cplcVWmVPVWmVZ1Q,cplcVWmVPVWmVZ2Q,cplcVWmVPVWmVZ3Q,cplcVWmVWmVZ,cplcVWmVWmVZVZ1Q,      & 
+& cplcVWmVWmVZVZ2Q,cplcVWmVWmVZVZ3Q,cplhhcHmVPVWm1,cplhhcHmVWm,cplhhcHmVWmVZ1,           & 
+& cplhhcVWmVWm,cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhhhhh1,cplhhhhhhsigma11,cplhhhhHmcHm1,    & 
+& cplhhhhsigma1,cplhhhhsigma1sigma11,cplhhhhVZVZ1,cplhhHmcHm,cplhhHmcVWm,cplhhHmcVWmVP1, & 
+& cplhhHmcVWmVZ1,cplhhHmsigma1cHm1,cplhhsigma1sigma1,cplhhsigma1sigma1sigma11,           & 
+& cplhhsigma1VZ,cplhhVZVZ,cplHmcHmcVWmVWm1,cplHmcHmVP,cplHmcHmVPVP1,cplHmcHmVPVZ1,       & 
+& cplHmcHmVZ,cplHmcHmVZVZ1,cplHmcVWmVP,cplHmcVWmVZ,cplHmHmcHmcHm1,cplHmsigma1cHm,        & 
+& cplHmsigma1cVWm,cplHmsigma1cVWmVP1,cplHmsigma1cVWmVZ1,cplHmsigma1sigma1cHm1,           & 
+& cplsigma1cHmVPVWm1,cplsigma1cHmVWm,cplsigma1cHmVWmVZ1,cplsigma1sigma1cVWmVWm1,         & 
+& cplsigma1sigma1sigma1,cplsigma1sigma1sigma1sigma11,cplsigma1sigma1VZVZ1,               & 
+& ctcplAhAhhh,ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhhhVZ,ctcplcFdFdhhL,ctcplcFdFdhhR,       & 
+& ctcplcFeFehhL,ctcplcFeFehhR,ctcplcFuFuhhL,ctcplcFuFuhhR,ctcplhhcVWmVWm,ctcplhhhhhh,    & 
+& ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhHmcVWm,ctcplhhsigma1sigma1,ctcplhhsigma1VZ,        & 
+& ctcplhhVZVZ,GcplcHmVPVWm,GcplhhcHmVWm,GcplhhHmcHm,GcplhhHmcVWm,GcplHmcVWmVP,           & 
+& GosZcplcHmVPVWm,GosZcplhhcHmVWm,GosZcplhhHmcHm,GosZcplhhHmcVWm,GosZcplHmcVWmVP,        & 
+& GZcplcHmVPVWm,GZcplhhcHmVWm,GZcplhhHmcHm,GZcplhhHmcVWm,GZcplHmcVWmVP,ZcplAhAhhh,       & 
+& ZcplAhhhhh,ZcplAhhhsigma1,ZcplAhhhVZ,ZcplcFdFdhhL,ZcplcFdFdhhR,ZcplcFeFehhL,           & 
+& ZcplcFeFehhR,ZcplcFuFuhhL,ZcplcFuFuhhR,ZcplhhcVWmVWm,Zcplhhhhhh,Zcplhhhhsigma1,        & 
+& ZcplhhHmcHm,ZcplhhHmcVWm,Zcplhhsigma1sigma1,Zcplhhsigma1VZ,ZcplhhVZVZ,ZRUZH,           & 
+& ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1Lhh)
 
 End if 
 ! Ah
@@ -4406,32 +4398,32 @@ Call OneLoopDecay_Ah(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhAhAh1,cplAhAhAhhh1,cplAhAhAhsigma11,     & 
-& cplAhAhcVWmVWm1,cplAhAhhh,cplAhAhhhhh1,cplAhAhhhsigma11,cplAhAhHmcHm1,cplAhAhsigma1,   & 
-& cplAhAhsigma1sigma11,cplAhAhVZVZ1,cplAhcHmVPVWm1,cplAhcHmVWm,cplAhcHmVWmVZ1,           & 
-& cplAhhhhh,cplAhhhhhhh1,cplAhhhhhsigma11,cplAhhhHmcHm1,cplAhhhsigma1,cplAhhhsigma1sigma11,& 
-& cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,cplAhHmsigma1cHm1,      & 
-& cplAhsigma1sigma1,cplAhsigma1sigma1sigma11,cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,        & 
-& cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,       & 
-& cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,              & 
-& cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,          & 
-& cplcFeFesigma1R,cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,           & 
-& cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,         & 
-& cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,         & 
-& cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,           & 
-& cplcFuFuVZR,cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcgAgWmcVWm,       & 
-& cplcgAgWpCVWm,cplcgWmgAHm,cplcgWmgAVWm,cplcgWmgWmAh,cplcgWmgWmhh,cplcgWmgWmsigma1,     & 
-& cplcgWmgWmVP,cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,cplcgWpCgAcVWm,cplcgWpCgWpCAh,      & 
-& cplcgWpCgWpChh,cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,cplcgWpCgWpCVZ,cplcgWpCgZcHm,         & 
-& cplcgWpCgZcVWm,cplcgZgWmcHm,cplcgZgWmcVWm,cplcgZgWpCHm,cplcgZgWpCVWm,cplcHmVPVWm,      & 
-& cplcHmVWmVZ,cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVPVWm1,cplhhcHmVWm,cplhhcHmVWmVZ1,       & 
-& cplhhcVWmVWm,cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhhhhh1,cplhhhhhhsigma11,cplhhhhHmcHm1,    & 
-& cplhhhhsigma1,cplhhhhsigma1sigma11,cplhhhhVZVZ1,cplhhHmcHm,cplhhHmcVWm,cplhhHmcVWmVP1, & 
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhAhAh1,cplAhAhAhhh1,cplAhAhAhsigma11,cplAhAhcVWmVWm1,           & 
+& cplAhAhhh,cplAhAhhhhh1,cplAhAhhhsigma11,cplAhAhHmcHm1,cplAhAhsigma1,cplAhAhsigma1sigma11,& 
+& cplAhAhVZVZ1,cplAhcHmVPVWm1,cplAhcHmVWm,cplAhcHmVWmVZ1,cplAhhhhh,cplAhhhhhhh1,         & 
+& cplAhhhhhsigma11,cplAhhhHmcHm1,cplAhhhsigma1,cplAhhhsigma1sigma11,cplAhhhVZ,           & 
+& cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,cplAhHmsigma1cHm1,cplAhsigma1sigma1,& 
+& cplAhsigma1sigma1sigma11,cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,              & 
+& cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,       & 
+& cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,             & 
+& cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,       & 
+& cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,               & 
+& cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,       & 
+& cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,cplcFuFusigma1R,       & 
+& cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,cplcFuFuVZR,               & 
+& cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcgAgWmcVWm,cplcgAgWpCVWm,     & 
+& cplcgWmgAHm,cplcgWmgAVWm,cplcgWmgWmAh,cplcgWmgWmhh,cplcgWmgWmsigma1,cplcgWmgWmVP,      & 
+& cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,cplcgWpCgAcVWm,cplcgWpCgWpCAh,cplcgWpCgWpChh,    & 
+& cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,cplcgWpCgWpCVZ,cplcgWpCgZcHm,cplcgWpCgZcVWm,         & 
+& cplcgZgWmcHm,cplcgZgWmcVWm,cplcgZgWpCHm,cplcgZgWpCVWm,cplcHmVPVWm,cplcHmVWmVZ,         & 
+& cplcVWmVPVWm,cplcVWmVWmVZ,cplhhcHmVPVWm1,cplhhcHmVWm,cplhhcHmVWmVZ1,cplhhcVWmVWm,      & 
+& cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhhhhh1,cplhhhhhhsigma11,cplhhhhHmcHm1,cplhhhhsigma1,   & 
+& cplhhhhsigma1sigma11,cplhhhhVZVZ1,cplhhHmcHm,cplhhHmcVWm,cplhhHmcVWmVP1,               & 
 & cplhhHmcVWmVZ1,cplhhHmsigma1cHm1,cplhhsigma1sigma1,cplhhsigma1sigma1sigma11,           & 
 & cplhhsigma1VZ,cplhhVZVZ,cplHmcHmcVWmVWm1,cplHmcHmVP,cplHmcHmVPVP1,cplHmcHmVPVZ1,       & 
 & cplHmcHmVZ,cplHmcHmVZVZ1,cplHmcVWmVP,cplHmcVWmVZ,cplHmHmcHmcHm1,cplHmsigma1cHm,        & 
@@ -4454,45 +4446,45 @@ Call OneLoopDecay_Hm(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & MFeOS,MFe2OS,Msigma1OS,Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,            & 
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
-& ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,betaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,               & 
-& Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,dg1,dg2,dg3,dM12,           & 
-& depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,               & 
-& dLam3,dLam2,dvd,dvu,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,               & 
-& dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,               & 
-& ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,cplAhAhAh,cplAhAhcVWmVWm1,cplAhAhhh,cplAhAhHmcHm1,        & 
-& cplAhAhsigma1,cplAhcHmVPVWm1,cplAhcHmVWm,cplAhcHmVWmVZ1,cplAhhhhh,cplAhhhHmcHm1,       & 
-& cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,          & 
-& cplAhHmsigma1cHm1,cplAhsigma1sigma1,cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,               & 
-& cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,       & 
-& cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,              & 
-& cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,          & 
-& cplcFeFesigma1R,cplcFeFeVPL,cplcFeFeVPR,cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,           & 
-& cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,         & 
-& cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,         & 
-& cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,           & 
-& cplcFuFuVZR,cplcFvFecHmL,cplcFvFecHmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcFvFvVZL,         & 
-& cplcFvFvVZR,cplcgAgWpCVWm,cplcgWmgWmAh,cplcgWmgWmhh,cplcgWmgWmsigma1,cplcgWmgWmVP,     & 
-& cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,cplcgWpCgAcHm,cplcgWpCgWpCAh,cplcgWpCgWpChh,     & 
-& cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,cplcgWpCgWpCVZ,cplcgWpCgZcHm,cplcgZgAhh,             & 
-& cplcgZgWmcHm,cplcgZgWpCHm,cplcgZgWpCVWm,cplcgZgZhh,cplcHmVPVWm,cplcHmVWmVZ,            & 
-& cplcVWmVPVPVWm1Q,cplcVWmVPVPVWm2Q,cplcVWmVPVPVWm3Q,cplcVWmVPVWm,cplcVWmVPVWmVZ1Q,      & 
-& cplcVWmVPVWmVZ2Q,cplcVWmVPVWmVZ3Q,cplcVWmVWmVZ,cplcVWmVWmVZVZ1Q,cplcVWmVWmVZVZ2Q,      & 
-& cplcVWmVWmVZVZ3Q,cplhhcHmVPVWm1,cplhhcHmVWm,cplhhcHmVWmVZ1,cplhhcVWmVWm,               & 
-& cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhHmcHm1,cplhhhhsigma1,cplhhHmcHm,cplhhHmcVWm,          & 
-& cplhhHmcVWmVP1,cplhhHmcVWmVZ1,cplhhHmsigma1cHm1,cplhhsigma1sigma1,cplhhsigma1VZ,       & 
-& cplhhVZVZ,cplHmcHmcVWmVWm1,cplHmcHmVP,cplHmcHmVPVP1,cplHmcHmVPVZ1,cplHmcHmVZ,          & 
-& cplHmcHmVZVZ1,cplHmcVWmVP,cplHmcVWmVZ,cplHmHmcHmcHm1,cplHmsigma1cHm,cplHmsigma1cVWm,   & 
-& cplHmsigma1cVWmVP1,cplHmsigma1cVWmVZ1,cplHmsigma1sigma1cHm1,cplsigma1cHmVPVWm1,        & 
-& cplsigma1cHmVWm,cplsigma1cHmVWmVZ1,cplsigma1sigma1cVWmVWm1,cplsigma1sigma1sigma1,      & 
-& ctcplAhcHmVWm,ctcplAhHmcHm,ctcplcFuFdcHmL,ctcplcFuFdcHmR,ctcplcFvFecHmL,               & 
-& ctcplcFvFecHmR,ctcplcHmVPVWm,ctcplcHmVWmVZ,ctcplhhcHmVWm,ctcplhhHmcHm,ctcplHmcHmVP,    & 
-& ctcplHmcHmVZ,ctcplHmsigma1cHm,ctcplsigma1cHmVWm,GcplAhHmcHm,GcplcHmVPVWm,              & 
-& GcplhhHmcHm,GcplHmcHmVZ,GcplHmcVWmVP,GcplHmsigma1cHm,GosZcplAhHmcHm,GosZcplcHmVPVWm,   & 
-& GosZcplhhHmcHm,GosZcplHmcHmVZ,GosZcplHmcVWmVP,GosZcplHmsigma1cHm,GZcplAhHmcHm,         & 
-& GZcplcHmVPVWm,GZcplhhHmcHm,GZcplHmcHmVZ,GZcplHmcVWmVP,GZcplHmsigma1cHm,ZcplAhcHmVWm,   & 
-& ZcplAhHmcHm,ZcplcFuFdcHmL,ZcplcFuFdcHmR,ZcplcFvFecHmL,ZcplcFvFecHmR,ZcplcHmVWmVZ,      & 
-& ZcplhhcHmVWm,ZcplhhHmcHm,ZcplHmcHmVZ,ZcplHmsigma1cHm,Zcplsigma1cHmVWm,ZRUZH,           & 
-& ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,ZRUUe,MLambda,em,gs,deltaM,kont,gP1LHm)
+& ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
+& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
+& dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
+& Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
+& ZfVZVP,cplAhAhAh,cplAhAhcVWmVWm1,cplAhAhhh,cplAhAhHmcHm1,cplAhAhsigma1,cplAhcHmVPVWm1, & 
+& cplAhcHmVWm,cplAhcHmVWmVZ1,cplAhhhhh,cplAhhhHmcHm1,cplAhhhsigma1,cplAhhhVZ,            & 
+& cplAhHmcHm,cplAhHmcVWm,cplAhHmcVWmVP1,cplAhHmcVWmVZ1,cplAhHmsigma1cHm1,cplAhsigma1sigma1,& 
+& cplcFdFdAhL,cplcFdFdAhR,cplcFdFdhhL,cplcFdFdhhR,cplcFdFdsigma1L,cplcFdFdsigma1R,       & 
+& cplcFdFdVGL,cplcFdFdVGR,cplcFdFdVPL,cplcFdFdVPR,cplcFdFdVZL,cplcFdFdVZR,               & 
+& cplcFdFuHmL,cplcFdFuHmR,cplcFdFuVWmL,cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,             & 
+& cplcFeFehhL,cplcFeFehhR,cplcFeFesigma1L,cplcFeFesigma1R,cplcFeFeVPL,cplcFeFeVPR,       & 
+& cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,             & 
+& cplcFuFdcHmL,cplcFuFdcHmR,cplcFuFdcVWmL,cplcFuFdcVWmR,cplcFuFuAhL,cplcFuFuAhR,         & 
+& cplcFuFuhhL,cplcFuFuhhR,cplcFuFusigma1L,cplcFuFusigma1R,cplcFuFuVGL,cplcFuFuVGR,       & 
+& cplcFuFuVPL,cplcFuFuVPR,cplcFuFuVZL,cplcFuFuVZR,cplcFvFecHmL,cplcFvFecHmR,             & 
+& cplcFvFecVWmL,cplcFvFecVWmR,cplcFvFvVZL,cplcFvFvVZR,cplcgAgWpCVWm,cplcgWmgWmAh,        & 
+& cplcgWmgWmhh,cplcgWmgWmsigma1,cplcgWmgWmVP,cplcgWmgWmVZ,cplcgWmgZHm,cplcgWmgZVWm,      & 
+& cplcgWpCgAcHm,cplcgWpCgWpCAh,cplcgWpCgWpChh,cplcgWpCgWpCsigma1,cplcgWpCgWpCVP,         & 
+& cplcgWpCgWpCVZ,cplcgWpCgZcHm,cplcgZgAhh,cplcgZgWmcHm,cplcgZgWpCHm,cplcgZgWpCVWm,       & 
+& cplcgZgZhh,cplcHmVPVWm,cplcHmVWmVZ,cplcVWmVPVPVWm1Q,cplcVWmVPVPVWm2Q,cplcVWmVPVPVWm3Q, & 
+& cplcVWmVPVWm,cplcVWmVPVWmVZ1Q,cplcVWmVPVWmVZ2Q,cplcVWmVPVWmVZ3Q,cplcVWmVWmVZ,          & 
+& cplcVWmVWmVZVZ1Q,cplcVWmVWmVZVZ2Q,cplcVWmVWmVZVZ3Q,cplhhcHmVPVWm1,cplhhcHmVWm,         & 
+& cplhhcHmVWmVZ1,cplhhcVWmVWm,cplhhhhcVWmVWm1,cplhhhhhh,cplhhhhHmcHm1,cplhhhhsigma1,     & 
+& cplhhHmcHm,cplhhHmcVWm,cplhhHmcVWmVP1,cplhhHmcVWmVZ1,cplhhHmsigma1cHm1,cplhhsigma1sigma1,& 
+& cplhhsigma1VZ,cplhhVZVZ,cplHmcHmcVWmVWm1,cplHmcHmVP,cplHmcHmVPVP1,cplHmcHmVPVZ1,       & 
+& cplHmcHmVZ,cplHmcHmVZVZ1,cplHmcVWmVP,cplHmcVWmVZ,cplHmHmcHmcHm1,cplHmsigma1cHm,        & 
+& cplHmsigma1cVWm,cplHmsigma1cVWmVP1,cplHmsigma1cVWmVZ1,cplHmsigma1sigma1cHm1,           & 
+& cplsigma1cHmVPVWm1,cplsigma1cHmVWm,cplsigma1cHmVWmVZ1,cplsigma1sigma1cVWmVWm1,         & 
+& cplsigma1sigma1sigma1,ctcplAhcHmVWm,ctcplAhHmcHm,ctcplcFuFdcHmL,ctcplcFuFdcHmR,        & 
+& ctcplcFvFecHmL,ctcplcFvFecHmR,ctcplcHmVPVWm,ctcplcHmVWmVZ,ctcplhhcHmVWm,               & 
+& ctcplhhHmcHm,ctcplHmcHmVP,ctcplHmcHmVZ,ctcplHmsigma1cHm,ctcplsigma1cHmVWm,             & 
+& GcplAhHmcHm,GcplcHmVPVWm,GcplhhHmcHm,GcplHmcHmVZ,GcplHmcVWmVP,GcplHmsigma1cHm,         & 
+& GosZcplAhHmcHm,GosZcplcHmVPVWm,GosZcplhhHmcHm,GosZcplHmcHmVZ,GosZcplHmcVWmVP,          & 
+& GosZcplHmsigma1cHm,GZcplAhHmcHm,GZcplcHmVPVWm,GZcplhhHmcHm,GZcplHmcHmVZ,               & 
+& GZcplHmcVWmVP,GZcplHmsigma1cHm,ZcplAhcHmVWm,ZcplAhHmcHm,ZcplcFuFdcHmL,ZcplcFuFdcHmR,   & 
+& ZcplcFvFecHmL,ZcplcFvFecHmR,ZcplcHmVWmVZ,ZcplhhcHmVWm,ZcplhhHmcHm,ZcplHmcHmVZ,         & 
+& ZcplHmsigma1cHm,Zcplsigma1cHmVWm,ZRUZH,ZRUZP,ZRUVd,ZRUUd,ZRUVu,ZRUUu,ZRUVe,            & 
+& ZRUUe,MLambda,em,gs,deltaM,kont,gP1LHm)
 
 End if 
 If (Extra_scale_loopDecays) Then 

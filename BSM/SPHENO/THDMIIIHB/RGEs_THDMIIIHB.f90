@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:23 on 22.10.2017   
+! File created at 17:25 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -1018,11 +1018,11 @@ Iname = Iname - 1
 End Subroutine rge131  
 
 Subroutine GToParameters133(g,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,            & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu)
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 Implicit None 
 Real(dp), Intent(in) :: g(133) 
-Real(dp),Intent(out) :: g1,g2,g3,vd,vu
+Real(dp),Intent(out) :: g1,g2,g3,v,v2
 
 Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
@@ -1093,8 +1093,8 @@ End Do
 M12= Cmplx(g(126),g(127),dp) 
 M112= Cmplx(g(128),g(129),dp) 
 M222= Cmplx(g(130),g(131),dp) 
-vd= g(132) 
-vu= g(133) 
+v= g(132) 
+v2= g(133) 
 Do i1=1,133 
 If (g(i1).ne.g(i1)) Then 
  Write(*,*) "NaN appearing in ",NameOfUnit(Iname) 
@@ -1107,11 +1107,11 @@ Iname = Iname - 1
 End Subroutine GToParameters133
 
 Subroutine ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,              & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,g)
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g)
 
 Implicit None 
 Real(dp), Intent(out) :: g(133) 
-Real(dp), Intent(in) :: g1,g2,g3,vd,vu
+Real(dp), Intent(in) :: g1,g2,g3,v,v2
 
 Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
@@ -1198,8 +1198,8 @@ g(128) = Real(M112,dp)
 g(129) = Aimag(M112)  
 g(130) = Real(M222,dp)  
 g(131) = Aimag(M222)  
-g(132) = vd  
-g(133) = vu  
+g(132) = v  
+g(133) = v2  
 Iname = Iname - 1 
  
 End Subroutine ParametersToG133
@@ -1213,7 +1213,7 @@ Integer :: i1,i2,i3,i4
 Integer :: j1,j2,j3,j4,j5,j6,j7 
 Real(dp) :: q 
 Real(dp) :: g1,betag11,betag12,Dg1,g2,betag21,betag22,Dg2,g3,betag31,betag32,         & 
-& Dg3,vd,betavd1,betavd2,Dvd,vu,betavu1,betavu2,Dvu
+& Dg3,v,betav1,betav2,Dv,v2,betav21,betav22,Dv2
 Complex(dp) :: Lam6,betaLam61,betaLam62,DLam6,Lam5,betaLam51,betaLam52,               & 
 & DLam5,Lam7,betaLam71,betaLam72,DLam7,Lam1,betaLam11,betaLam12,DLam1,Lam4,              & 
 & betaLam41,betaLam42,DLam4,Lam3,betaLam31,betaLam32,DLam3,Lam2,betaLam21,               & 
@@ -1279,7 +1279,7 @@ OnlyDiagonal = .Not.GenerationMixing
 q = t 
  
 Call GToParameters133(gy,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,            & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu)
+& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 Call Adjungate(epYU,adjepYU)
 Call Adjungate(Yu,adjYu)
@@ -2008,53 +2008,52 @@ End If
 Call Chop(DM222) 
 
 !-------------------- 
-! vd 
+! v 
 !-------------------- 
  
-betavd1  = (9*g1p2*vd + 45*g2p2*vd - 60*TrepYUadjepYU*vd - 60*TrYdadjYd*vd -          & 
-&  20*TrYeadjYe*vd - 30*TrepYDadjYd*vu - 10*TrepYEadjYe*vu - 30*TrepYUadjYu*vu -         & 
-&  30*TrYdadjepYD*vu - 10*TrYeadjepYE*vu - 30*TrYuadjepYU*vu + 3*g1p2*vd*Xi +            & 
-&  15*g2p2*vd*Xi)/20._dp
+betav1  = (9*g1p2*v + 45*g2p2*v - 60*TrepYUadjepYU*v - 60*TrYdadjYd*v -               & 
+&  20*TrYeadjYe*v - 30*TrepYDadjYd*v2 - 10*TrepYEadjYe*v2 - 30*TrepYUadjYu*v2 -          & 
+&  30*TrYdadjepYD*v2 - 10*TrYeadjepYE*v2 - 30*TrYuadjepYU*v2 + 3*g1p2*v*Xi +             & 
+&  15*g2p2*v*Xi)/20._dp
 
  
  
 If (TwoLoopRGE) Then 
-betavd2 = 0
+betav2 = 0
 
  
-Dvd = oo16pi2*( betavd1 + oo16pi2 * betavd2 ) 
+Dv = oo16pi2*( betav1 + oo16pi2 * betav2 ) 
 
  
 Else 
-Dvd = oo16pi2* betavd1 
+Dv = oo16pi2* betav1 
 End If 
  
  
 !-------------------- 
-! vu 
+! v2 
 !-------------------- 
  
-betavu1  = (-30*TrepYDadjYd*vd - 10*TrepYEadjYe*vd - 30*TrepYUadjYu*vd -              & 
-&  30*TrYdadjepYD*vd - 10*TrYeadjepYE*vd - 30*TrYuadjepYU*vd + 9*g1p2*vu +               & 
-&  45*g2p2*vu - 60*TrepYDadjepYD*vu - 20*TrepYEadjepYE*vu - 60*TrYuadjYu*vu +            & 
-&  3*g1p2*vu*Xi + 15*g2p2*vu*Xi)/20._dp
+betav21  = (-30*TrepYDadjYd*v - 10*TrepYEadjYe*v - 30*TrepYUadjYu*v - 30*TrYdadjepYD*v -& 
+&  10*TrYeadjepYE*v - 30*TrYuadjepYU*v + 9*g1p2*v2 + 45*g2p2*v2 - 60*TrepYDadjepYD*v2 -  & 
+&  20*TrepYEadjepYE*v2 - 60*TrYuadjYu*v2 + 3*g1p2*v2*Xi + 15*g2p2*v2*Xi)/20._dp
 
  
  
 If (TwoLoopRGE) Then 
-betavu2 = 0
+betav22 = 0
 
  
-Dvu = oo16pi2*( betavu1 + oo16pi2 * betavu2 ) 
+Dv2 = oo16pi2*( betav21 + oo16pi2 * betav22 ) 
 
  
 Else 
-Dvu = oo16pi2* betavu1 
+Dv2 = oo16pi2* betav21 
 End If 
  
  
 Call ParametersToG133(Dg1,Dg2,Dg3,DLam6,DLam5,DLam7,DLam1,DLam4,DLam3,DLam2,          & 
-& DepYU,DYu,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,Dvd,Dvu,f)
+& DepYU,DYu,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,Dv,Dv2,f)
 
 Iname = Iname - 1 
  

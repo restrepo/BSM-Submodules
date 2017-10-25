@@ -18,7 +18,6 @@ Block MINPAR      # Input parameters
 6   0.000000E+00    # Lambda6Input
 7   0.000000E+00    # Lambda7Input
 9   4.0000000E+04    # M12input
-10   5.0000000E+01    # TanBeta
 Block SPhenoInput   # SPheno specific input 
   1 -1              # error level 
   2  0              # SPA conventions 
@@ -104,3 +103,5 @@ Block EPSUIN    #
 3 1   0.000000E+00         # epYU(3,1)
 3 2   0.000000E+00         # epYU(3,2)
 3 3   0.000000E+00         # epYU(3,3)
+Block V2IN       #  
+1   0.000000E+00         # v2

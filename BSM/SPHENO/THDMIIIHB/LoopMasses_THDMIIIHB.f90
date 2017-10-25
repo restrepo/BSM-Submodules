@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:24 on 22.10.2017   
+! File created at 17:25 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -44,9 +44,9 @@ Real(dp) :: PiP2S_EffPot(1,1)
 Contains 
  
 Subroutine OneLoopMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,            & 
-& MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,             & 
-& ZP,ZW,ZZ,alphaH,betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont)
+& MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,               & 
+& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,              & 
+& Yd,Ye,epYD,epYE,M12,M112,M222,kont)
 
 Implicit None 
 Real(dp),Intent(inout) :: g1,g2,g3
@@ -55,12 +55,11 @@ Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
-& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,v,ZH(2,2),ZP(2,2),ZZ(2,2),             & 
-& alphaH,betaH
+& MHm2(2),Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZH(2,2),ZP(2,2),ZZ(2,2),alphaH
 
 Complex(dp),Intent(inout) :: ZDR(3,3),ZER(3,3),ZUR(3,3),ZDL(3,3),ZEL(3,3),ZUL(3,3),ZW(2,2)
 
-Real(dp),Intent(inout) :: vd,vu
+Real(dp),Intent(inout) :: v,v2
 
 Complex(dp) :: cplAhAhAh,cplAhAhAhAh,cplAhAhcVWmVWm,cplAhAhhh(2),cplAhAhhhhh(2,2),cplAhAhHmcHm(2,2), & 
 & cplAhAhsigma1,cplAhAhsigma1sigma1,cplAhAhUhh(2),cplAhAhUhhUhh(2,2),cplAhAhUHmcUHm(2,2),& 
@@ -135,9 +134,9 @@ RXiZ = RXi
 
  
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
 M112Tree  = M112
 M222Tree  = M222
@@ -147,10 +146,10 @@ M222Tree  = M222
  
 If ((DecoupleAtRenScale).and.(Abs(1._dp-RXiNew).lt.0.01_dp)) Then 
 vSM=vSM_Q 
-vd=vSM 
-vu=0 
+v=vSM 
+v2=0 
 Else 
-Call CouplingsForVectorBosons(g1,g2,ZH,TW,ZP,vd,vu,ZDL,ZUL,ZEL,cplhhsigma1VZ,         & 
+Call CouplingsForVectorBosons(g1,g2,ZH,TW,ZP,v,v2,ZDL,ZUL,ZEL,cplhhsigma1VZ,          & 
 & cplHmsigma1cVWm,cplsigma1sigma1cVWmVWm,cplsigma1sigma1VZVZ,cplAhhhVZ,cplAhHmcVWm,      & 
 & cplAhAhcVWmVWm,cplAhAhVZVZ,cplcFdFdVPL,cplcFdFdVPR,cplcFeFeVPL,cplcFeFeVPR,            & 
 & cplcFuFuVPL,cplcFuFuVPR,cplcgWmgWmVP,cplcgWpCgWpCVP,cplHmcHmVP,cplHmcVWmVP,            & 
@@ -170,20 +169,20 @@ Call Pi1LoopVZ(mZ2,Mhh,Mhh2,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Msigma1,        
 & cplcVWmVWmVZ,cplAhAhVZVZ,cplhhhhVZVZ,cplHmcHmVZVZ,cplsigma1sigma1VZVZ,cplcVWmVWmVZVZ1, & 
 & cplcVWmVWmVZVZ2,cplcVWmVWmVZVZ3,kont,dmZ2)
 
-vev2=4._dp*Real(mZ2+dmz2,dp)/(g1**2+g2**2) -0 
+vev2=4._dp*Real(mZ2+dmz2,dp)/(g1**2+g2**2) -2*v2**2 
 vSM=sqrt(vev2) 
-vd=vSM 
-vu=0 
+v=vSM 
+v2=0 
 End if 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,(/ ZeroC, ZeroC /))
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
-& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,          & 
-& betaH,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,            & 
-& epYE,M12,M112,M222,GenerationMixing,kont)
+& Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& M12,M112,M222,GenerationMixing,kont)
 
-Call CouplingsForLoopMasses(Lam5,Lam7,Lam4,Lam3,Lam2,vd,vu,Lam6,ZH,g1,g2,             & 
+Call CouplingsForLoopMasses(Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,Lam6,ZH,g1,g2,              & 
 & TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,epYU,Yu,ZUL,ZUR,Lam1,ZP,g3,cplAhAhUhh,              & 
 & cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,cplcFdFdUhhR,cplcFeFeUhhL,           & 
 & cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,cplcgWpCgWpCUhh,cplcgZgZUhh,      & 
@@ -223,7 +222,7 @@ Call CouplingsForLoopMasses(Lam5,Lam7,Lam4,Lam3,Lam2,vd,vu,Lam6,ZH,g1,g2,       
 & cplhhhhcVWmVWm,cplHmcHmcVWmVWm,cplcVWmcVWmVWmVWm1,cplcVWmcVWmVWmVWm2,cplcVWmcVWmVWmVWm3,& 
 & cplcHmVWmVZ,cplcHmVPVWm,cplHmcHmVPVZ,cplcVWmVPVWmVZ1,cplcVWmVPVWmVZ2,cplcVWmVPVWmVZ3)
 
-Call OneLoopTadpoleshh(vd,vu,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,            & 
+Call OneLoopTadpoleshh(v,v2,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,             & 
 & MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,cplAhAhUhh,cplcFdFdUhhL,cplcFdFdUhhR,    & 
 & cplcFeFeUhhL,cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,cplcgWpCgWpCUhh,     & 
 & cplcgZgZUhh,cplUhhhhhh,cplUhhHmcHm,cplUhhsigma1sigma1,cplUhhcVWmVWm,cplUhhVZVZ,        & 
@@ -233,15 +232,15 @@ M112Tree  = M112
 M222Tree  = M222
 If (CalculateTwoLoopHiggsMasses) Then 
     If(GaugelessLimit) Then 
-  vdFix = 0._dp 
-  vuFix = 0._dp 
+  vFix = 0._dp 
+  v2Fix = 0._dp 
    g1_saveEP =g1
    g1 = 0._dp 
    g2_saveEP =g2
    g2 = 0._dp 
      Else 
-  vdFix = vd 
-  vuFix = vu 
+  vFix = v 
+  v2Fix = v2 
      End if 
 
 SELECT CASE (TwoLoopMethod) 
@@ -264,11 +263,11 @@ CASE ( 1 , 2 )
    where (aint(Abs(epYE)).eq.epYE) epYE=epYE*(1 + 6*1.0E-12_dp)
 
 If (NewGBC) Then 
-Call CalculatePi2S(125._dp**2,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,           & 
+Call CalculatePi2S(125._dp**2,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,            & 
 & Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
 
 Else 
-Call CalculatePi2S(0._dp,vd,vu,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,           & 
+Call CalculatePi2S(0._dp,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,            & 
 & epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
 
 End if 
@@ -298,19 +297,19 @@ ti_ep2L = 0._dp
 
 End if 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,Tad1Loop)
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
 
 M1121L = M112
 M2221L = M222
 Tad1Loop(1:2) = Tad1Loop(1:2) - ti_ep2L 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,vd,vu,Tad1Loop)
+& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
 
 M1122L = M112
 M2222L = M222
-Call OneLoophh(M12,Lam6,Lam5,Lam7,M1122L,M2222L,Lam1,Lam4,Lam3,Lam2,vd,               & 
-& vu,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,MFd,MFd2,MFe,MFe2,MFu,MFu2,             & 
-& MHm,MHm2,MVWm,MVWm2,cplAhAhUhh,cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,      & 
+Call OneLoophh(M12,Lam6,Lam5,Lam7,M1122L,M2222L,Lam1,Lam4,Lam3,Lam2,v,v2,             & 
+& MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,MFd,MFd2,MFe,MFe2,MFu,MFu2,MHm,            & 
+& MHm2,MVWm,MVWm2,cplAhAhUhh,cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,          & 
 & cplcFdFdUhhR,cplcFeFeUhhL,cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,        & 
 & cplcgWpCgWpCUhh,cplcgZgZUhh,cplUhhhhhh,cplUhhhhsigma1,cplUhhHmcHm,cplUhhHmcVWm,        & 
 & cplUhhsigma1sigma1,cplUhhsigma1VZ,cplUhhcVWmVWm,cplUhhVZVZ,cplAhAhUhhUhh,              & 
@@ -318,7 +317,7 @@ Call OneLoophh(M12,Lam6,Lam5,Lam7,M1122L,M2222L,Lam1,Lam4,Lam3,Lam2,vd,         
 & 0.1_dp*delta_mass,Mhh_1L,Mhh2_1L,ZH_1L,kont)
 
 Call OneLoopHm(g2,M12,Lam6,Lam5,Lam7,M1121L,M2221L,Lam1,Lam4,Lam3,Lam2,               & 
-& vd,vu,MHm,MHm2,MAh,MAh2,MVWm,MVWm2,MFu,MFu2,MFd,MFd2,MFe,MFe2,Mhh,Mhh2,Msigma1,        & 
+& v,v2,MHm,MHm2,MAh,MAh2,MVWm,MVWm2,MFu,MFu2,MFd,MFd2,MFe,MFe2,Mhh,Mhh2,Msigma1,         & 
 & Msigma12,MVZ,MVZ2,cplAhHmcUHm,cplAhcUHmVWm,cplcFuFdcUHmL,cplcFuFdcUHmR,cplcFvFecUHmL,  & 
 & cplcFvFecUHmR,cplcgZgWmcUHm,cplcgWmgZUHm,cplcgWpCgZcUHm,cplcgZgWpCUHm,cplhhHmcUHm,     & 
 & cplhhcUHmVWm,cplHmsigma1cUHm,cplHmcUHmVP,cplHmcUHmVZ,cplsigma1cUHmVWm,cplcUHmVPVWm,    & 
@@ -326,25 +325,25 @@ Call OneLoopHm(g2,M12,Lam6,Lam5,Lam7,M1121L,M2221L,Lam1,Lam4,Lam3,Lam2,         
 & cplUHmcUHmVPVP,cplUHmcUHmcVWmVWm,cplUHmcUHmVZVZ,0.1_dp*delta_mass,MHm_1L,              & 
 & MHm2_1L,ZP_1L,kont)
 
-Call OneLoopFd(Yd,epYD,vd,vu,MFd,MFd2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,             & 
+Call OneLoopFd(Yd,epYD,v,v2,MFd,MFd2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,              & 
 & MVZ,MVZ2,MHm,MHm2,MFu,MFu2,MVWm,MVWm2,cplcUFdFdAhL,cplcUFdFdAhR,cplcUFdFdhhL,          & 
 & cplcUFdFdhhR,cplcUFdFdsigma1L,cplcUFdFdsigma1R,cplcUFdFdVGL,cplcUFdFdVGR,              & 
 & cplcUFdFdVPL,cplcUFdFdVPR,cplcUFdFdVZL,cplcUFdFdVZR,cplcUFdFuHmL,cplcUFdFuHmR,         & 
 & cplcUFdFuVWmL,cplcUFdFuVWmR,0.1_dp*delta_mass,MFd_1L,MFd2_1L,ZDL_1L,ZDR_1L,kont)
 
-Call OneLoopFu(epYU,Yu,vd,vu,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,MVWm2,          & 
+Call OneLoopFu(epYU,Yu,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,MVWm2,           & 
 & Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,cplcUFuFuAhL,cplcUFuFuAhR,cplcUFuFdcHmL,            & 
 & cplcUFuFdcHmR,cplcUFuFdcVWmL,cplcUFuFdcVWmR,cplcUFuFuhhL,cplcUFuFuhhR,cplcUFuFusigma1L,& 
 & cplcUFuFusigma1R,cplcUFuFuVGL,cplcUFuFuVGR,cplcUFuFuVPL,cplcUFuFuVPR,cplcUFuFuVZL,     & 
 & cplcUFuFuVZR,0.1_dp*delta_mass,MFu_1L,MFu2_1L,ZUL_1L,ZUR_1L,kont)
 
-Call OneLoopFe(Ye,epYE,vd,vu,MFe,MFe2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,             & 
+Call OneLoopFe(Ye,epYE,v,v2,MFe,MFe2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,              & 
 & MVZ,MVZ2,MHm,MHm2,MVWm,MVWm2,cplcUFeFeAhL,cplcUFeFeAhR,cplcUFeFehhL,cplcUFeFehhR,      & 
 & cplcUFeFesigma1L,cplcUFeFesigma1R,cplcUFeFeVPL,cplcUFeFeVPR,cplcUFeFeVZL,              & 
 & cplcUFeFeVZR,cplcUFeFvHmL,cplcUFeFvHmR,cplcUFeFvVWmL,cplcUFeFvVWmR,0.1_dp*delta_mass,  & 
 & MFe_1L,MFe2_1L,ZEL_1L,ZER_1L,kont)
 
-Call OneLoopsigma1(g1,g2,Lam6,Lam5,M1122L,Lam1,Lam4,Lam3,vd,vu,TW,MAh,MAh2,           & 
+Call OneLoopsigma1(g1,g2,Lam6,Lam5,M1122L,Lam1,Lam4,Lam3,v,v2,TW,MAh,MAh2,            & 
 & Mhh,Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,MVWm,           & 
 & MVWm2,cplAhAhsigma1,cplAhhhsigma1,cplAhsigma1sigma1,cplcFdFdsigma1L,cplcFdFdsigma1R,   & 
 & cplcFeFesigma1L,cplcFeFesigma1R,cplcFuFusigma1L,cplcFuFusigma1R,cplcgWmgWmsigma1,      & 
@@ -353,8 +352,8 @@ Call OneLoopsigma1(g1,g2,Lam6,Lam5,M1122L,Lam1,Lam4,Lam3,vd,vu,TW,MAh,MAh2,     
 & cplHmsigma1sigma1cHm,cplsigma1sigma1sigma1sigma1,cplsigma1sigma1cVWmVWm,               & 
 & cplsigma1sigma1VZVZ,0.1_dp*delta_mass,Msigma1_1L,Msigma12_1L,kont)
 
-Call OneLoopAh(g1,g2,Lam5,Lam7,M2222L,Lam4,Lam3,Lam2,vd,vu,TW,MAh,MAh2,               & 
-& Mhh,Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,MVWm,           & 
+Call OneLoopAh(g1,g2,Lam5,Lam7,M2222L,Lam4,Lam3,Lam2,v,v2,TW,MAh,MAh2,Mhh,            & 
+& Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,MVWm,               & 
 & MVWm2,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,           & 
 & cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,cplcgWmgWmAh,cplcgWpCgWpCAh,cplAhhhhh,             & 
 & cplAhhhsigma1,cplAhhhVZ,cplAhHmcHm,cplAhHmcVWm,cplAhsigma1sigma1,cplAhAhAhAh,          & 
@@ -374,8 +373,8 @@ MAh2 = MAh2_1L
 End If 
  
 Call SortGoldstones(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,            & 
-& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,v,ZDL,ZEL,ZUL,ZH,ZP,               & 
-& ZW,ZZ,alphaH,betaH,kont)
+& Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,              & 
+& ZZ,alphaH,kont)
 
 ! Set pole masses 
 MVWm = mW 
@@ -413,8 +412,8 @@ End if
 Iname = Iname -1 
 End Subroutine OneLoopMasses 
  
-Subroutine OneLoopTadpoleshh(vd,vu,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,               & 
-& Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,cplAhAhUhh,cplcFdFdUhhL,        & 
+Subroutine OneLoopTadpoleshh(v,v2,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,            & 
+& Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,cplAhAhUhh,cplcFdFdUhhL,            & 
 & cplcFdFdUhhR,cplcFeFeUhhL,cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,        & 
 & cplcgWpCgWpCUhh,cplcgZgZUhh,cplUhhhhhh,cplUhhHmcHm,cplUhhsigma1sigma1,cplUhhcVWmVWm,   & 
 & cplUhhVZVZ,tadpoles)
@@ -428,7 +427,7 @@ Complex(dp), Intent(in) :: cplAhAhUhh(2),cplcFdFdUhhL(3,3,2),cplcFdFdUhhR(3,3,2)
 & cplcgWpCgWpCUhh(2),cplcgZgZUhh(2),cplUhhhhhh(2,2,2),cplUhhHmcHm(2,2,2),cplUhhsigma1sigma1(2),& 
 & cplUhhcVWmVWm(2),cplUhhVZVZ(2)
 
-Real(dp), Intent(in) :: vd,vu
+Real(dp), Intent(in) :: v,v2
 
 Integer :: i1,i2, gO1, gO2 
 Complex(dp) :: coupL, coupR, coup, temp, res, A0m, sumI(2)  
@@ -579,8 +578,8 @@ tadpoles = oo16pi2*tadpoles
 Iname = Iname - 1 
 End Subroutine OneLoopTadpoleshh 
  
-Subroutine OneLoophh(M12,Lam6,Lam5,Lam7,M112,M222,Lam1,Lam4,Lam3,Lam2,vd,             & 
-& vu,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,MFd,MFd2,MFe,MFe2,MFu,MFu2,             & 
+Subroutine OneLoophh(M12,Lam6,Lam5,Lam7,M112,M222,Lam1,Lam4,Lam3,Lam2,v,              & 
+& v2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,MFd,MFd2,MFe,MFe2,MFu,MFu2,             & 
 & MHm,MHm2,MVWm,MVWm2,cplAhAhUhh,cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,      & 
 & cplcFdFdUhhR,cplcFeFeUhhL,cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,        & 
 & cplcgWpCgWpCUhh,cplcgZgZUhh,cplUhhhhhh,cplUhhhhsigma1,cplUhhHmcHm,cplUhhHmcVWm,        & 
@@ -592,7 +591,7 @@ Implicit None
 Real(dp), Intent(in) :: MAh,MAh2,Mhh(2),Mhh2(2),Msigma1,Msigma12,MVZ,MVZ2,MFd(3),MFd2(3),MFe(3),              & 
 & MFe2(3),MFu(3),MFu2(3),MHm(2),MHm2(2),MVWm,MVWm2
 
-Real(dp), Intent(in) :: vd,vu
+Real(dp), Intent(in) :: v,v2
 
 Complex(dp), Intent(in) :: M12,Lam6,Lam5,Lam7,M112,M222,Lam1,Lam4,Lam3,Lam2
 
@@ -616,33 +615,33 @@ NameOfUnit(Iname) = 'OneLoophh'
  
 mat2a(1,1) = 0._dp 
 mat2a(1,1) = mat2a(1,1)+M112
-mat2a(1,1) = mat2a(1,1)+(3*Lam1*vd**2)/2._dp
-mat2a(1,1) = mat2a(1,1)+(3*Lam6*vd*vu)/2._dp
-mat2a(1,1) = mat2a(1,1)+(Lam3*vu**2)/2._dp
-mat2a(1,1) = mat2a(1,1)+(Lam4*vu**2)/2._dp
-mat2a(1,1) = mat2a(1,1)+(Lam5*vu**2)/4._dp
-mat2a(1,1) = mat2a(1,1)+(vu**2*Conjg(Lam5))/4._dp
-mat2a(1,1) = mat2a(1,1)+(3*vd*vu*Conjg(Lam6))/2._dp
+mat2a(1,1) = mat2a(1,1)+(3*Lam1*v**2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(3*Lam6*v*v2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(Lam3*v2**2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(Lam4*v2**2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(Lam5*v2**2)/4._dp
+mat2a(1,1) = mat2a(1,1)+(v2**2*Conjg(Lam5))/4._dp
+mat2a(1,1) = mat2a(1,1)+(3*v*v2*Conjg(Lam6))/2._dp
 mat2a(1,2) = 0._dp 
 mat2a(1,2) = mat2a(1,2)-1._dp*(M12)/2._dp
-mat2a(1,2) = mat2a(1,2)+(3*Lam6*vd**2)/4._dp
-mat2a(1,2) = mat2a(1,2)+Lam3*vd*vu
-mat2a(1,2) = mat2a(1,2)+Lam4*vd*vu
-mat2a(1,2) = mat2a(1,2)+(Lam5*vd*vu)/2._dp
-mat2a(1,2) = mat2a(1,2)+(3*Lam7*vu**2)/4._dp
-mat2a(1,2) = mat2a(1,2)+(vd*vu*Conjg(Lam5))/2._dp
-mat2a(1,2) = mat2a(1,2)+(3*vd**2*Conjg(Lam6))/4._dp
-mat2a(1,2) = mat2a(1,2)+(3*vu**2*Conjg(Lam7))/4._dp
+mat2a(1,2) = mat2a(1,2)+(3*Lam6*v**2)/4._dp
+mat2a(1,2) = mat2a(1,2)+Lam3*v*v2
+mat2a(1,2) = mat2a(1,2)+Lam4*v*v2
+mat2a(1,2) = mat2a(1,2)+(Lam5*v*v2)/2._dp
+mat2a(1,2) = mat2a(1,2)+(3*Lam7*v2**2)/4._dp
+mat2a(1,2) = mat2a(1,2)+(v*v2*Conjg(Lam5))/2._dp
+mat2a(1,2) = mat2a(1,2)+(3*v**2*Conjg(Lam6))/4._dp
+mat2a(1,2) = mat2a(1,2)+(3*v2**2*Conjg(Lam7))/4._dp
 mat2a(1,2) = mat2a(1,2)-Conjg(M12)/2._dp
 mat2a(2,2) = 0._dp 
 mat2a(2,2) = mat2a(2,2)+M222
-mat2a(2,2) = mat2a(2,2)+(Lam3*vd**2)/2._dp
-mat2a(2,2) = mat2a(2,2)+(Lam4*vd**2)/2._dp
-mat2a(2,2) = mat2a(2,2)+(Lam5*vd**2)/4._dp
-mat2a(2,2) = mat2a(2,2)+(3*Lam7*vd*vu)/2._dp
-mat2a(2,2) = mat2a(2,2)+(3*Lam2*vu**2)/2._dp
-mat2a(2,2) = mat2a(2,2)+(vd**2*Conjg(Lam5))/4._dp
-mat2a(2,2) = mat2a(2,2)+(3*vd*vu*Conjg(Lam7))/2._dp
+mat2a(2,2) = mat2a(2,2)+(Lam3*v**2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(Lam4*v**2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(Lam5*v**2)/4._dp
+mat2a(2,2) = mat2a(2,2)+(3*Lam7*v*v2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(3*Lam2*v2**2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(v**2*Conjg(Lam5))/4._dp
+mat2a(2,2) = mat2a(2,2)+(3*v*v2*Conjg(Lam7))/2._dp
 
  
  Do i1=2,2
@@ -1624,7 +1623,7 @@ res = oo16pi2*res
 End Subroutine DerPi1Loophh 
  
 Subroutine OneLoopHm(g2,M12,Lam6,Lam5,Lam7,M112,M222,Lam1,Lam4,Lam3,Lam2,             & 
-& vd,vu,MHm,MHm2,MAh,MAh2,MVWm,MVWm2,MFu,MFu2,MFd,MFd2,MFe,MFe2,Mhh,Mhh2,Msigma1,        & 
+& v,v2,MHm,MHm2,MAh,MAh2,MVWm,MVWm2,MFu,MFu2,MFd,MFd2,MFe,MFe2,Mhh,Mhh2,Msigma1,         & 
 & Msigma12,MVZ,MVZ2,cplAhHmcUHm,cplAhcUHmVWm,cplcFuFdcUHmL,cplcFuFdcUHmR,cplcFvFecUHmL,  & 
 & cplcFvFecUHmR,cplcgZgWmcUHm,cplcgWmgZUHm,cplcgWpCgZcUHm,cplcgZgWpCUHm,cplhhHmcUHm,     & 
 & cplhhcUHmVWm,cplHmsigma1cUHm,cplHmcUHmVP,cplHmcUHmVZ,cplsigma1cUHmVWm,cplcUHmVPVWm,    & 
@@ -1635,7 +1634,7 @@ Implicit None
 Real(dp), Intent(in) :: MHm(2),MHm2(2),MAh,MAh2,MVWm,MVWm2,MFu(3),MFu2(3),MFd(3),MFd2(3),MFe(3),              & 
 & MFe2(3),Mhh(2),Mhh2(2),Msigma1,Msigma12,MVZ,MVZ2
 
-Real(dp), Intent(in) :: g2,vd,vu
+Real(dp), Intent(in) :: g2,v,v2
 
 Complex(dp), Intent(in) :: M12,Lam6,Lam5,Lam7,M112,M222,Lam1,Lam4,Lam3,Lam2
 
@@ -1659,25 +1658,25 @@ NameOfUnit(Iname) = 'OneLoopHm'
  
 mat2a(1,1) = 0._dp 
 mat2a(1,1) = mat2a(1,1)+M112
-mat2a(1,1) = mat2a(1,1)+(Lam1*vd**2)/2._dp
-mat2a(1,1) = mat2a(1,1)+(Lam6*vd*vu)/2._dp
-mat2a(1,1) = mat2a(1,1)+(Lam3*vu**2)/2._dp
-mat2a(1,1) = mat2a(1,1)+(vd*vu*Conjg(Lam6))/2._dp
-mat2a(1,1) = mat2a(1,1)+(g2**2*vd**2*RXiWm)/4._dp
+mat2a(1,1) = mat2a(1,1)+(Lam1*v**2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(Lam6*v*v2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(Lam3*v2**2)/2._dp
+mat2a(1,1) = mat2a(1,1)+(v*v2*Conjg(Lam6))/2._dp
+mat2a(1,1) = mat2a(1,1)+(g2**2*v**2*RXiWm)/4._dp
 mat2a(1,2) = 0._dp 
-mat2a(1,2) = mat2a(1,2)+(Lam4*vd*vu)/2._dp
-mat2a(1,2) = mat2a(1,2)+(Lam5*vd*vu)/2._dp
-mat2a(1,2) = mat2a(1,2)+(vd**2*Conjg(Lam6))/2._dp
-mat2a(1,2) = mat2a(1,2)+(vu**2*Conjg(Lam7))/2._dp
+mat2a(1,2) = mat2a(1,2)+(Lam4*v*v2)/2._dp
+mat2a(1,2) = mat2a(1,2)+(Lam5*v*v2)/2._dp
+mat2a(1,2) = mat2a(1,2)+(v**2*Conjg(Lam6))/2._dp
+mat2a(1,2) = mat2a(1,2)+(v2**2*Conjg(Lam7))/2._dp
 mat2a(1,2) = mat2a(1,2)-Conjg(M12)
-mat2a(1,2) = mat2a(1,2)+(g2**2*vd*vu*RXiWm)/4._dp
+mat2a(1,2) = mat2a(1,2)+(g2**2*v*v2*RXiWm)/4._dp
 mat2a(2,2) = 0._dp 
 mat2a(2,2) = mat2a(2,2)+M222
-mat2a(2,2) = mat2a(2,2)+(Lam3*vd**2)/2._dp
-mat2a(2,2) = mat2a(2,2)+(Lam7*vd*vu)/2._dp
-mat2a(2,2) = mat2a(2,2)+(Lam2*vu**2)/2._dp
-mat2a(2,2) = mat2a(2,2)+(vd*vu*Conjg(Lam7))/2._dp
-mat2a(2,2) = mat2a(2,2)+(g2**2*vu**2*RXiWm)/4._dp
+mat2a(2,2) = mat2a(2,2)+(Lam3*v**2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(Lam7*v*v2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(Lam2*v2**2)/2._dp
+mat2a(2,2) = mat2a(2,2)+(v*v2*Conjg(Lam7))/2._dp
+mat2a(2,2) = mat2a(2,2)+(g2**2*v2**2*RXiWm)/4._dp
 
  
  Do i1=2,2
@@ -2550,7 +2549,7 @@ res = oo16pi2*res
  
 End Subroutine DerPi1LoopHm 
  
-Subroutine OneLoopFd(Yd,epYD,vd,vu,MFd,MFd2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,       & 
+Subroutine OneLoopFd(Yd,epYD,v,v2,MFd,MFd2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,        & 
 & MVZ,MVZ2,MHm,MHm2,MFu,MFu2,MVWm,MVWm2,cplcUFdFdAhL,cplcUFdFdAhR,cplcUFdFdhhL,          & 
 & cplcUFdFdhhR,cplcUFdFdsigma1L,cplcUFdFdsigma1R,cplcUFdFdVGL,cplcUFdFdVGR,              & 
 & cplcUFdFdVPL,cplcUFdFdVPR,cplcUFdFdVZL,cplcUFdFdVZR,cplcUFdFuHmL,cplcUFdFuHmR,         & 
@@ -2560,7 +2559,7 @@ Implicit None
 Real(dp), Intent(in) :: MFd(3),MFd2(3),MAh,MAh2,Mhh(2),Mhh2(2),Msigma1,Msigma12,MVZ,MVZ2,MHm(2),              & 
 & MHm2(2),MFu(3),MFu2(3),MVWm,MVWm2
 
-Real(dp), Intent(in) :: vd,vu
+Real(dp), Intent(in) :: v,v2
 
 Complex(dp), Intent(in) :: Yd(3,3),epYD(3,3)
 
@@ -2590,32 +2589,32 @@ Complex(dp) :: ZDL2(3,3), ZDR2(3,3)
 NameOfUnit(Iname) = 'OneLoopMFd'
  
 mat1a(1,1) = 0._dp 
-mat1a(1,1) = mat1a(1,1)-((vu*epYD(1,1))/sqrt(2._dp))
-mat1a(1,1) = mat1a(1,1)-((vd*Yd(1,1))/sqrt(2._dp))
+mat1a(1,1) = mat1a(1,1)-((v2*epYD(1,1))/sqrt(2._dp))
+mat1a(1,1) = mat1a(1,1)-((v*Yd(1,1))/sqrt(2._dp))
 mat1a(1,2) = 0._dp 
-mat1a(1,2) = mat1a(1,2)-((vu*epYD(2,1))/sqrt(2._dp))
-mat1a(1,2) = mat1a(1,2)-((vd*Yd(2,1))/sqrt(2._dp))
+mat1a(1,2) = mat1a(1,2)-((v2*epYD(2,1))/sqrt(2._dp))
+mat1a(1,2) = mat1a(1,2)-((v*Yd(2,1))/sqrt(2._dp))
 mat1a(1,3) = 0._dp 
-mat1a(1,3) = mat1a(1,3)-((vu*epYD(3,1))/sqrt(2._dp))
-mat1a(1,3) = mat1a(1,3)-((vd*Yd(3,1))/sqrt(2._dp))
+mat1a(1,3) = mat1a(1,3)-((v2*epYD(3,1))/sqrt(2._dp))
+mat1a(1,3) = mat1a(1,3)-((v*Yd(3,1))/sqrt(2._dp))
 mat1a(2,1) = 0._dp 
-mat1a(2,1) = mat1a(2,1)-((vu*epYD(1,2))/sqrt(2._dp))
-mat1a(2,1) = mat1a(2,1)-((vd*Yd(1,2))/sqrt(2._dp))
+mat1a(2,1) = mat1a(2,1)-((v2*epYD(1,2))/sqrt(2._dp))
+mat1a(2,1) = mat1a(2,1)-((v*Yd(1,2))/sqrt(2._dp))
 mat1a(2,2) = 0._dp 
-mat1a(2,2) = mat1a(2,2)-((vu*epYD(2,2))/sqrt(2._dp))
-mat1a(2,2) = mat1a(2,2)-((vd*Yd(2,2))/sqrt(2._dp))
+mat1a(2,2) = mat1a(2,2)-((v2*epYD(2,2))/sqrt(2._dp))
+mat1a(2,2) = mat1a(2,2)-((v*Yd(2,2))/sqrt(2._dp))
 mat1a(2,3) = 0._dp 
-mat1a(2,3) = mat1a(2,3)-((vu*epYD(3,2))/sqrt(2._dp))
-mat1a(2,3) = mat1a(2,3)-((vd*Yd(3,2))/sqrt(2._dp))
+mat1a(2,3) = mat1a(2,3)-((v2*epYD(3,2))/sqrt(2._dp))
+mat1a(2,3) = mat1a(2,3)-((v*Yd(3,2))/sqrt(2._dp))
 mat1a(3,1) = 0._dp 
-mat1a(3,1) = mat1a(3,1)-((vu*epYD(1,3))/sqrt(2._dp))
-mat1a(3,1) = mat1a(3,1)-((vd*Yd(1,3))/sqrt(2._dp))
+mat1a(3,1) = mat1a(3,1)-((v2*epYD(1,3))/sqrt(2._dp))
+mat1a(3,1) = mat1a(3,1)-((v*Yd(1,3))/sqrt(2._dp))
 mat1a(3,2) = 0._dp 
-mat1a(3,2) = mat1a(3,2)-((vu*epYD(2,3))/sqrt(2._dp))
-mat1a(3,2) = mat1a(3,2)-((vd*Yd(2,3))/sqrt(2._dp))
+mat1a(3,2) = mat1a(3,2)-((v2*epYD(2,3))/sqrt(2._dp))
+mat1a(3,2) = mat1a(3,2)-((v*Yd(2,3))/sqrt(2._dp))
 mat1a(3,3) = 0._dp 
-mat1a(3,3) = mat1a(3,3)-((vu*epYD(3,3))/sqrt(2._dp))
-mat1a(3,3) = mat1a(3,3)-((vd*Yd(3,3))/sqrt(2._dp))
+mat1a(3,3) = mat1a(3,3)-((v2*epYD(3,3))/sqrt(2._dp))
+mat1a(3,3) = mat1a(3,3)-((v*Yd(3,3))/sqrt(2._dp))
 
  
  !---------------------------------------- 
@@ -3300,17 +3299,17 @@ SigSR = oo16pi2*SigSR
  
 End Subroutine DerSigma1LoopFd 
  
-Subroutine OneLoopFu(epYU,Yu,vd,vu,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,               & 
-& MVWm,MVWm2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,cplcUFuFuAhL,cplcUFuFuAhR,               & 
-& cplcUFuFdcHmL,cplcUFuFdcHmR,cplcUFuFdcVWmL,cplcUFuFdcVWmR,cplcUFuFuhhL,cplcUFuFuhhR,   & 
-& cplcUFuFusigma1L,cplcUFuFusigma1R,cplcUFuFuVGL,cplcUFuFuVGR,cplcUFuFuVPL,              & 
-& cplcUFuFuVPR,cplcUFuFuVZL,cplcUFuFuVZR,delta,MFu_1L,MFu2_1L,ZUL_1L,ZUR_1L,ierr)
+Subroutine OneLoopFu(epYU,Yu,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,           & 
+& MVWm2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,cplcUFuFuAhL,cplcUFuFuAhR,cplcUFuFdcHmL,      & 
+& cplcUFuFdcHmR,cplcUFuFdcVWmL,cplcUFuFdcVWmR,cplcUFuFuhhL,cplcUFuFuhhR,cplcUFuFusigma1L,& 
+& cplcUFuFusigma1R,cplcUFuFuVGL,cplcUFuFuVGR,cplcUFuFuVPL,cplcUFuFuVPR,cplcUFuFuVZL,     & 
+& cplcUFuFuVZR,delta,MFu_1L,MFu2_1L,ZUL_1L,ZUR_1L,ierr)
 
 Implicit None 
 Real(dp), Intent(in) :: MFu(3),MFu2(3),MAh,MAh2,MHm(2),MHm2(2),MFd(3),MFd2(3),MVWm,MVWm2,Mhh(2),              & 
 & Mhh2(2),Msigma1,Msigma12,MVZ,MVZ2
 
-Real(dp), Intent(in) :: vd,vu
+Real(dp), Intent(in) :: v,v2
 
 Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3)
 
@@ -3340,32 +3339,32 @@ Complex(dp) :: ZUL2(3,3), ZUR2(3,3)
 NameOfUnit(Iname) = 'OneLoopMFu'
  
 mat1a(1,1) = 0._dp 
-mat1a(1,1) = mat1a(1,1)+(vd*epYU(1,1))/sqrt(2._dp)
-mat1a(1,1) = mat1a(1,1)+(vu*Yu(1,1))/sqrt(2._dp)
+mat1a(1,1) = mat1a(1,1)+(v*epYU(1,1))/sqrt(2._dp)
+mat1a(1,1) = mat1a(1,1)+(v2*Yu(1,1))/sqrt(2._dp)
 mat1a(1,2) = 0._dp 
-mat1a(1,2) = mat1a(1,2)+(vd*epYU(2,1))/sqrt(2._dp)
-mat1a(1,2) = mat1a(1,2)+(vu*Yu(2,1))/sqrt(2._dp)
+mat1a(1,2) = mat1a(1,2)+(v*epYU(2,1))/sqrt(2._dp)
+mat1a(1,2) = mat1a(1,2)+(v2*Yu(2,1))/sqrt(2._dp)
 mat1a(1,3) = 0._dp 
-mat1a(1,3) = mat1a(1,3)+(vd*epYU(3,1))/sqrt(2._dp)
-mat1a(1,3) = mat1a(1,3)+(vu*Yu(3,1))/sqrt(2._dp)
+mat1a(1,3) = mat1a(1,3)+(v*epYU(3,1))/sqrt(2._dp)
+mat1a(1,3) = mat1a(1,3)+(v2*Yu(3,1))/sqrt(2._dp)
 mat1a(2,1) = 0._dp 
-mat1a(2,1) = mat1a(2,1)+(vd*epYU(1,2))/sqrt(2._dp)
-mat1a(2,1) = mat1a(2,1)+(vu*Yu(1,2))/sqrt(2._dp)
+mat1a(2,1) = mat1a(2,1)+(v*epYU(1,2))/sqrt(2._dp)
+mat1a(2,1) = mat1a(2,1)+(v2*Yu(1,2))/sqrt(2._dp)
 mat1a(2,2) = 0._dp 
-mat1a(2,2) = mat1a(2,2)+(vd*epYU(2,2))/sqrt(2._dp)
-mat1a(2,2) = mat1a(2,2)+(vu*Yu(2,2))/sqrt(2._dp)
+mat1a(2,2) = mat1a(2,2)+(v*epYU(2,2))/sqrt(2._dp)
+mat1a(2,2) = mat1a(2,2)+(v2*Yu(2,2))/sqrt(2._dp)
 mat1a(2,3) = 0._dp 
-mat1a(2,3) = mat1a(2,3)+(vd*epYU(3,2))/sqrt(2._dp)
-mat1a(2,3) = mat1a(2,3)+(vu*Yu(3,2))/sqrt(2._dp)
+mat1a(2,3) = mat1a(2,3)+(v*epYU(3,2))/sqrt(2._dp)
+mat1a(2,3) = mat1a(2,3)+(v2*Yu(3,2))/sqrt(2._dp)
 mat1a(3,1) = 0._dp 
-mat1a(3,1) = mat1a(3,1)+(vd*epYU(1,3))/sqrt(2._dp)
-mat1a(3,1) = mat1a(3,1)+(vu*Yu(1,3))/sqrt(2._dp)
+mat1a(3,1) = mat1a(3,1)+(v*epYU(1,3))/sqrt(2._dp)
+mat1a(3,1) = mat1a(3,1)+(v2*Yu(1,3))/sqrt(2._dp)
 mat1a(3,2) = 0._dp 
-mat1a(3,2) = mat1a(3,2)+(vd*epYU(2,3))/sqrt(2._dp)
-mat1a(3,2) = mat1a(3,2)+(vu*Yu(2,3))/sqrt(2._dp)
+mat1a(3,2) = mat1a(3,2)+(v*epYU(2,3))/sqrt(2._dp)
+mat1a(3,2) = mat1a(3,2)+(v2*Yu(2,3))/sqrt(2._dp)
 mat1a(3,3) = 0._dp 
-mat1a(3,3) = mat1a(3,3)+(vd*epYU(3,3))/sqrt(2._dp)
-mat1a(3,3) = mat1a(3,3)+(vu*Yu(3,3))/sqrt(2._dp)
+mat1a(3,3) = mat1a(3,3)+(v*epYU(3,3))/sqrt(2._dp)
+mat1a(3,3) = mat1a(3,3)+(v2*Yu(3,3))/sqrt(2._dp)
 
  
  !---------------------------------------- 
@@ -4050,7 +4049,7 @@ SigSR = oo16pi2*SigSR
  
 End Subroutine DerSigma1LoopFu 
  
-Subroutine OneLoopFe(Ye,epYE,vd,vu,MFe,MFe2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,       & 
+Subroutine OneLoopFe(Ye,epYE,v,v2,MFe,MFe2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,        & 
 & MVZ,MVZ2,MHm,MHm2,MVWm,MVWm2,cplcUFeFeAhL,cplcUFeFeAhR,cplcUFeFehhL,cplcUFeFehhR,      & 
 & cplcUFeFesigma1L,cplcUFeFesigma1R,cplcUFeFeVPL,cplcUFeFeVPR,cplcUFeFeVZL,              & 
 & cplcUFeFeVZR,cplcUFeFvHmL,cplcUFeFvHmR,cplcUFeFvVWmL,cplcUFeFvVWmR,delta,              & 
@@ -4060,7 +4059,7 @@ Implicit None
 Real(dp), Intent(in) :: MFe(3),MFe2(3),MAh,MAh2,Mhh(2),Mhh2(2),Msigma1,Msigma12,MVZ,MVZ2,MHm(2),              & 
 & MHm2(2),MVWm,MVWm2
 
-Real(dp), Intent(in) :: vd,vu
+Real(dp), Intent(in) :: v,v2
 
 Complex(dp), Intent(in) :: Ye(3,3),epYE(3,3)
 
@@ -4090,32 +4089,32 @@ Complex(dp) :: ZEL2(3,3), ZER2(3,3)
 NameOfUnit(Iname) = 'OneLoopMFe'
  
 mat1a(1,1) = 0._dp 
-mat1a(1,1) = mat1a(1,1)-((vu*epYE(1,1))/sqrt(2._dp))
-mat1a(1,1) = mat1a(1,1)-((vd*Ye(1,1))/sqrt(2._dp))
+mat1a(1,1) = mat1a(1,1)-((v2*epYE(1,1))/sqrt(2._dp))
+mat1a(1,1) = mat1a(1,1)-((v*Ye(1,1))/sqrt(2._dp))
 mat1a(1,2) = 0._dp 
-mat1a(1,2) = mat1a(1,2)-((vu*epYE(2,1))/sqrt(2._dp))
-mat1a(1,2) = mat1a(1,2)-((vd*Ye(2,1))/sqrt(2._dp))
+mat1a(1,2) = mat1a(1,2)-((v2*epYE(2,1))/sqrt(2._dp))
+mat1a(1,2) = mat1a(1,2)-((v*Ye(2,1))/sqrt(2._dp))
 mat1a(1,3) = 0._dp 
-mat1a(1,3) = mat1a(1,3)-((vu*epYE(3,1))/sqrt(2._dp))
-mat1a(1,3) = mat1a(1,3)-((vd*Ye(3,1))/sqrt(2._dp))
+mat1a(1,3) = mat1a(1,3)-((v2*epYE(3,1))/sqrt(2._dp))
+mat1a(1,3) = mat1a(1,3)-((v*Ye(3,1))/sqrt(2._dp))
 mat1a(2,1) = 0._dp 
-mat1a(2,1) = mat1a(2,1)-((vu*epYE(1,2))/sqrt(2._dp))
-mat1a(2,1) = mat1a(2,1)-((vd*Ye(1,2))/sqrt(2._dp))
+mat1a(2,1) = mat1a(2,1)-((v2*epYE(1,2))/sqrt(2._dp))
+mat1a(2,1) = mat1a(2,1)-((v*Ye(1,2))/sqrt(2._dp))
 mat1a(2,2) = 0._dp 
-mat1a(2,2) = mat1a(2,2)-((vu*epYE(2,2))/sqrt(2._dp))
-mat1a(2,2) = mat1a(2,2)-((vd*Ye(2,2))/sqrt(2._dp))
+mat1a(2,2) = mat1a(2,2)-((v2*epYE(2,2))/sqrt(2._dp))
+mat1a(2,2) = mat1a(2,2)-((v*Ye(2,2))/sqrt(2._dp))
 mat1a(2,3) = 0._dp 
-mat1a(2,3) = mat1a(2,3)-((vu*epYE(3,2))/sqrt(2._dp))
-mat1a(2,3) = mat1a(2,3)-((vd*Ye(3,2))/sqrt(2._dp))
+mat1a(2,3) = mat1a(2,3)-((v2*epYE(3,2))/sqrt(2._dp))
+mat1a(2,3) = mat1a(2,3)-((v*Ye(3,2))/sqrt(2._dp))
 mat1a(3,1) = 0._dp 
-mat1a(3,1) = mat1a(3,1)-((vu*epYE(1,3))/sqrt(2._dp))
-mat1a(3,1) = mat1a(3,1)-((vd*Ye(1,3))/sqrt(2._dp))
+mat1a(3,1) = mat1a(3,1)-((v2*epYE(1,3))/sqrt(2._dp))
+mat1a(3,1) = mat1a(3,1)-((v*Ye(1,3))/sqrt(2._dp))
 mat1a(3,2) = 0._dp 
-mat1a(3,2) = mat1a(3,2)-((vu*epYE(2,3))/sqrt(2._dp))
-mat1a(3,2) = mat1a(3,2)-((vd*Ye(2,3))/sqrt(2._dp))
+mat1a(3,2) = mat1a(3,2)-((v2*epYE(2,3))/sqrt(2._dp))
+mat1a(3,2) = mat1a(3,2)-((v*Ye(2,3))/sqrt(2._dp))
 mat1a(3,3) = 0._dp 
-mat1a(3,3) = mat1a(3,3)-((vu*epYE(3,3))/sqrt(2._dp))
-mat1a(3,3) = mat1a(3,3)-((vd*Ye(3,3))/sqrt(2._dp))
+mat1a(3,3) = mat1a(3,3)-((v2*epYE(3,3))/sqrt(2._dp))
+mat1a(3,3) = mat1a(3,3)-((v*Ye(3,3))/sqrt(2._dp))
 
  
  !---------------------------------------- 
@@ -4978,7 +4977,7 @@ SigSR = oo16pi2*SigSR
  
 End Subroutine DerSigma1LoopFv 
  
-Subroutine OneLoopsigma1(g1,g2,Lam6,Lam5,M112,Lam1,Lam4,Lam3,vd,vu,TW,MAh,            & 
+Subroutine OneLoopsigma1(g1,g2,Lam6,Lam5,M112,Lam1,Lam4,Lam3,v,v2,TW,MAh,             & 
 & MAh2,Mhh,Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,           & 
 & MVWm,MVWm2,cplAhAhsigma1,cplAhhhsigma1,cplAhsigma1sigma1,cplcFdFdsigma1L,              & 
 & cplcFdFdsigma1R,cplcFeFesigma1L,cplcFeFesigma1R,cplcFuFusigma1L,cplcFuFusigma1R,       & 
@@ -4990,7 +4989,7 @@ Subroutine OneLoopsigma1(g1,g2,Lam6,Lam5,M112,Lam1,Lam4,Lam3,vd,vu,TW,MAh,      
 Real(dp), Intent(in) :: MAh,MAh2,Mhh(2),Mhh2(2),Msigma1,Msigma12,MFd(3),MFd2(3),MFe(3),MFe2(3),               & 
 & MFu(3),MFu2(3),MVZ,MVZ2,MHm(2),MHm2(2),MVWm,MVWm2
 
-Real(dp), Intent(in) :: g1,g2,vd,vu,TW
+Real(dp), Intent(in) :: g1,g2,v,v2,TW
 
 Complex(dp), Intent(in) :: Lam6,Lam5,M112,Lam1,Lam4,Lam3
 
@@ -5010,7 +5009,7 @@ Real(dp), Intent(out) :: mass, mass2
 Iname = Iname + 1 
 NameOfUnit(Iname) = 'OneLoopsigma1'
  
-mi2 = (4._dp*(M112) + 2*Lam1*vd**2 + 2*Lam6*vd*vu + 2*Lam3*vu**2 + 2*Lam4*vu**2 - Lam5*vu**2 - vu**2*Conjg(Lam5) + 2*vd*vu*Conjg(Lam6) + g2**2*vd**2*Cos(TW)**2*RXiZ + 2*g1*g2*vd**2*Cos(TW)*RXiZ*Sin(TW) + g1**2*vd**2*RXiZ*Sin(TW)**2)/4._dp 
+mi2 = (4._dp*(M112) + 2*Lam1*v**2 + 2*Lam6*v*v2 + 2*Lam3*v2**2 + 2*Lam4*v2**2 - Lam5*v2**2 - v2**2*Conjg(Lam5) + 2*v*v2*Conjg(Lam6) + g2**2*v**2*Cos(TW)**2*RXiZ + 2*g1*g2*v**2*Cos(TW)*RXiZ*Sin(TW) + g1**2*v**2*RXiZ*Sin(TW)**2)/4._dp 
 
  
 p2 = 0._dp 
@@ -5628,7 +5627,7 @@ res = oo16pi2*res
  
 End Subroutine DerPi1Loopsigma1 
  
-Subroutine OneLoopAh(g1,g2,Lam5,Lam7,M222,Lam4,Lam3,Lam2,vd,vu,TW,MAh,MAh2,           & 
+Subroutine OneLoopAh(g1,g2,Lam5,Lam7,M222,Lam4,Lam3,Lam2,v,v2,TW,MAh,MAh2,            & 
 & Mhh,Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,MVWm,           & 
 & MVWm2,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,           & 
 & cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,cplcgWmgWmAh,cplcgWpCgWpCAh,cplAhhhhh,             & 
@@ -5639,7 +5638,7 @@ Subroutine OneLoopAh(g1,g2,Lam5,Lam7,M222,Lam4,Lam3,Lam2,vd,vu,TW,MAh,MAh2,     
 Real(dp), Intent(in) :: MAh,MAh2,Mhh(2),Mhh2(2),Msigma1,Msigma12,MFd(3),MFd2(3),MFe(3),MFe2(3),               & 
 & MFu(3),MFu2(3),MVZ,MVZ2,MHm(2),MHm2(2),MVWm,MVWm2
 
-Real(dp), Intent(in) :: g1,g2,vd,vu,TW
+Real(dp), Intent(in) :: g1,g2,v,v2,TW
 
 Complex(dp), Intent(in) :: Lam5,Lam7,M222,Lam4,Lam3,Lam2
 
@@ -5658,7 +5657,7 @@ Real(dp), Intent(out) :: mass, mass2
 Iname = Iname + 1 
 NameOfUnit(Iname) = 'OneLoopAh'
  
-mi2 = (4._dp*(M222) + 2*Lam3*vd**2 + 2*Lam4*vd**2 - Lam5*vd**2 + 2*Lam7*vd*vu + 2*Lam2*vu**2 - vd**2*Conjg(Lam5) + 2*vd*vu*Conjg(Lam7) + g2**2*vu**2*Cos(TW)**2*RXiZ + 2*g1*g2*vu**2*Cos(TW)*RXiZ*Sin(TW) + g1**2*vu**2*RXiZ*Sin(TW)**2)/4._dp 
+mi2 = (4._dp*(M222) + 2*Lam3*v**2 + 2*Lam4*v**2 - Lam5*v**2 + 2*Lam7*v*v2 + 2*Lam2*v2**2 - v**2*Conjg(Lam5) + 2*v*v2*Conjg(Lam7) + g2**2*v2**2*Cos(TW)**2*RXiZ + 2*g1*g2*v2**2*Cos(TW)*RXiZ*Sin(TW) + g1**2*v2**2*RXiZ*Sin(TW)**2)/4._dp 
 
  
 p2 = MAh2
@@ -6832,7 +6831,7 @@ res = oo16pi2*res
  
 End Subroutine DerPi1LoopVP 
  
-Subroutine OneLoopVZ(g1,g2,vd,vu,TW,Mhh,Mhh2,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
+Subroutine OneLoopVZ(g1,g2,v,v2,TW,Mhh,Mhh2,MAh,MAh2,MFd,MFd2,MFe,MFe2,               & 
 & MFu,MFu2,Msigma1,Msigma12,MVZ,MVZ2,MHm,MHm2,MVWm,MVWm2,cplAhhhVZ,cplcFdFdVZL,          & 
 & cplcFdFdVZR,cplcFeFeVZL,cplcFeFeVZR,cplcFuFuVZL,cplcFuFuVZR,cplcFvFvVZL,               & 
 & cplcFvFvVZR,cplcgWmgWmVZ,cplcgWpCgWpCVZ,cplhhsigma1VZ,cplhhVZVZ,cplHmcHmVZ,            & 
@@ -6842,7 +6841,7 @@ Subroutine OneLoopVZ(g1,g2,vd,vu,TW,Mhh,Mhh2,MAh,MAh2,MFd,MFd2,MFe,MFe2,        
 Real(dp), Intent(in) :: Mhh(2),Mhh2(2),MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Msigma1,         & 
 & Msigma12,MVZ,MVZ2,MHm(2),MHm2(2),MVWm,MVWm2
 
-Real(dp), Intent(in) :: g1,g2,vd,vu,TW
+Real(dp), Intent(in) :: g1,g2,v,v2,TW
 
 Complex(dp), Intent(in) :: cplAhhhVZ(2),cplcFdFdVZL(3,3),cplcFdFdVZR(3,3),cplcFeFeVZL(3,3),cplcFeFeVZR(3,3),     & 
 & cplcFuFuVZL(3,3),cplcFuFuVZR(3,3),cplcFvFvVZL(3,3),cplcFvFvVZR(3,3),cplcgWmgWmVZ,      & 
@@ -7385,8 +7384,8 @@ res = oo16pi2*res
  
 End Subroutine DerPi1LoopVZ 
  
-Subroutine OneLoopVWm(g2,vd,vu,MHm,MHm2,MAh,MAh2,MFu,MFu2,MFd,MFd2,MFe,               & 
-& MFe2,Mhh,Mhh2,MVWm,MVWm2,Msigma1,Msigma12,MVZ,MVZ2,cplAhHmcVWm,cplcFuFdcVWmL,          & 
+Subroutine OneLoopVWm(g2,v,v2,MHm,MHm2,MAh,MAh2,MFu,MFu2,MFd,MFd2,MFe,MFe2,           & 
+& Mhh,Mhh2,MVWm,MVWm2,Msigma1,Msigma12,MVZ,MVZ2,cplAhHmcVWm,cplcFuFdcVWmL,               & 
 & cplcFuFdcVWmR,cplcFvFecVWmL,cplcFvFecVWmR,cplcgWpCgAcVWm,cplcgAgWmcVWm,cplcgZgWmcVWm,  & 
 & cplcgWpCgZcVWm,cplhhHmcVWm,cplhhcVWmVWm,cplHmsigma1cVWm,cplHmcVWmVP,cplHmcVWmVZ,       & 
 & cplcVWmVPVWm,cplcVWmVWmVZ,cplAhAhcVWmVWm,cplhhhhcVWmVWm,cplHmcHmcVWmVWm,               & 
@@ -7397,7 +7396,7 @@ Subroutine OneLoopVWm(g2,vd,vu,MHm,MHm2,MAh,MAh2,MFu,MFu2,MFd,MFd2,MFe,         
 Real(dp), Intent(in) :: MHm(2),MHm2(2),MAh,MAh2,MFu(3),MFu2(3),MFd(3),MFd2(3),MFe(3),MFe2(3),Mhh(2),          & 
 & Mhh2(2),MVWm,MVWm2,Msigma1,Msigma12,MVZ,MVZ2
 
-Real(dp), Intent(in) :: g2,vd,vu
+Real(dp), Intent(in) :: g2,v,v2
 
 Complex(dp), Intent(in) :: cplAhHmcVWm(2),cplcFuFdcVWmL(3,3),cplcFuFdcVWmR(3,3),cplcFvFecVWmL(3,3),              & 
 & cplcFvFecVWmR(3,3),cplcgWpCgAcVWm,cplcgAgWmcVWm,cplcgZgWmcVWm,cplcgWpCgZcVWm,          & 

@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 12:24 on 22.10.2017   
+! File created at 17:25 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -164,10 +164,10 @@ End Function AlphaS_T
 
 
 Subroutine DeltaVB(sinW2,sinW2_dr,rho,MAh,MFe,Mhh,MHm,Msigma1,MVWm,epYE,              & 
-& g2,ZER,vd,vu,ZEL,Ye,ZH,ZP,res)
+& g2,ZER,v,v2,ZEL,Ye,ZH,ZP,res)
 
 Implicit None 
-Real(dp),Intent(in) :: MAh,MFe(3),Mhh(2),MHm(2),Msigma1,MVWm,g2,vd,vu,ZH(2,2),ZP(2,2)
+Real(dp),Intent(in) :: MAh,MFe(3),Mhh(2),MHm(2),Msigma1,MVWm,g2,v,v2,ZH(2,2),ZP(2,2)
 
 Complex(dp),Intent(in) :: epYE(3,3),ZER(3,3),ZEL(3,3),Ye(3,3)
 
@@ -284,7 +284,7 @@ End Do
 
 cplhhcVWmVWm = 0._dp 
 Do gt1 = 1, 2
-Call CouplinghhcVWmVWmT(gt1,g2,vd,vu,ZH,cplhhcVWmVWm(gt1))
+Call CouplinghhcVWmVWmT(gt1,g2,v,v2,ZH,cplhhcVWmVWm(gt1))
 
 End Do 
 
