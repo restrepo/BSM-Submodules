@@ -65,7 +65,7 @@ if [ "$1" == '--clean' ];then
 	    SUBMODEL=${ModelDir[$tool]}/
 	fi
 
-	if [ -d $tool/${SUBMODEL}$FULLMODELNAME ];then
+	if [ $FULLMODELNAME  ] && [ -d $tool/${SUBMODEL}$FULLMODELNAME ];then
 	    rm -rf $tool/${SUBMODEL}$FULLMODELNAME
 	fi
     done
