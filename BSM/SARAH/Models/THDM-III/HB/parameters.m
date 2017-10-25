@@ -69,16 +69,32 @@ ParameterDefinitions = {
                LesHouches -> {HMIX,22}}},
 
 
-{v1,        { Description -> "Down-VEV", LaTeX -> "v_1"}}, 
+(*{v1,        { Description -> "Down-VEV", LaTeX -> "v_1"}}, 
 {v2,        { Description -> "Up-VEV", LaTeX -> "v_2"}},       
 {v,         { Description -> "EW-VEV"}},
-             
-{\[Beta],   { Description -> "Pseudo Scalar mixing angle"  }},             
+*)
+{v1,        { Description -> "EW-VEV",
+		 DependenceNum -> Sqrt[4*Mass[VWm]^2/(g2^2)],
+		 DependenceSPheno -> None  }}, 
+{v2,        { Description -> "EW-VEV0",
+		  DependenceNum -> 0,
+		  LesHouches -> v2,
+		  DependenceSPheno -> None,
+		  OutputName-> v2 }},
+    
+(*{\[Beta],   { Description -> "Pseudo Scalar mixing angle"  }},             
 {TanBeta,   { Description -> "Tan Beta" }},              
-{\[Alpha],  { Description -> "Scalar mixing angle" }},  
+{\[Alpha],  { Description -> "Scalar mixing angle" }},*)  
+    
+{\[Alpha],  { Description -> "Scalar mixing angle",
+		LaTeX -> "\\alpha",
+		DependenceSPheno -> ArcCos[ZH[1,2]], 
+		Real -> True, 
+		LesHouches -> {HMIX, 11},
+		OutputName-> alphaH     }},  
 
 {ZH,        { Description->"Scalar-Mixing-Matrix"}},
-{ZA,        { Description->"Pseudo-Scalar-Mixing-Matrix"}},
+(* {ZA,        { Description->"Pseudo-Scalar-Mixing-Matrix"}},*)
 {ZP,        { Description->"Charged-Mixing-Matrix"}},  
 
 

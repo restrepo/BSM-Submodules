@@ -8,10 +8,10 @@ MINPAR={{1,Lambda1Input},
         {5,Lambda5Input},
         {6,Lambda6Input},
         {7,Lambda7Input},
-        {9,M12input},
-        {10,TanBeta} };
+        {9,M12input}(*,
+        {10,TanBeta}*) };
 
-RealParameters = {TanBeta};
+(*RealParameters = {TanBeta};*)
 
 ParametersToSolveTadpoles = {M112,M222};
 
@@ -43,7 +43,7 @@ ListDecayParticles = {Fu,Fe,Fd,hh,Ah,Hm};
 ListDecayParticles3B = {{Fu,"Fu.f90"},{Fe,"Fe.f90"},{Fd,"Fd.f90"}};
 
 
-DefaultInputValues ={Lambda1Input -> 0.1, Lambda2Input -> 0.13, Lambda3Input -> 1.1, Lambda4Input ->-0.5, Lambda5Input ->0.5,  M12input -> 40000, TanBeta->50};
+DefaultInputValues ={Lambda1Input -> 0.1, Lambda2Input -> 0.13, Lambda3Input -> 1.1, Lambda4Input ->-0.5, Lambda5Input ->0.5,  M12input -> 40000(*, TanBeta->50*)};
 
 RenConditionsDecays={
 {dCosTW, 1/2*Cos[ThetaW] * (PiVWm/(MVWm^2) - PiVZ/(mVZ^2)) },
