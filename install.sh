@@ -95,6 +95,9 @@ for tool in "${!ModelDir[@]}";do
 	# Creates $FULLMODELNAME with command if necessary
 	if [ "${ModelExec[$tool]}" ];then
 	    cd $tool
+	    #Be sure to compile inside the last branch
+	    make
+	    make 
 	    echo ${ModelExec[$tool]}
 	    ${ModelExec[$tool]} $FULLMODELNAME
 	    cd ..
