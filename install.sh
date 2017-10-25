@@ -60,8 +60,13 @@ declare -A ModelExec=( [SPHENO]="" [calchep]="./mkWORKdir"  [micromegas]="./newP
 if [ "$1" == '--clean' ];then
     echo "Deleting installed model files..."
     for tool in "${!ModelDir[@]}";do
-	if [ -d $tool/${ModelDir[$tool]}/$FULLMODELNAME ];then
-	    rm -rf $tool/${ModelDir[$tool]}/$FULLMODELNAME
+	SUBMODEL=""
+	if [ "${ModelDir[$tool]}"  ];then
+	    SUBMODEL=${ModelDir[$tool]}/
+	fi
+
+	if [ -d $tool/${SUBMODEL}$FULLMODELNAME ];then
+	    rm -rf $tool/${SUBMODEL}$FULLMODELNAME
 	fi
     done
     exit
