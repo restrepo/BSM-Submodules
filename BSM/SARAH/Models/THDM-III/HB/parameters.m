@@ -95,8 +95,15 @@ ParameterDefinitions = {
 
 {ZH,        { Description->"Scalar-Mixing-Matrix"}},
 (* {ZA,        { Description->"Pseudo-Scalar-Mixing-Matrix"}},*)
-{ZP,        { Description->"Charged-Mixing-Matrix"}},  
-
+(*{ZP,        { Description->"Charged-Mixing-Matrix"}},  *)
+{ZP,        { Description->"Charged-Mixing-Matrix", 
+		LaTeX -> "Z^+",
+		Real ->True,
+		DependenceOptional -> None, 
+		Value -> None, 
+		LesHouches -> CHARGEMIX,
+		OutputName-> ZP      }},                       
+    
 
 {ThetaW,    { Description -> "Weinberg-Angle"}}, 
 
