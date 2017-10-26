@@ -3,7 +3,7 @@
 # SARAH References: arXiv:0806.0538, arXiv:0909.2863, arXiv:1002.0840    
 # (c) Florian Staub, 2011  
 # ----------------------------------------------------------------------  
-# File created at 17:32 on 25.10.2017   
+# File created at 22:58 on 25.10.2017   
 # ----------------------------------------------------------------------  
  
  
@@ -185,150 +185,6 @@ WWm = 	 Parameter(name = 'WWm',
 	 lhablock = 'DECAY', 
 	 lhacode = [24]) 
  
-repYU11 = 	 Parameter(name='repYU11', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU11}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [1, 1] ) 
- 
-iepYU11 = 	 Parameter(name='iepYU11', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU11}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [1, 1] ) 
- 
-repYU12 = 	 Parameter(name='repYU12', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU12}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [1, 2] ) 
- 
-iepYU12 = 	 Parameter(name='iepYU12', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU12}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [1, 2] ) 
- 
-repYU13 = 	 Parameter(name='repYU13', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU13}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [1, 3] ) 
- 
-iepYU13 = 	 Parameter(name='iepYU13', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU13}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [1, 3] ) 
- 
-repYU21 = 	 Parameter(name='repYU21', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU21}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [2, 1] ) 
- 
-iepYU21 = 	 Parameter(name='iepYU21', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU21}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [2, 1] ) 
- 
-repYU22 = 	 Parameter(name='repYU22', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU22}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [2, 2] ) 
- 
-iepYU22 = 	 Parameter(name='iepYU22', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU22}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [2, 2] ) 
- 
-repYU23 = 	 Parameter(name='repYU23', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU23}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [2, 3] ) 
- 
-iepYU23 = 	 Parameter(name='iepYU23', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU23}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [2, 3] ) 
- 
-repYU31 = 	 Parameter(name='repYU31', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU31}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [3, 1] ) 
- 
-iepYU31 = 	 Parameter(name='iepYU31', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU31}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [3, 1] ) 
- 
-repYU32 = 	 Parameter(name='repYU32', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU32}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [3, 2] ) 
- 
-iepYU32 = 	 Parameter(name='iepYU32', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU32}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [3, 2] ) 
- 
-repYU33 = 	 Parameter(name='repYU33', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU33}', 
-	 lhablock = 'EPSU', 
-	 lhacode = [3, 3] ) 
- 
-iepYU33 = 	 Parameter(name='iepYU33', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{epYU33}', 
-	 lhablock = 'IMEPSU', 
-	 lhacode = [3, 3] ) 
- 
 rYu11 = 	 Parameter(name='rYu11', 
 	 nature = 'external', 
 	 type = 'real', 
@@ -471,6 +327,150 @@ iYu33 = 	 Parameter(name='iYu33',
 	 value = 0., 
 	 texname = '\\text{Yu33}', 
 	 lhablock = 'IMYU', 
+	 lhacode = [3, 3] ) 
+ 
+repYU11 = 	 Parameter(name='repYU11', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU11}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [1, 1] ) 
+ 
+iepYU11 = 	 Parameter(name='iepYU11', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU11}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [1, 1] ) 
+ 
+repYU12 = 	 Parameter(name='repYU12', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU12}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [1, 2] ) 
+ 
+iepYU12 = 	 Parameter(name='iepYU12', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU12}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [1, 2] ) 
+ 
+repYU13 = 	 Parameter(name='repYU13', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU13}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [1, 3] ) 
+ 
+iepYU13 = 	 Parameter(name='iepYU13', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU13}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [1, 3] ) 
+ 
+repYU21 = 	 Parameter(name='repYU21', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU21}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [2, 1] ) 
+ 
+iepYU21 = 	 Parameter(name='iepYU21', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU21}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [2, 1] ) 
+ 
+repYU22 = 	 Parameter(name='repYU22', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU22}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [2, 2] ) 
+ 
+iepYU22 = 	 Parameter(name='iepYU22', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU22}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [2, 2] ) 
+ 
+repYU23 = 	 Parameter(name='repYU23', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU23}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [2, 3] ) 
+ 
+iepYU23 = 	 Parameter(name='iepYU23', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU23}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [2, 3] ) 
+ 
+repYU31 = 	 Parameter(name='repYU31', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU31}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [3, 1] ) 
+ 
+iepYU31 = 	 Parameter(name='iepYU31', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU31}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [3, 1] ) 
+ 
+repYU32 = 	 Parameter(name='repYU32', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU32}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [3, 2] ) 
+ 
+iepYU32 = 	 Parameter(name='iepYU32', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU32}', 
+	 lhablock = 'IMEPSU', 
+	 lhacode = [3, 2] ) 
+ 
+repYU33 = 	 Parameter(name='repYU33', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU33}', 
+	 lhablock = 'EPSU', 
+	 lhacode = [3, 3] ) 
+ 
+iepYU33 = 	 Parameter(name='iepYU33', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{epYU33}', 
+	 lhablock = 'IMEPSU', 
 	 lhacode = [3, 3] ) 
  
 rYd11 = 	 Parameter(name='rYd11', 
@@ -1160,6 +1160,38 @@ iLam2 = 	 Parameter(name='iLam2',
 	 texname = '\\text{Lam2}', 
 	 lhablock = 'IMHMIX', 
 	 lhacode = [32] ) 
+ 
+ZP11 = 	 Parameter(name='ZP11', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{ZP11}', 
+	 lhablock = 'CHARGEMIX', 
+	 lhacode = [1, 1] ) 
+ 
+ZP12 = 	 Parameter(name='ZP12', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{ZP12}', 
+	 lhablock = 'CHARGEMIX', 
+	 lhacode = [1, 2] ) 
+ 
+ZP21 = 	 Parameter(name='ZP21', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{ZP21}', 
+	 lhablock = 'CHARGEMIX', 
+	 lhacode = [2, 1] ) 
+ 
+ZP22 = 	 Parameter(name='ZP22', 
+	 nature = 'external', 
+	 type = 'real', 
+	 value = 0., 
+	 texname = '\\text{ZP22}', 
+	 lhablock = 'CHARGEMIX', 
+	 lhacode = [2, 2] ) 
  
 rZDL11 = 	 Parameter(name='rZDL11', 
 	 nature = 'external', 
@@ -2033,22 +2065,6 @@ alphaH = 	 Parameter(name='alphaH',
 	 lhablock = 'HMIX', 
 	 lhacode = [11] ) 
  
-rbeta = 	 Parameter(name='rbeta', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{beta}', 
-	 lhablock = 'None', 
-	 lhacode = [1] ) 
- 
-ibeta = 	 Parameter(name='ibeta', 
-	 nature = 'external', 
-	 type = 'real', 
-	 value = 0., 
-	 texname = '\\text{beta}', 
-	 lhablock = 'IMNone', 
-	 lhacode = [1] ) 
- 
 aS = 	 Parameter(name='aS', 
 	 nature = 'external', 
 	 type = 'real', 
@@ -2072,60 +2088,6 @@ Gf = 	 Parameter(name='Gf',
 	 texname = '\\text{Gf}', 
 	 lhablock = 'SMINPUTS', 
 	 lhacode = [2] ) 
- 
-epYU11 = 	 Parameter(name='epYU11', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU11 + complex(0,1)*iepYU11', 
-	 texname = '\\text{epYU11}' ) 
- 
-epYU12 = 	 Parameter(name='epYU12', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU12 + complex(0,1)*iepYU12', 
-	 texname = '\\text{epYU12}' ) 
- 
-epYU13 = 	 Parameter(name='epYU13', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU13 + complex(0,1)*iepYU13', 
-	 texname = '\\text{epYU13}' ) 
- 
-epYU21 = 	 Parameter(name='epYU21', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU21 + complex(0,1)*iepYU21', 
-	 texname = '\\text{epYU21}' ) 
- 
-epYU22 = 	 Parameter(name='epYU22', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU22 + complex(0,1)*iepYU22', 
-	 texname = '\\text{epYU22}' ) 
- 
-epYU23 = 	 Parameter(name='epYU23', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU23 + complex(0,1)*iepYU23', 
-	 texname = '\\text{epYU23}' ) 
- 
-epYU31 = 	 Parameter(name='epYU31', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU31 + complex(0,1)*iepYU31', 
-	 texname = '\\text{epYU31}' ) 
- 
-epYU32 = 	 Parameter(name='epYU32', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU32 + complex(0,1)*iepYU32', 
-	 texname = '\\text{epYU32}' ) 
- 
-epYU33 = 	 Parameter(name='epYU33', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'repYU33 + complex(0,1)*iepYU33', 
-	 texname = '\\text{epYU33}' ) 
  
 Yu11 = 	 Parameter(name='Yu11', 
 	 nature = 'internal', 
@@ -2180,6 +2142,60 @@ Yu33 = 	 Parameter(name='Yu33',
 	 type = 'complex', 
 	 value = 'rYu33 + complex(0,1)*iYu33', 
 	 texname = '\\text{Yu33}' ) 
+ 
+epYU11 = 	 Parameter(name='epYU11', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU11 + complex(0,1)*iepYU11', 
+	 texname = '\\text{epYU11}' ) 
+ 
+epYU12 = 	 Parameter(name='epYU12', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU12 + complex(0,1)*iepYU12', 
+	 texname = '\\text{epYU12}' ) 
+ 
+epYU13 = 	 Parameter(name='epYU13', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU13 + complex(0,1)*iepYU13', 
+	 texname = '\\text{epYU13}' ) 
+ 
+epYU21 = 	 Parameter(name='epYU21', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU21 + complex(0,1)*iepYU21', 
+	 texname = '\\text{epYU21}' ) 
+ 
+epYU22 = 	 Parameter(name='epYU22', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU22 + complex(0,1)*iepYU22', 
+	 texname = '\\text{epYU22}' ) 
+ 
+epYU23 = 	 Parameter(name='epYU23', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU23 + complex(0,1)*iepYU23', 
+	 texname = '\\text{epYU23}' ) 
+ 
+epYU31 = 	 Parameter(name='epYU31', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU31 + complex(0,1)*iepYU31', 
+	 texname = '\\text{epYU31}' ) 
+ 
+epYU32 = 	 Parameter(name='epYU32', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU32 + complex(0,1)*iepYU32', 
+	 texname = '\\text{epYU32}' ) 
+ 
+epYU33 = 	 Parameter(name='epYU33', 
+	 nature = 'internal', 
+	 type = 'complex', 
+	 value = 'repYU33 + complex(0,1)*iepYU33', 
+	 texname = '\\text{epYU33}' ) 
  
 Yd11 = 	 Parameter(name='Yd11', 
 	 nature = 'internal', 
@@ -2763,12 +2779,6 @@ ZER33 = 	 Parameter(name='ZER33',
 	 value = 'rZER33 + complex(0,1)*iZER33', 
 	 texname = '\\text{ZER33}' ) 
  
-beta = 	 Parameter(name='beta', 
-	 nature = 'internal', 
-	 type = 'complex', 
-	 value = 'rbeta + complex(0,1)*ibeta', 
-	 texname = '\\text{beta}' ) 
- 
 G = 	 Parameter(name='G', 
 	 nature = 'internal', 
 	 type = 'real', 
@@ -2804,30 +2814,6 @@ ZH22 = 	 Parameter(name='ZH22',
 	 type = 'real', 
 	 value = 'cmath.sin(alphaH)', 
 	 texname = 'ZH22') 
- 
-ZP11 = 	 Parameter(name='ZP11', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = '-cmath.cos(beta)', 
-	 texname = 'ZP11') 
- 
-ZP12 = 	 Parameter(name='ZP12', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = 'cmath.sin(beta)', 
-	 texname = 'ZP12') 
- 
-ZP21 = 	 Parameter(name='ZP21', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = 'cmath.sin(beta)', 
-	 texname = 'ZP21') 
- 
-ZP22 = 	 Parameter(name='ZP22', 
-	 nature = 'internal', 
-	 type = 'real', 
-	 value = 'cmath.cos(beta)', 
-	 texname = 'ZP22') 
  
 el = 	 Parameter(name='el', 
 	 nature = 'internal', 

@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:31 on 25.10.2017   
+! File created at 22:57 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -138,19 +138,6 @@ Do
        Call Warn_CPV(i_cpv,"IMEXTPAR") 
        End If 
     Call Read_EXTPAR(99,1,i_model,set_mod_par,kont)  
-   Else If (read_line(7:12).Eq."EPSUIN") Then 
-InputValueforepYU= .True. 
-    Call ReadMatrixC(99,3,3,epYUIN,0, "epYUIN",kont)
-
- 
-   Else If (read_line(7:14).Eq."IMEPYUIN") Then 
-     If (i_cpv.Lt.2) Then  
-       Call Warn_CPV(i_cpv,"IMepYU") 
-       Cycle 
-     End If 
-    Call ReadMatrixC(99,3,3,epYUIN,1, "epYUIN",kont)
-
- 
    Else If (read_line(7:10).Eq."YUIN") Then 
 InputValueforYu= .True. 
     Call ReadMatrixC(99,3,3,YuIN,0, "YuIN",kont)
@@ -162,6 +149,19 @@ InputValueforYu= .True.
        Cycle 
      End If 
     Call ReadMatrixC(99,3,3,YuIN,1, "YuIN",kont)
+
+ 
+   Else If (read_line(7:12).Eq."EPSUIN") Then 
+InputValueforepYU= .True. 
+    Call ReadMatrixC(99,3,3,epYUIN,0, "epYUIN",kont)
+
+ 
+   Else If (read_line(7:14).Eq."IMEPYUIN") Then 
+     If (i_cpv.Lt.2) Then  
+       Call Warn_CPV(i_cpv,"IMepYU") 
+       Cycle 
+     End If 
+    Call ReadMatrixC(99,3,3,epYUIN,1, "epYUIN",kont)
 
  
    Else If (read_line(7:10).Eq."YDIN") Then 
@@ -290,8 +290,8 @@ Else If (i_par.Eq.7) Then
 If (i_c.Eq.0) Lambda7Input= Cmplx(wert,Aimag(Lambda7Input),dp) 
 If (i_c.Eq.1) Lambda7Input= Cmplx(Real(Lambda7Input,dp),wert,dp) 
 Else If (i_par.Eq.9) Then 
-If (i_c.Eq.0) M12input= Cmplx(wert,Aimag(M12input),dp) 
-If (i_c.Eq.1) M12input= Cmplx(Real(M12input,dp),wert,dp) 
+If (i_c.Eq.0) M222Input= Cmplx(wert,Aimag(M222Input),dp) 
+If (i_c.Eq.1) M222Input= Cmplx(Real(M222Input,dp),wert,dp) 
 Else
 Write(ErrCan,*) "Error in routine "//NameOfUnit(Iname)
 If (i_c.Eq.0) Write(ErrCan,*) "Unknown entry for Block MINPAR ",i_par
@@ -1483,7 +1483,7 @@ Write(io_L,101) 4, Real(Lambda4Input,dp) ,"# Lambda4Input"
 Write(io_L,101) 5, Real(Lambda5Input,dp) ,"# Lambda5Input"
 Write(io_L,101) 6, Real(Lambda6Input,dp) ,"# Lambda6Input"
 Write(io_L,101) 7, Real(Lambda7Input,dp) ,"# Lambda7Input"
-Write(io_L,101) 9, Real(M12input,dp) ,"# M12input"
+Write(io_L,101) 9, Real(M222Input,dp) ,"# M222Input"
 WriteNextBlock = .False. 
 If (Abs(Aimag(Lambda1Input)).gt.0._dp) WriteNextBlock = .True. 
 If (Abs(Aimag(Lambda2Input)).gt.0._dp) WriteNextBlock = .True. 
@@ -1492,7 +1492,7 @@ If (Abs(Aimag(Lambda4Input)).gt.0._dp) WriteNextBlock = .True.
 If (Abs(Aimag(Lambda5Input)).gt.0._dp) WriteNextBlock = .True. 
 If (Abs(Aimag(Lambda6Input)).gt.0._dp) WriteNextBlock = .True. 
 If (Abs(Aimag(Lambda7Input)).gt.0._dp) WriteNextBlock = .True. 
-If (Abs(Aimag(M12input)).gt.0._dp) WriteNextBlock = .True. 
+If (Abs(Aimag(M222Input)).gt.0._dp) WriteNextBlock = .True. 
 If(WriteNextBlock) Then 
 Write(io_L,100) "Block IMMINPAR  # Input parameters"
 If (Abs(Aimag(Lambda1Input)).gt.0._dp) Then 
@@ -1516,8 +1516,8 @@ End if
 If (Abs(Aimag(Lambda7Input)).gt.0._dp) Then 
 Write(io_L,101) 7, Aimag(Lambda7Input) ,"# Lambda7Input"
 End if 
-If (Abs(Aimag(M12input)).gt.0._dp) Then 
-Write(io_L,101) 9, Aimag(M12input) ,"# M12input"
+If (Abs(Aimag(M222Input)).gt.0._dp) Then 
+Write(io_L,101) 9, Aimag(M222Input) ,"# M222Input"
 End if 
 End if 
 Write(io_L,106) "Block gaugeGUT Q=",m_GUT,"# (GUT scale)" 
@@ -1587,77 +1587,54 @@ If (HighScaleModel.Eq."LOW") Then
 WriteNextBlock = .false. 
 If (OutputForMG) WriteNextBlock = .True. 
 Write(io_L,106) "Block TREEHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Real(M12Tree,dp), "# M12" 
+If (Abs(Aimag(M12Tree)).gt.0._dp) WriteNextBlock = .True. 
 Write(io_L,104) 20,Real(M112Tree,dp), "# M112" 
 If (Abs(Aimag(M112Tree)).gt.0._dp) WriteNextBlock = .True. 
-Write(io_L,104) 21,Real(M222Tree,dp), "# M222" 
-If (Abs(Aimag(M222Tree)).gt.0._dp) WriteNextBlock = .True. 
 If(WriteNextBlock) Then 
 Write(io_L,106) "Block TREEIMHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Aimag(M12Tree), "# M12" 
 Write(io_L,104) 20,Aimag(M112Tree), "# M112" 
-Write(io_L,104) 21,Aimag(M222Tree), "# M222" 
 End if 
 WriteNextBlock = .false. 
 If (OutputForMG) WriteNextBlock = .True. 
 Write(io_L,106) "Block LOOPHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Real(M121L,dp), "# M12" 
+If (Abs(Aimag(M121L)).gt.0._dp) WriteNextBlock = .True. 
 Write(io_L,104) 20,Real(M1121L,dp), "# M112" 
 If (Abs(Aimag(M1121L)).gt.0._dp) WriteNextBlock = .True. 
-Write(io_L,104) 21,Real(M2221L,dp), "# M222" 
-If (Abs(Aimag(M2221L)).gt.0._dp) WriteNextBlock = .True. 
 If(WriteNextBlock) Then 
 Write(io_L,106) "Block LOOPIMHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Aimag(M121L), "# M12" 
 Write(io_L,104) 20,Aimag(M1121L), "# M112" 
-Write(io_L,104) 21,Aimag(M2221L), "# M222" 
 End if 
 Else 
 WriteNextBlock = .false. 
 If (OutputForMG) WriteNextBlock = .True. 
 Write(io_L,106) "Block TREEHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Real(M12Tree,dp), "# M12" 
+If (Abs(Aimag(M12Tree)).gt.0._dp) WriteNextBlock = .True. 
 Write(io_L,104) 20,Real(M112Tree,dp), "# M112" 
 If (Abs(Aimag(M112Tree)).gt.0._dp) WriteNextBlock = .True. 
-Write(io_L,104) 21,Real(M222Tree,dp), "# M222" 
-If (Abs(Aimag(M222Tree)).gt.0._dp) WriteNextBlock = .True. 
 If(WriteNextBlock) Then 
 Write(io_L,106) "Block TREEIMHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Aimag(M12Tree), "# M12" 
 Write(io_L,104) 20,Aimag(M112Tree), "# M112" 
-Write(io_L,104) 21,Aimag(M222Tree), "# M222" 
 End if 
 WriteNextBlock = .false. 
 If (OutputForMG) WriteNextBlock = .True. 
 Write(io_L,106) "Block LOOPHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Real(M121L,dp), "# M12" 
+If (Abs(Aimag(M121L)).gt.0._dp) WriteNextBlock = .True. 
 Write(io_L,104) 20,Real(M1121L,dp), "# M112" 
 If (Abs(Aimag(M1121L)).gt.0._dp) WriteNextBlock = .True. 
-Write(io_L,104) 21,Real(M2221L,dp), "# M222" 
-If (Abs(Aimag(M2221L)).gt.0._dp) WriteNextBlock = .True. 
 If(WriteNextBlock) Then 
 Write(io_L,106) "Block LOOPIMHMIX Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,104) 22,Aimag(M121L), "# M12" 
 Write(io_L,104) 20,Aimag(M1121L), "# M112" 
-Write(io_L,104) 21,Aimag(M2221L), "# M222" 
 End if 
 End if 
 End if 
-Write(io_L,106) "Block epsU Q=",Q,"# (Renormalization Scale)" 
-Write(io_L,107)1,1,Real(epYU(1,1),dp), "# Real(epYU(1,1),dp)" 
-Write(io_L,107)1,2,Real(epYU(1,2),dp), "# Real(epYU(1,2),dp)" 
-Write(io_L,107)1,3,Real(epYU(1,3),dp), "# Real(epYU(1,3),dp)" 
-Write(io_L,107)2,1,Real(epYU(2,1),dp), "# Real(epYU(2,1),dp)" 
-Write(io_L,107)2,2,Real(epYU(2,2),dp), "# Real(epYU(2,2),dp)" 
-Write(io_L,107)2,3,Real(epYU(2,3),dp), "# Real(epYU(2,3),dp)" 
-Write(io_L,107)3,1,Real(epYU(3,1),dp), "# Real(epYU(3,1),dp)" 
-Write(io_L,107)3,2,Real(epYU(3,2),dp), "# Real(epYU(3,2),dp)" 
-Write(io_L,107)3,3,Real(epYU(3,3),dp), "# Real(epYU(3,3),dp)" 
-If ((MaxVal(Abs(AImag(epYU))).gt.0._dp).OR.(OutputForMG)) Then 
-Write(io_L,106) "Block IMepsU Q=",Q,"# (Renormalization Scale)" 
-Write(io_L,107)1,1,Aimag(epYU(1,1)), "# Aimag(epYU(1,1))" 
-Write(io_L,107)1,2,Aimag(epYU(1,2)), "# Aimag(epYU(1,2))" 
-Write(io_L,107)1,3,Aimag(epYU(1,3)), "# Aimag(epYU(1,3))" 
-Write(io_L,107)2,1,Aimag(epYU(2,1)), "# Aimag(epYU(2,1))" 
-Write(io_L,107)2,2,Aimag(epYU(2,2)), "# Aimag(epYU(2,2))" 
-Write(io_L,107)2,3,Aimag(epYU(2,3)), "# Aimag(epYU(2,3))" 
-Write(io_L,107)3,1,Aimag(epYU(3,1)), "# Aimag(epYU(3,1))" 
-Write(io_L,107)3,2,Aimag(epYU(3,2)), "# Aimag(epYU(3,2))" 
-Write(io_L,107)3,3,Aimag(epYU(3,3)), "# Aimag(epYU(3,3))" 
-End If 
-
 Write(io_L,106) "Block Yu Q=",Q,"# (Renormalization Scale)" 
 Write(io_L,107)1,1,Real(Yu(1,1),dp), "# Real(Yu(1,1),dp)" 
 Write(io_L,107)1,2,Real(Yu(1,2),dp), "# Real(Yu(1,2),dp)" 
@@ -1679,6 +1656,29 @@ Write(io_L,107)2,3,Aimag(Yu(2,3)), "# Aimag(Yu(2,3))"
 Write(io_L,107)3,1,Aimag(Yu(3,1)), "# Aimag(Yu(3,1))" 
 Write(io_L,107)3,2,Aimag(Yu(3,2)), "# Aimag(Yu(3,2))" 
 Write(io_L,107)3,3,Aimag(Yu(3,3)), "# Aimag(Yu(3,3))" 
+End If 
+
+Write(io_L,106) "Block epsU Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,107)1,1,Real(epYU(1,1),dp), "# Real(epYU(1,1),dp)" 
+Write(io_L,107)1,2,Real(epYU(1,2),dp), "# Real(epYU(1,2),dp)" 
+Write(io_L,107)1,3,Real(epYU(1,3),dp), "# Real(epYU(1,3),dp)" 
+Write(io_L,107)2,1,Real(epYU(2,1),dp), "# Real(epYU(2,1),dp)" 
+Write(io_L,107)2,2,Real(epYU(2,2),dp), "# Real(epYU(2,2),dp)" 
+Write(io_L,107)2,3,Real(epYU(2,3),dp), "# Real(epYU(2,3),dp)" 
+Write(io_L,107)3,1,Real(epYU(3,1),dp), "# Real(epYU(3,1),dp)" 
+Write(io_L,107)3,2,Real(epYU(3,2),dp), "# Real(epYU(3,2),dp)" 
+Write(io_L,107)3,3,Real(epYU(3,3),dp), "# Real(epYU(3,3),dp)" 
+If ((MaxVal(Abs(AImag(epYU))).gt.0._dp).OR.(OutputForMG)) Then 
+Write(io_L,106) "Block IMepsU Q=",Q,"# (Renormalization Scale)" 
+Write(io_L,107)1,1,Aimag(epYU(1,1)), "# Aimag(epYU(1,1))" 
+Write(io_L,107)1,2,Aimag(epYU(1,2)), "# Aimag(epYU(1,2))" 
+Write(io_L,107)1,3,Aimag(epYU(1,3)), "# Aimag(epYU(1,3))" 
+Write(io_L,107)2,1,Aimag(epYU(2,1)), "# Aimag(epYU(2,1))" 
+Write(io_L,107)2,2,Aimag(epYU(2,2)), "# Aimag(epYU(2,2))" 
+Write(io_L,107)2,3,Aimag(epYU(2,3)), "# Aimag(epYU(2,3))" 
+Write(io_L,107)3,1,Aimag(epYU(3,1)), "# Aimag(epYU(3,1))" 
+Write(io_L,107)3,2,Aimag(epYU(3,2)), "# Aimag(epYU(3,2))" 
+Write(io_L,107)3,3,Aimag(epYU(3,3)), "# Aimag(epYU(3,3))" 
 End If 
 
 Write(io_L,106) "Block Yd Q=",Q,"# (Renormalization Scale)" 
@@ -1789,29 +1789,6 @@ Write(io_L,104) 32,Real(Lam2GUT,dp), "# Lam2"
 Write(io_L,104) 22,Real(M12GUT,dp), "# M12" 
 Write(io_L,104) 20,Real(M112GUT,dp), "# M112" 
 Write(io_L,104) 21,Real(M222GUT,dp), "# M222" 
-Write(io_L,106) "Block epYUGUT Q=",M_GUT,"# (GUT Scale)" 
-Write(io_L,107)1,1,Real(epYUGUT(1,1),dp), "# Real(epYUGUT(1,1),dp)" 
-Write(io_L,107)1,2,Real(epYUGUT(1,2),dp), "# Real(epYUGUT(1,2),dp)" 
-Write(io_L,107)1,3,Real(epYUGUT(1,3),dp), "# Real(epYUGUT(1,3),dp)" 
-Write(io_L,107)2,1,Real(epYUGUT(2,1),dp), "# Real(epYUGUT(2,1),dp)" 
-Write(io_L,107)2,2,Real(epYUGUT(2,2),dp), "# Real(epYUGUT(2,2),dp)" 
-Write(io_L,107)2,3,Real(epYUGUT(2,3),dp), "# Real(epYUGUT(2,3),dp)" 
-Write(io_L,107)3,1,Real(epYUGUT(3,1),dp), "# Real(epYUGUT(3,1),dp)" 
-Write(io_L,107)3,2,Real(epYUGUT(3,2),dp), "# Real(epYUGUT(3,2),dp)" 
-Write(io_L,107)3,3,Real(epYUGUT(3,3),dp), "# Real(epYUGUT(3,3),dp)" 
-If ((MaxVal(Abs(AImag(epYUGUT))).gt.0._dp).OR.(OutputForMG)) Then 
-Write(io_L,106) "Block IMepYUGUT Q=",M_GUT,"# (GUT Scale)" 
-Write(io_L,107)1,1,Aimag(epYUGUT(1,1)), "# Aimag(epYUGUT(1,1))" 
-Write(io_L,107)1,2,Aimag(epYUGUT(1,2)), "# Aimag(epYUGUT(1,2))" 
-Write(io_L,107)1,3,Aimag(epYUGUT(1,3)), "# Aimag(epYUGUT(1,3))" 
-Write(io_L,107)2,1,Aimag(epYUGUT(2,1)), "# Aimag(epYUGUT(2,1))" 
-Write(io_L,107)2,2,Aimag(epYUGUT(2,2)), "# Aimag(epYUGUT(2,2))" 
-Write(io_L,107)2,3,Aimag(epYUGUT(2,3)), "# Aimag(epYUGUT(2,3))" 
-Write(io_L,107)3,1,Aimag(epYUGUT(3,1)), "# Aimag(epYUGUT(3,1))" 
-Write(io_L,107)3,2,Aimag(epYUGUT(3,2)), "# Aimag(epYUGUT(3,2))" 
-Write(io_L,107)3,3,Aimag(epYUGUT(3,3)), "# Aimag(epYUGUT(3,3))" 
-End If 
-
 Write(io_L,106) "Block YuGUT Q=",M_GUT,"# (GUT Scale)" 
 Write(io_L,107)1,1,Real(YuGUT(1,1),dp), "# Real(YuGUT(1,1),dp)" 
 Write(io_L,107)1,2,Real(YuGUT(1,2),dp), "# Real(YuGUT(1,2),dp)" 
@@ -1833,6 +1810,29 @@ Write(io_L,107)2,3,Aimag(YuGUT(2,3)), "# Aimag(YuGUT(2,3))"
 Write(io_L,107)3,1,Aimag(YuGUT(3,1)), "# Aimag(YuGUT(3,1))" 
 Write(io_L,107)3,2,Aimag(YuGUT(3,2)), "# Aimag(YuGUT(3,2))" 
 Write(io_L,107)3,3,Aimag(YuGUT(3,3)), "# Aimag(YuGUT(3,3))" 
+End If 
+
+Write(io_L,106) "Block epYUGUT Q=",M_GUT,"# (GUT Scale)" 
+Write(io_L,107)1,1,Real(epYUGUT(1,1),dp), "# Real(epYUGUT(1,1),dp)" 
+Write(io_L,107)1,2,Real(epYUGUT(1,2),dp), "# Real(epYUGUT(1,2),dp)" 
+Write(io_L,107)1,3,Real(epYUGUT(1,3),dp), "# Real(epYUGUT(1,3),dp)" 
+Write(io_L,107)2,1,Real(epYUGUT(2,1),dp), "# Real(epYUGUT(2,1),dp)" 
+Write(io_L,107)2,2,Real(epYUGUT(2,2),dp), "# Real(epYUGUT(2,2),dp)" 
+Write(io_L,107)2,3,Real(epYUGUT(2,3),dp), "# Real(epYUGUT(2,3),dp)" 
+Write(io_L,107)3,1,Real(epYUGUT(3,1),dp), "# Real(epYUGUT(3,1),dp)" 
+Write(io_L,107)3,2,Real(epYUGUT(3,2),dp), "# Real(epYUGUT(3,2),dp)" 
+Write(io_L,107)3,3,Real(epYUGUT(3,3),dp), "# Real(epYUGUT(3,3),dp)" 
+If ((MaxVal(Abs(AImag(epYUGUT))).gt.0._dp).OR.(OutputForMG)) Then 
+Write(io_L,106) "Block IMepYUGUT Q=",M_GUT,"# (GUT Scale)" 
+Write(io_L,107)1,1,Aimag(epYUGUT(1,1)), "# Aimag(epYUGUT(1,1))" 
+Write(io_L,107)1,2,Aimag(epYUGUT(1,2)), "# Aimag(epYUGUT(1,2))" 
+Write(io_L,107)1,3,Aimag(epYUGUT(1,3)), "# Aimag(epYUGUT(1,3))" 
+Write(io_L,107)2,1,Aimag(epYUGUT(2,1)), "# Aimag(epYUGUT(2,1))" 
+Write(io_L,107)2,2,Aimag(epYUGUT(2,2)), "# Aimag(epYUGUT(2,2))" 
+Write(io_L,107)2,3,Aimag(epYUGUT(2,3)), "# Aimag(epYUGUT(2,3))" 
+Write(io_L,107)3,1,Aimag(epYUGUT(3,1)), "# Aimag(epYUGUT(3,1))" 
+Write(io_L,107)3,2,Aimag(epYUGUT(3,2)), "# Aimag(epYUGUT(3,2))" 
+Write(io_L,107)3,3,Aimag(epYUGUT(3,3)), "# Aimag(epYUGUT(3,3))" 
 End If 
 
 Write(io_L,106) "Block YdGUT Q=",M_GUT,"# (GUT Scale)" 
@@ -6237,24 +6237,6 @@ Write(123,*) "Lam3_r = ",Real(Lam3,dp)
 Write(123,*) "Lam3_i = ",AImag(Lam3) 
 Write(123,*) "Lam2_r = ",Real(Lam2,dp) 
 Write(123,*) "Lam2_i = ",AImag(Lam2) 
-Write(123,*) "epYU11_r= ",Real(epYU(1,1),dp)
-Write(123,*) "epYU12_r= ",Real(epYU(1,2),dp)
-Write(123,*) "epYU13_r= ",Real(epYU(1,3),dp)
-Write(123,*) "epYU21_r= ",Real(epYU(2,1),dp)
-Write(123,*) "epYU22_r= ",Real(epYU(2,2),dp)
-Write(123,*) "epYU23_r= ",Real(epYU(2,3),dp)
-Write(123,*) "epYU31_r= ",Real(epYU(3,1),dp)
-Write(123,*) "epYU32_r= ",Real(epYU(3,2),dp)
-Write(123,*) "epYU33_r= ",Real(epYU(3,3),dp)
-Write(123,*) "epYU11_i= ",AImag(epYU(1,1))
-Write(123,*) "epYU12_i= ",AImag(epYU(1,2))
-Write(123,*) "epYU13_i= ",AImag(epYU(1,3))
-Write(123,*) "epYU21_i= ",AImag(epYU(2,1))
-Write(123,*) "epYU22_i= ",AImag(epYU(2,2))
-Write(123,*) "epYU23_i= ",AImag(epYU(2,3))
-Write(123,*) "epYU31_i= ",AImag(epYU(3,1))
-Write(123,*) "epYU32_i= ",AImag(epYU(3,2))
-Write(123,*) "epYU33_i= ",AImag(epYU(3,3))
 Write(123,*) "Yu11_r= ",Real(Yu(1,1),dp)
 Write(123,*) "Yu12_r= ",Real(Yu(1,2),dp)
 Write(123,*) "Yu13_r= ",Real(Yu(1,3),dp)
@@ -6273,6 +6255,24 @@ Write(123,*) "Yu23_i= ",AImag(Yu(2,3))
 Write(123,*) "Yu31_i= ",AImag(Yu(3,1))
 Write(123,*) "Yu32_i= ",AImag(Yu(3,2))
 Write(123,*) "Yu33_i= ",AImag(Yu(3,3))
+Write(123,*) "epYU11_r= ",Real(epYU(1,1),dp)
+Write(123,*) "epYU12_r= ",Real(epYU(1,2),dp)
+Write(123,*) "epYU13_r= ",Real(epYU(1,3),dp)
+Write(123,*) "epYU21_r= ",Real(epYU(2,1),dp)
+Write(123,*) "epYU22_r= ",Real(epYU(2,2),dp)
+Write(123,*) "epYU23_r= ",Real(epYU(2,3),dp)
+Write(123,*) "epYU31_r= ",Real(epYU(3,1),dp)
+Write(123,*) "epYU32_r= ",Real(epYU(3,2),dp)
+Write(123,*) "epYU33_r= ",Real(epYU(3,3),dp)
+Write(123,*) "epYU11_i= ",AImag(epYU(1,1))
+Write(123,*) "epYU12_i= ",AImag(epYU(1,2))
+Write(123,*) "epYU13_i= ",AImag(epYU(1,3))
+Write(123,*) "epYU21_i= ",AImag(epYU(2,1))
+Write(123,*) "epYU22_i= ",AImag(epYU(2,2))
+Write(123,*) "epYU23_i= ",AImag(epYU(2,3))
+Write(123,*) "epYU31_i= ",AImag(epYU(3,1))
+Write(123,*) "epYU32_i= ",AImag(epYU(3,2))
+Write(123,*) "epYU33_i= ",AImag(epYU(3,3))
 Write(123,*) "Yd11_r= ",Real(Yd(1,1),dp)
 Write(123,*) "Yd12_r= ",Real(Yd(1,2),dp)
 Write(123,*) "Yd13_r= ",Real(Yd(1,3),dp)
@@ -6405,6 +6405,10 @@ Write(123,*) ""
  Write(123,*) "# Mixing matrices" 
  
 Write(123,*) "" 
+Write(123,*) "ZP11= ",ZP(1,1)
+Write(123,*) "ZP12= ",ZP(1,2)
+Write(123,*) "ZP21= ",ZP(2,1)
+Write(123,*) "ZP22= ",ZP(2,2)
 Write(123,*) "ZDL11_r = ", Real(ZDL(1,1),dp)
 Write(123,*) "ZDL11_i = ", AImag(ZDL(1,1))
 Write(123,*) "ZDL12_r = ", Real(ZDL(1,2),dp)

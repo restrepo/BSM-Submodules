@@ -18,7 +18,6 @@ Block MINPAR      # Input parameters
 5   5.0000000E-01    # Lambda5Input
 6   0.000000E+00    # Lambda6Input
 7   0.000000E+00    # Lambda7Input
-9   4.0000000E+04    # M12input
 Block SPhenoInput   # SPheno specific input 
   1 -1              # error level 
   2  0              # SPA conventions 

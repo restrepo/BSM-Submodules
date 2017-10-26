@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:25 on 25.10.2017   
+! File created at 22:52 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -26,13 +26,13 @@ Contains
 
 
 Subroutine GToParameters131(g,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,            & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222)
 
 Implicit None 
 Real(dp), Intent(in) :: g(131) 
 Real(dp),Intent(out) :: g1,g2,g3
 
-Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Integer i1, i2, i3, i4, SumI 
@@ -54,7 +54,7 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-epYU(i1,i2) = Cmplx( g(SumI+18), g(SumI+19), dp) 
+Yu(i1,i2) = Cmplx( g(SumI+18), g(SumI+19), dp) 
 End Do 
  End Do 
  
@@ -62,7 +62,7 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-Yu(i1,i2) = Cmplx( g(SumI+36), g(SumI+37), dp) 
+epYU(i1,i2) = Cmplx( g(SumI+36), g(SumI+37), dp) 
 End Do 
  End Do 
  
@@ -113,13 +113,13 @@ Iname = Iname - 1
 End Subroutine GToParameters131
 
 Subroutine ParametersToG131(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,              & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,g)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,g)
 
 Implicit None 
 Real(dp), Intent(out) :: g(131) 
 Real(dp), Intent(in) :: g1,g2,g3
 
-Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Integer i1, i2, i3, i4, SumI 
@@ -148,8 +148,8 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-g(SumI+18) = Real(epYU(i1,i2), dp) 
-g(SumI+19) = Aimag(epYU(i1,i2)) 
+g(SumI+18) = Real(Yu(i1,i2), dp) 
+g(SumI+19) = Aimag(Yu(i1,i2)) 
 End Do 
 End Do 
 
@@ -157,8 +157,8 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-g(SumI+36) = Real(Yu(i1,i2), dp) 
-g(SumI+37) = Aimag(Yu(i1,i2)) 
+g(SumI+36) = Real(epYU(i1,i2), dp) 
+g(SumI+37) = Aimag(epYU(i1,i2)) 
 End Do 
 End Do 
 
@@ -220,54 +220,54 @@ Real(dp) :: g1,betag11,betag12,Dg1,g2,betag21,betag22,Dg2,g3,betag31,betag32,Dg3
 Complex(dp) :: Lam6,betaLam61,betaLam62,DLam6,Lam5,betaLam51,betaLam52,               & 
 & DLam5,Lam7,betaLam71,betaLam72,DLam7,Lam1,betaLam11,betaLam12,DLam1,Lam4,              & 
 & betaLam41,betaLam42,DLam4,Lam3,betaLam31,betaLam32,DLam3,Lam2,betaLam21,               & 
-& betaLam22,DLam2,epYU(3,3),betaepYU1(3,3),betaepYU2(3,3),DepYU(3,3),adjepYU(3,3)        & 
-& ,Yu(3,3),betaYu1(3,3),betaYu2(3,3),DYu(3,3),adjYu(3,3),Yd(3,3),betaYd1(3,3)            & 
+& betaLam22,DLam2,Yu(3,3),betaYu1(3,3),betaYu2(3,3),DYu(3,3),adjYu(3,3),epYU(3,3)        & 
+& ,betaepYU1(3,3),betaepYU2(3,3),DepYU(3,3),adjepYU(3,3),Yd(3,3),betaYd1(3,3)            & 
 & ,betaYd2(3,3),DYd(3,3),adjYd(3,3),Ye(3,3),betaYe1(3,3),betaYe2(3,3),DYe(3,3)           & 
 & ,adjYe(3,3),epYD(3,3),betaepYD1(3,3),betaepYD2(3,3),DepYD(3,3),adjepYD(3,3)            & 
 & ,epYE(3,3),betaepYE1(3,3),betaepYE2(3,3),DepYE(3,3),adjepYE(3,3),M12,betaM121,         & 
 & betaM122,DM12,M112,betaM1121,betaM1122,DM112,M222,betaM2221,betaM2222,DM222
-Complex(dp) :: epYDadjepYD(3,3),epYDadjYd(3,3),epYEadjepYE(3,3),epYEadjYe(3,3),epYUadjepYD(3,3),     & 
-& epYUadjepYU(3,3),epYUadjYu(3,3),YdadjepYD(3,3),YdadjYd(3,3),YdadjYu(3,3),              & 
-& YeadjepYE(3,3),YeadjYe(3,3),YuadjepYU(3,3),YuadjYd(3,3),YuadjYu(3,3),adjepYDepYD(3,3), & 
+Complex(dp) :: epYDadjepYD(3,3),epYDadjYd(3,3),epYEadjepYE(3,3),epYEadjYe(3,3),epYUadjepYU(3,3),     & 
+& epYUadjYd(3,3),epYUadjYu(3,3),YdadjepYD(3,3),YdadjepYU(3,3),YdadjYd(3,3),              & 
+& YeadjepYE(3,3),YeadjYe(3,3),YuadjepYD(3,3),YuadjepYU(3,3),YuadjYu(3,3),adjepYDepYD(3,3),& 
 & adjepYDYd(3,3),adjepYEepYE(3,3),adjepYEYe(3,3),adjepYUepYU(3,3),adjepYUYu(3,3),        & 
 & adjYdepYD(3,3),adjYdYd(3,3),adjYeepYE(3,3),adjYeYe(3,3),adjYuepYU(3,3),adjYuYu(3,3),   & 
-& epYDadjepYDepYD(3,3),epYDadjepYDYd(3,3),epYDadjepYUepYU(3,3),epYDadjepYUYu(3,3),       & 
-& epYDadjYdYd(3,3),epYDadjYuYu(3,3),epYEadjepYEepYE(3,3),epYEadjepYEYe(3,3),             & 
-& epYEadjYeYe(3,3),epYUadjepYDepYD(3,3),epYUadjepYDYd(3,3),epYUadjepYUepYU(3,3),         & 
-& epYUadjepYUYu(3,3),epYUadjYdYd(3,3),epYUadjYuYu(3,3),YdadjepYDepYD(3,3),               & 
-& YdadjepYUepYU(3,3),YdadjYdepYD(3,3),YdadjYdYd(3,3),YdadjYuepYU(3,3),YdadjYuYu(3,3),    & 
-& YeadjepYEepYE(3,3),YeadjYeepYE(3,3),YeadjYeYe(3,3),YuadjepYDepYD(3,3),YuadjepYUepYU(3,3),& 
-& YuadjYdepYD(3,3),YuadjYdYd(3,3),YuadjYuepYU(3,3),YuadjYuYu(3,3),adjepYDepYDadjepYD(3,3),& 
-& adjepYDepYDadjYd(3,3),adjepYDYdadjepYD(3,3),adjepYDYdadjYd(3,3),adjepYDYdadjYu(3,3),   & 
-& adjepYEepYEadjepYE(3,3),adjepYEepYEadjYe(3,3),adjepYEYeadjepYE(3,3),adjepYEYeadjYe(3,3),& 
-& adjepYUepYUadjepYD(3,3),adjepYUepYUadjepYU(3,3),adjepYUepYUadjYu(3,3),adjepYUYuadjepYU(3,3),& 
-& adjepYUYuadjYd(3,3),adjepYUYuadjYu(3,3),adjYdepYDadjepYD(3,3),adjYdepYDadjYd(3,3),     & 
-& adjYdYdadjepYD(3,3),adjYdYdadjYd(3,3),adjYeepYEadjepYE(3,3),adjYeepYEadjYe(3,3),       & 
-& adjYeYeadjepYE(3,3),adjYeYeadjYe(3,3),adjYuepYUadjepYU(3,3),adjYuepYUadjYu(3,3),       & 
-& adjYuYuadjepYU(3,3),adjYuYuadjYd(3,3),adjYuYuadjYu(3,3),epYDadjepYDepYDadjepYD(3,3),   & 
+& epYDadjepYDepYD(3,3),epYDadjepYDYd(3,3),epYDadjepYUepYU(3,3),epYDadjYdYd(3,3),         & 
+& epYDadjYuepYU(3,3),epYDadjYuYu(3,3),epYEadjepYEepYE(3,3),epYEadjepYEYe(3,3),           & 
+& epYEadjYeYe(3,3),epYUadjepYDepYD(3,3),epYUadjepYUepYU(3,3),epYUadjepYUYu(3,3),         & 
+& epYUadjYdepYD(3,3),epYUadjYdYd(3,3),epYUadjYuYu(3,3),YdadjepYDepYD(3,3),               & 
+& YdadjepYUepYU(3,3),YdadjepYUYu(3,3),YdadjYdepYD(3,3),YdadjYdYd(3,3),YdadjYuYu(3,3),    & 
+& YeadjepYEepYE(3,3),YeadjYeepYE(3,3),YeadjYeYe(3,3),YuadjepYDepYD(3,3),YuadjepYDYd(3,3),& 
+& YuadjepYUepYU(3,3),YuadjYdYd(3,3),YuadjYuepYU(3,3),YuadjYuYu(3,3),adjepYDepYDadjepYD(3,3),& 
+& adjepYDepYDadjYd(3,3),adjepYDYdadjepYD(3,3),adjepYDYdadjYd(3,3),adjepYEepYEadjepYE(3,3),& 
+& adjepYEepYEadjYe(3,3),adjepYEYeadjepYE(3,3),adjepYEYeadjYe(3,3),adjepYUepYUadjepYU(3,3),& 
+& adjepYUepYUadjYu(3,3),adjepYUYuadjepYD(3,3),adjepYUYuadjepYU(3,3),adjepYUYuadjYu(3,3), & 
+& adjYdepYDadjepYD(3,3),adjYdepYDadjYd(3,3),adjYdYdadjepYD(3,3),adjYdYdadjepYU(3,3),     & 
+& adjYdYdadjYd(3,3),adjYeepYEadjepYE(3,3),adjYeepYEadjYe(3,3),adjYeYeadjepYE(3,3),       & 
+& adjYeYeadjYe(3,3),adjYuepYUadjepYU(3,3),adjYuepYUadjYd(3,3),adjYuepYUadjYu(3,3),       & 
+& adjYuYuadjepYD(3,3),adjYuYuadjepYU(3,3),adjYuYuadjYu(3,3),epYDadjepYDepYDadjepYD(3,3), & 
 & epYDadjepYDepYDadjYd(3,3),epYDadjepYDYdadjepYD(3,3),epYDadjepYDYdadjYd(3,3),           & 
-& epYDadjepYUepYUadjepYD(3,3),epYDadjepYUYuadjYd(3,3),epYDadjYdepYDadjepYD(3,3),         & 
-& epYDadjYdepYDadjYd(3,3),epYDadjYdYdadjepYD(3,3),epYDadjYdYdadjYd(3,3),epYEadjepYEepYEadjepYE(3,3),& 
+& epYDadjYdepYDadjepYD(3,3),epYDadjYdepYDadjYd(3,3),epYDadjYdYdadjepYD(3,3),             & 
+& epYDadjYdYdadjYd(3,3),epYDadjYuepYUadjYd(3,3),epYDadjYuYuadjepYD(3,3),epYEadjepYEepYEadjepYE(3,3),& 
 & epYEadjepYEepYEadjYe(3,3),epYEadjepYEYeadjepYE(3,3),epYEadjepYEYeadjYe(3,3),           & 
 & epYEadjYeepYEadjepYE(3,3),epYEadjYeepYEadjYe(3,3),epYEadjYeYeadjepYE(3,3),             & 
-& epYEadjYeYeadjYe(3,3),epYUadjepYDYdadjYu(3,3),epYUadjepYUepYUadjepYU(3,3),             & 
-& epYUadjepYUepYUadjYu(3,3),epYUadjepYUYuadjepYU(3,3),epYUadjepYUYuadjYu(3,3),           & 
+& epYEadjYeYeadjYe(3,3),epYUadjepYUepYUadjepYU(3,3),epYUadjepYUepYUadjYu(3,3),           & 
+& epYUadjepYUYuadjepYU(3,3),epYUadjepYUYuadjYu(3,3),epYUadjYdYdadjepYU(3,3),             & 
 & epYUadjYuepYUadjepYU(3,3),epYUadjYuepYUadjYu(3,3),epYUadjYuYuadjepYU(3,3),             & 
-& epYUadjYuYuadjYu(3,3),YdadjepYDYdadjepYD(3,3),YdadjepYDYdadjYd(3,3),YdadjYdYdadjepYD(3,3),& 
-& YdadjYdYdadjYd(3,3),YdadjYuYuadjYd(3,3),YeadjepYEYeadjepYE(3,3),YeadjepYEYeadjYe(3,3), & 
+& epYUadjYuYuadjYu(3,3),YdadjepYDYdadjepYD(3,3),YdadjepYDYdadjYd(3,3),YdadjepYUYuadjepYD(3,3),& 
+& YdadjYdYdadjepYD(3,3),YdadjYdYdadjYd(3,3),YeadjepYEYeadjepYE(3,3),YeadjepYEYeadjYe(3,3),& 
 & YeadjYeYeadjepYE(3,3),YeadjYeYeadjYe(3,3),YuadjepYUYuadjepYU(3,3),YuadjepYUYuadjYu(3,3),& 
 & YuadjYuYuadjepYU(3,3),YuadjYuYuadjYu(3,3)
 
 Complex(dp) :: TrepYDadjepYD,TrepYDadjYd,TrepYEadjepYE,TrepYEadjYe,TrepYUadjepYU,TrepYUadjYu,        & 
 & TrYdadjepYD,TrYdadjYd,TrYeadjepYE,TrYeadjYe,TrYuadjepYU,TrYuadjYu,TrepYDadjepYDepYDadjepYD,& 
-& TrepYDadjepYDepYDadjYd,TrepYDadjepYDYdadjepYD,TrepYDadjepYDYdadjYd,TrepYDadjepYUepYUadjepYD,& 
-& TrepYDadjepYUYuadjYd,TrepYDadjYdepYDadjepYD,TrepYDadjYdepYDadjYd,TrepYDadjYdYdadjepYD, & 
-& TrepYDadjYdYdadjYd,TrepYEadjepYEepYEadjepYE,TrepYEadjepYEepYEadjYe,TrepYEadjepYEYeadjepYE,& 
+& TrepYDadjepYDepYDadjYd,TrepYDadjepYDYdadjepYD,TrepYDadjepYDYdadjYd,TrepYDadjYdepYDadjepYD,& 
+& TrepYDadjYdepYDadjYd,TrepYDadjYdYdadjepYD,TrepYDadjYdYdadjYd,TrepYDadjYuepYUadjYd,     & 
+& TrepYDadjYuYuadjepYD,TrepYEadjepYEepYEadjepYE,TrepYEadjepYEepYEadjYe,TrepYEadjepYEYeadjepYE,& 
 & TrepYEadjepYEYeadjYe,TrepYEadjYeepYEadjepYE,TrepYEadjYeepYEadjYe,TrepYEadjYeYeadjepYE, & 
-& TrepYEadjYeYeadjYe,TrepYUadjepYDYdadjYu,TrepYUadjepYUepYUadjepYU,TrepYUadjepYUepYUadjYu,& 
-& TrepYUadjepYUYuadjepYU,TrepYUadjepYUYuadjYu,TrepYUadjYuepYUadjepYU,TrepYUadjYuepYUadjYu,& 
+& TrepYEadjYeYeadjYe,TrepYUadjepYUepYUadjepYU,TrepYUadjepYUepYUadjYu,TrepYUadjepYUYuadjepYU,& 
+& TrepYUadjepYUYuadjYu,TrepYUadjYdYdadjepYU,TrepYUadjYuepYUadjepYU,TrepYUadjYuepYUadjYu, & 
 & TrepYUadjYuYuadjepYU,TrepYUadjYuYuadjYu,TrYdadjepYDYdadjepYD,TrYdadjepYDYdadjYd,       & 
-& TrYdadjYdYdadjepYD,TrYdadjYdYdadjYd,TrYdadjYuYuadjYd,TrYeadjepYEYeadjepYE,             & 
+& TrYdadjepYUYuadjepYD,TrYdadjYdYdadjepYD,TrYdadjYdYdadjYd,TrYeadjepYEYeadjepYE,         & 
 & TrYeadjepYEYeadjYe,TrYeadjYeYeadjepYE,TrYeadjYeYeadjYe,TrYuadjepYUYuadjepYU,           & 
 & TrYuadjepYUYuadjYu,TrYuadjYuYuadjepYU,TrYuadjYuYuadjYu
 
@@ -281,11 +281,11 @@ NameOfUnit(Iname) = 'rge131'
 OnlyDiagonal = .Not.GenerationMixing 
 q = t 
  
-Call GToParameters131(gy,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,            & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222)
+Call GToParameters131(gy,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,              & 
+& epYU,Yd,Ye,epYD,epYE,M12,M112,M222)
 
-Call Adjungate(epYU,adjepYU)
 Call Adjungate(Yu,adjYu)
+Call Adjungate(epYU,adjepYU)
 Call Adjungate(Yd,adjYd)
 Call Adjungate(Ye,adjYe)
 Call Adjungate(epYD,adjepYD)
@@ -296,19 +296,19 @@ Forall(i2=1:3)  epYDadjepYD(i2,i2) =  Real(epYDadjepYD(i2,i2),dp)
  epYEadjepYE = Matmul(epYE,adjepYE) 
 Forall(i2=1:3)  epYEadjepYE(i2,i2) =  Real(epYEadjepYE(i2,i2),dp) 
  epYEadjYe = Matmul(epYE,adjYe) 
- epYUadjepYD = Matmul(epYU,adjepYD) 
  epYUadjepYU = Matmul(epYU,adjepYU) 
 Forall(i2=1:3)  epYUadjepYU(i2,i2) =  Real(epYUadjepYU(i2,i2),dp) 
+ epYUadjYd = Matmul(epYU,adjYd) 
  epYUadjYu = Matmul(epYU,adjYu) 
  YdadjepYD = Matmul(Yd,adjepYD) 
+ YdadjepYU = Matmul(Yd,adjepYU) 
  YdadjYd = Matmul(Yd,adjYd) 
 Forall(i2=1:3)  YdadjYd(i2,i2) =  Real(YdadjYd(i2,i2),dp) 
- YdadjYu = Matmul(Yd,adjYu) 
  YeadjepYE = Matmul(Ye,adjepYE) 
  YeadjYe = Matmul(Ye,adjYe) 
 Forall(i2=1:3)  YeadjYe(i2,i2) =  Real(YeadjYe(i2,i2),dp) 
+ YuadjepYD = Matmul(Yu,adjepYD) 
  YuadjepYU = Matmul(Yu,adjepYU) 
- YuadjYd = Matmul(Yu,adjYd) 
  YuadjYu = Matmul(Yu,adjYu) 
 Forall(i2=1:3)  YuadjYu(i2,i2) =  Real(YuadjYu(i2,i2),dp) 
  adjepYDepYD = Matmul(adjepYD,epYD) 
@@ -332,30 +332,30 @@ Forall(i2=1:3)  adjYuYu(i2,i2) =  Real(adjYuYu(i2,i2),dp)
  epYDadjepYDepYD = Matmul(epYD,adjepYDepYD) 
  epYDadjepYDYd = Matmul(epYD,adjepYDYd) 
  epYDadjepYUepYU = Matmul(epYD,adjepYUepYU) 
- epYDadjepYUYu = Matmul(epYD,adjepYUYu) 
  epYDadjYdYd = Matmul(epYD,adjYdYd) 
+ epYDadjYuepYU = Matmul(epYD,adjYuepYU) 
  epYDadjYuYu = Matmul(epYD,adjYuYu) 
  epYEadjepYEepYE = Matmul(epYE,adjepYEepYE) 
  epYEadjepYEYe = Matmul(epYE,adjepYEYe) 
  epYEadjYeYe = Matmul(epYE,adjYeYe) 
  epYUadjepYDepYD = Matmul(epYU,adjepYDepYD) 
- epYUadjepYDYd = Matmul(epYU,adjepYDYd) 
  epYUadjepYUepYU = Matmul(epYU,adjepYUepYU) 
  epYUadjepYUYu = Matmul(epYU,adjepYUYu) 
+ epYUadjYdepYD = Matmul(epYU,adjYdepYD) 
  epYUadjYdYd = Matmul(epYU,adjYdYd) 
  epYUadjYuYu = Matmul(epYU,adjYuYu) 
  YdadjepYDepYD = Matmul(Yd,adjepYDepYD) 
  YdadjepYUepYU = Matmul(Yd,adjepYUepYU) 
+ YdadjepYUYu = Matmul(Yd,adjepYUYu) 
  YdadjYdepYD = Matmul(Yd,adjYdepYD) 
  YdadjYdYd = Matmul(Yd,adjYdYd) 
- YdadjYuepYU = Matmul(Yd,adjYuepYU) 
  YdadjYuYu = Matmul(Yd,adjYuYu) 
  YeadjepYEepYE = Matmul(Ye,adjepYEepYE) 
  YeadjYeepYE = Matmul(Ye,adjYeepYE) 
  YeadjYeYe = Matmul(Ye,adjYeYe) 
  YuadjepYDepYD = Matmul(Yu,adjepYDepYD) 
+ YuadjepYDYd = Matmul(Yu,adjepYDYd) 
  YuadjepYUepYU = Matmul(Yu,adjepYUepYU) 
- YuadjYdepYD = Matmul(Yu,adjYdepYD) 
  YuadjYdYd = Matmul(Yu,adjYdYd) 
  YuadjYuepYU = Matmul(Yu,adjYuepYU) 
  YuadjYuYu = Matmul(Yu,adjYuYu) 
@@ -363,43 +363,43 @@ Forall(i2=1:3)  adjYuYu(i2,i2) =  Real(adjYuYu(i2,i2),dp)
  adjepYDepYDadjYd = Matmul(adjepYD,epYDadjYd) 
  adjepYDYdadjepYD = Matmul(adjepYD,YdadjepYD) 
  adjepYDYdadjYd = Matmul(adjepYD,YdadjYd) 
- adjepYDYdadjYu = Matmul(adjepYD,YdadjYu) 
  adjepYEepYEadjepYE = Matmul(adjepYE,epYEadjepYE) 
  adjepYEepYEadjYe = Matmul(adjepYE,epYEadjYe) 
  adjepYEYeadjepYE = Matmul(adjepYE,YeadjepYE) 
  adjepYEYeadjYe = Matmul(adjepYE,YeadjYe) 
- adjepYUepYUadjepYD = Matmul(adjepYU,epYUadjepYD) 
  adjepYUepYUadjepYU = Matmul(adjepYU,epYUadjepYU) 
  adjepYUepYUadjYu = Matmul(adjepYU,epYUadjYu) 
+ adjepYUYuadjepYD = Matmul(adjepYU,YuadjepYD) 
  adjepYUYuadjepYU = Matmul(adjepYU,YuadjepYU) 
- adjepYUYuadjYd = Matmul(adjepYU,YuadjYd) 
  adjepYUYuadjYu = Matmul(adjepYU,YuadjYu) 
  adjYdepYDadjepYD = Matmul(adjYd,epYDadjepYD) 
  adjYdepYDadjYd = Matmul(adjYd,epYDadjYd) 
  adjYdYdadjepYD = Matmul(adjYd,YdadjepYD) 
+ adjYdYdadjepYU = Matmul(adjYd,YdadjepYU) 
  adjYdYdadjYd = Matmul(adjYd,YdadjYd) 
  adjYeepYEadjepYE = Matmul(adjYe,epYEadjepYE) 
  adjYeepYEadjYe = Matmul(adjYe,epYEadjYe) 
  adjYeYeadjepYE = Matmul(adjYe,YeadjepYE) 
  adjYeYeadjYe = Matmul(adjYe,YeadjYe) 
  adjYuepYUadjepYU = Matmul(adjYu,epYUadjepYU) 
+ adjYuepYUadjYd = Matmul(adjYu,epYUadjYd) 
  adjYuepYUadjYu = Matmul(adjYu,epYUadjYu) 
+ adjYuYuadjepYD = Matmul(adjYu,YuadjepYD) 
  adjYuYuadjepYU = Matmul(adjYu,YuadjepYU) 
- adjYuYuadjYd = Matmul(adjYu,YuadjYd) 
  adjYuYuadjYu = Matmul(adjYu,YuadjYu) 
  epYDadjepYDepYDadjepYD = Matmul(epYD,adjepYDepYDadjepYD) 
 Forall(i2=1:3)  epYDadjepYDepYDadjepYD(i2,i2) =  Real(epYDadjepYDepYDadjepYD(i2,i2),dp) 
  epYDadjepYDepYDadjYd = Matmul(epYD,adjepYDepYDadjYd) 
  epYDadjepYDYdadjepYD = Matmul(epYD,adjepYDYdadjepYD) 
  epYDadjepYDYdadjYd = Matmul(epYD,adjepYDYdadjYd) 
- epYDadjepYUepYUadjepYD = Matmul(epYD,adjepYUepYUadjepYD) 
-Forall(i2=1:3)  epYDadjepYUepYUadjepYD(i2,i2) =  Real(epYDadjepYUepYUadjepYD(i2,i2),dp) 
- epYDadjepYUYuadjYd = Matmul(epYD,adjepYUYuadjYd) 
  epYDadjYdepYDadjepYD = Matmul(epYD,adjYdepYDadjepYD) 
  epYDadjYdepYDadjYd = Matmul(epYD,adjYdepYDadjYd) 
  epYDadjYdYdadjepYD = Matmul(epYD,adjYdYdadjepYD) 
 Forall(i2=1:3)  epYDadjYdYdadjepYD(i2,i2) =  Real(epYDadjYdYdadjepYD(i2,i2),dp) 
  epYDadjYdYdadjYd = Matmul(epYD,adjYdYdadjYd) 
+ epYDadjYuepYUadjYd = Matmul(epYD,adjYuepYUadjYd) 
+ epYDadjYuYuadjepYD = Matmul(epYD,adjYuYuadjepYD) 
+Forall(i2=1:3)  epYDadjYuYuadjepYD(i2,i2) =  Real(epYDadjYuYuadjepYD(i2,i2),dp) 
  epYEadjepYEepYEadjepYE = Matmul(epYE,adjepYEepYEadjepYE) 
 Forall(i2=1:3)  epYEadjepYEepYEadjepYE(i2,i2) =  Real(epYEadjepYEepYEadjepYE(i2,i2),dp) 
  epYEadjepYEepYEadjYe = Matmul(epYE,adjepYEepYEadjYe) 
@@ -410,12 +410,13 @@ Forall(i2=1:3)  epYEadjepYEepYEadjepYE(i2,i2) =  Real(epYEadjepYEepYEadjepYE(i2,
  epYEadjYeYeadjepYE = Matmul(epYE,adjYeYeadjepYE) 
 Forall(i2=1:3)  epYEadjYeYeadjepYE(i2,i2) =  Real(epYEadjYeYeadjepYE(i2,i2),dp) 
  epYEadjYeYeadjYe = Matmul(epYE,adjYeYeadjYe) 
- epYUadjepYDYdadjYu = Matmul(epYU,adjepYDYdadjYu) 
  epYUadjepYUepYUadjepYU = Matmul(epYU,adjepYUepYUadjepYU) 
 Forall(i2=1:3)  epYUadjepYUepYUadjepYU(i2,i2) =  Real(epYUadjepYUepYUadjepYU(i2,i2),dp) 
  epYUadjepYUepYUadjYu = Matmul(epYU,adjepYUepYUadjYu) 
  epYUadjepYUYuadjepYU = Matmul(epYU,adjepYUYuadjepYU) 
  epYUadjepYUYuadjYu = Matmul(epYU,adjepYUYuadjYu) 
+ epYUadjYdYdadjepYU = Matmul(epYU,adjYdYdadjepYU) 
+Forall(i2=1:3)  epYUadjYdYdadjepYU(i2,i2) =  Real(epYUadjYdYdadjepYU(i2,i2),dp) 
  epYUadjYuepYUadjepYU = Matmul(epYU,adjYuepYUadjepYU) 
  epYUadjYuepYUadjYu = Matmul(epYU,adjYuepYUadjYu) 
  epYUadjYuYuadjepYU = Matmul(epYU,adjYuYuadjepYU) 
@@ -423,11 +424,10 @@ Forall(i2=1:3)  epYUadjYuYuadjepYU(i2,i2) =  Real(epYUadjYuYuadjepYU(i2,i2),dp)
  epYUadjYuYuadjYu = Matmul(epYU,adjYuYuadjYu) 
  YdadjepYDYdadjepYD = Matmul(Yd,adjepYDYdadjepYD) 
  YdadjepYDYdadjYd = Matmul(Yd,adjepYDYdadjYd) 
+ YdadjepYUYuadjepYD = Matmul(Yd,adjepYUYuadjepYD) 
  YdadjYdYdadjepYD = Matmul(Yd,adjYdYdadjepYD) 
  YdadjYdYdadjYd = Matmul(Yd,adjYdYdadjYd) 
 Forall(i2=1:3)  YdadjYdYdadjYd(i2,i2) =  Real(YdadjYdYdadjYd(i2,i2),dp) 
- YdadjYuYuadjYd = Matmul(Yd,adjYuYuadjYd) 
-Forall(i2=1:3)  YdadjYuYuadjYd(i2,i2) =  Real(YdadjYuYuadjYd(i2,i2),dp) 
  YeadjepYEYeadjepYE = Matmul(Ye,adjepYEYeadjepYE) 
  YeadjepYEYeadjYe = Matmul(Ye,adjepYEYeadjYe) 
  YeadjYeYeadjepYE = Matmul(Ye,adjYeYeadjepYE) 
@@ -454,12 +454,12 @@ Forall(i2=1:3)  YuadjYuYuadjYu(i2,i2) =  Real(YuadjYuYuadjYu(i2,i2),dp)
  TrepYDadjepYDepYDadjYd = cTrace(epYDadjepYDepYDadjYd) 
  TrepYDadjepYDYdadjepYD = cTrace(epYDadjepYDYdadjepYD) 
  TrepYDadjepYDYdadjYd = cTrace(epYDadjepYDYdadjYd) 
- TrepYDadjepYUepYUadjepYD = Real(cTrace(epYDadjepYUepYUadjepYD),dp) 
- TrepYDadjepYUYuadjYd = cTrace(epYDadjepYUYuadjYd) 
  TrepYDadjYdepYDadjepYD = cTrace(epYDadjYdepYDadjepYD) 
  TrepYDadjYdepYDadjYd = cTrace(epYDadjYdepYDadjYd) 
  TrepYDadjYdYdadjepYD = Real(cTrace(epYDadjYdYdadjepYD),dp) 
  TrepYDadjYdYdadjYd = cTrace(epYDadjYdYdadjYd) 
+ TrepYDadjYuepYUadjYd = cTrace(epYDadjYuepYUadjYd) 
+ TrepYDadjYuYuadjepYD = Real(cTrace(epYDadjYuYuadjepYD),dp) 
  TrepYEadjepYEepYEadjepYE = Real(cTrace(epYEadjepYEepYEadjepYE),dp) 
  TrepYEadjepYEepYEadjYe = cTrace(epYEadjepYEepYEadjYe) 
  TrepYEadjepYEYeadjepYE = cTrace(epYEadjepYEYeadjepYE) 
@@ -468,20 +468,20 @@ Forall(i2=1:3)  YuadjYuYuadjYu(i2,i2) =  Real(YuadjYuYuadjYu(i2,i2),dp)
  TrepYEadjYeepYEadjYe = cTrace(epYEadjYeepYEadjYe) 
  TrepYEadjYeYeadjepYE = Real(cTrace(epYEadjYeYeadjepYE),dp) 
  TrepYEadjYeYeadjYe = cTrace(epYEadjYeYeadjYe) 
- TrepYUadjepYDYdadjYu = cTrace(epYUadjepYDYdadjYu) 
  TrepYUadjepYUepYUadjepYU = Real(cTrace(epYUadjepYUepYUadjepYU),dp) 
  TrepYUadjepYUepYUadjYu = cTrace(epYUadjepYUepYUadjYu) 
  TrepYUadjepYUYuadjepYU = cTrace(epYUadjepYUYuadjepYU) 
  TrepYUadjepYUYuadjYu = cTrace(epYUadjepYUYuadjYu) 
+ TrepYUadjYdYdadjepYU = Real(cTrace(epYUadjYdYdadjepYU),dp) 
  TrepYUadjYuepYUadjepYU = cTrace(epYUadjYuepYUadjepYU) 
  TrepYUadjYuepYUadjYu = cTrace(epYUadjYuepYUadjYu) 
  TrepYUadjYuYuadjepYU = Real(cTrace(epYUadjYuYuadjepYU),dp) 
  TrepYUadjYuYuadjYu = cTrace(epYUadjYuYuadjYu) 
  TrYdadjepYDYdadjepYD = cTrace(YdadjepYDYdadjepYD) 
  TrYdadjepYDYdadjYd = cTrace(YdadjepYDYdadjYd) 
+ TrYdadjepYUYuadjepYD = cTrace(YdadjepYUYuadjepYD) 
  TrYdadjYdYdadjepYD = cTrace(YdadjYdYdadjepYD) 
  TrYdadjYdYdadjYd = Real(cTrace(YdadjYdYdadjYd),dp) 
- TrYdadjYuYuadjYd = Real(cTrace(YdadjYuYuadjYd),dp) 
  TrYeadjepYEYeadjepYE = cTrace(YeadjepYEYeadjepYE) 
  TrYeadjepYEYeadjYe = cTrace(YeadjepYEYeadjYe) 
  TrYeadjYeYeadjepYE = cTrace(YeadjYeYeadjepYE) 
@@ -579,15 +579,15 @@ betaLam61  = (-18*g1p2*Lam6 - 90*g2p2*Lam6 + 120*Lam1*Lam6 + 60*Lam3*Lam6 +     
 &  80*Lam4*Lam6 + 100*Lam5*Lam6 + 60*Lam3*Lam7 + 40*Lam4*Lam7 + 20*Lam5*Lam7 +           & 
 &  30*Lam6*TrepYDadjepYD + 15*(Lam1 + Lam3 + Lam4 + Lam5)*TrepYDadjYd - 60._dp*(TrepYDadjYdYdadjYd)& 
 &  + 10*Lam6*TrepYEadjepYE + 5*Lam1*TrepYEadjYe + 5*Lam3*TrepYEadjYe + 5*Lam4*TrepYEadjYe +& 
-&  5*Lam5*TrepYEadjYe - 20._dp*(TrepYEadjYeYeadjYe) + 90*Lam6*TrepYUadjepYU -            & 
-&  30._dp*(TrepYUadjepYUepYUadjYu) - 60._dp*(TrepYUadjepYUYuadjepYU) + 15*Lam1*TrepYUadjYu +& 
-&  15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 30._dp*(TrepYUadjYuepYUadjepYU)& 
-&  + 15*Lam1*TrYdadjepYD + 15*Lam3*TrYdadjepYD + 15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD -& 
-&  30._dp*(TrYdadjepYDYdadjYd) + 90*Lam6*TrYdadjYd - 30._dp*(TrYdadjYdYdadjepYD)         & 
-&  + 5*Lam1*TrYeadjepYE + 5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE + 5*Lam5*TrYeadjepYE - & 
-&  10._dp*(TrYeadjepYEYeadjYe) + 30*Lam6*TrYeadjYe - 10._dp*(TrYeadjYeYeadjepYE)         & 
-&  + 15*Lam1*TrYuadjepYU + 15*Lam3*TrYuadjepYU + 15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU +& 
-&  30*Lam6*TrYuadjYu)/10._dp
+&  5*Lam5*TrepYEadjYe - 20._dp*(TrepYEadjYeYeadjYe) + 30*Lam6*TrepYUadjepYU +            & 
+&  15*Lam1*TrepYUadjYu + 15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu -& 
+&  60._dp*(TrepYUadjYuYuadjYu) + 15*Lam1*TrYdadjepYD + 15*Lam3*TrYdadjepYD +             & 
+&  15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD - 30._dp*(TrYdadjepYDYdadjYd)               & 
+&  + 90*Lam6*TrYdadjYd - 30._dp*(TrYdadjYdYdadjepYD) + 5*Lam1*TrYeadjepYE +              & 
+&  5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE + 5*Lam5*TrYeadjepYE - 10._dp*(TrYeadjepYEYeadjYe)& 
+&  + 30*Lam6*TrYeadjYe - 10._dp*(TrYeadjYeYeadjepYE) + 15*Lam1*TrYuadjepYU +             & 
+&  15*Lam3*TrYuadjepYU + 15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU - 30._dp*(TrYuadjepYUYuadjYu)& 
+&  + 90*Lam6*TrYuadjYu - 30._dp*(TrYuadjYuYuadjepYU))/10._dp
 
  
  
@@ -645,13 +645,13 @@ betaLam71  = (60*Lam3*Lam6 + 40*Lam4*Lam6 + 20*Lam5*Lam6 - 18*g1p2*Lam7 -       
 &  + 15*(Lam2 + Lam3 + Lam4 + Lam5)*TrepYDadjYd - 30._dp*(TrepYDadjYdepYDadjepYD)        & 
 &  + 30*Lam7*TrepYEadjepYE - 10._dp*(TrepYEadjepYEepYEadjYe) - 20._dp*(TrepYEadjepYEYeadjepYE)& 
 &  + 5*Lam2*TrepYEadjYe + 5*Lam3*TrepYEadjYe + 5*Lam4*TrepYEadjYe + 5*Lam5*TrepYEadjYe - & 
-&  10._dp*(TrepYEadjYeepYEadjepYE) + 30*Lam7*TrepYUadjepYU + 15*Lam2*TrepYUadjYu +       & 
-&  15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 60._dp*(TrepYUadjYuYuadjYu)& 
+&  10._dp*(TrepYEadjYeepYEadjepYE) + 90*Lam7*TrepYUadjepYU - 30._dp*(TrepYUadjepYUepYUadjYu)& 
+&  - 60._dp*(TrepYUadjepYUYuadjepYU) + 15*Lam2*TrepYUadjYu + 15*Lam3*TrepYUadjYu +       & 
+&  15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 30._dp*(TrepYUadjYuepYUadjepYU)           & 
 &  + 15*Lam2*TrYdadjepYD + 15*Lam3*TrYdadjepYD + 15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD +& 
 &  30*Lam7*TrYdadjYd + 5*Lam2*TrYeadjepYE + 5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE +    & 
 &  5*Lam5*TrYeadjepYE + 10*Lam7*TrYeadjYe + 15*Lam2*TrYuadjepYU + 15*Lam3*TrYuadjepYU +  & 
-&  15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU - 30._dp*(TrYuadjepYUYuadjYu)               & 
-&  + 90*Lam7*TrYuadjYu - 30._dp*(TrYuadjYuYuadjepYU))/10._dp
+&  15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU + 30*Lam7*TrYuadjYu)/10._dp
 
  
  
@@ -676,9 +676,9 @@ Call Chop(DLam7)
 betaLam11  = 27._dp*(g1p4)/100._dp + (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)              & 
 & /4._dp + 12._dp*(Lam1p2) + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2)            & 
 &  + 24._dp*(Lam6p2) - (9*g1p2*Lam1)/5._dp - 9*g2p2*Lam1 + 4*Lam3*Lam4 + 6*Lam6*TrepYDadjYd +& 
-&  2*Lam6*TrepYEadjYe + 12*Lam1*TrepYUadjepYU - 12._dp*(TrepYUadjepYUepYUadjepYU)        & 
-&  + 6*Lam6*TrepYUadjYu + 6*Lam6*TrYdadjepYD + 12*Lam1*TrYdadjYd - 12._dp*(TrYdadjYdYdadjYd)& 
-&  + 2*Lam6*TrYeadjepYE + 4*Lam1*TrYeadjYe - 4._dp*(TrYeadjYeYeadjYe) + 6*Lam6*TrYuadjepYU
+&  2*Lam6*TrepYEadjYe + 6*Lam6*TrepYUadjYu + 6*Lam6*TrYdadjepYD + 12*Lam1*TrYdadjYd -    & 
+&  12._dp*(TrYdadjYdYdadjYd) + 2*Lam6*TrYeadjepYE + 4*Lam1*TrYeadjYe - 4._dp*(TrYeadjYeYeadjYe)& 
+&  + 6*Lam6*TrYuadjepYU + 12*Lam1*TrYuadjYu - 12._dp*(TrYuadjYuYuadjYu)
 
  
  
@@ -702,14 +702,14 @@ Call Chop(DLam1)
  
 betaLam41  = (9*g1p2*g2p2)/5._dp + 4._dp*(Lam4p2) + 8._dp*(Lam5p2) + 10._dp*(Lam6p2)  & 
 &  + 10._dp*(Lam7p2) - (9*g1p2*Lam4)/5._dp - 9*g2p2*Lam4 + 2*Lam1*Lam4 + 2*Lam2*Lam4 +   & 
-&  8*Lam3*Lam4 + 4*Lam6*Lam7 + 6*Lam4*TrepYDadjepYD + 12._dp*(TrepYDadjepYUepYUadjepYD)  & 
-&  - 12._dp*(TrepYDadjepYUYuadjYd) + 3*(Lam6 + Lam7)*TrepYDadjYd - 12._dp*(TrepYDadjYdYdadjepYD)& 
+&  8*Lam3*Lam4 + 4*Lam6*Lam7 + 6*Lam4*TrepYDadjepYD + 3*(Lam6 + Lam7)*TrepYDadjYd -      & 
+&  12._dp*(TrepYDadjYdYdadjepYD) - 12._dp*(TrepYDadjYuepYUadjYd) + 12._dp*(TrepYDadjYuYuadjepYD)& 
 &  + 2*Lam4*TrepYEadjepYE + Lam6*TrepYEadjYe + Lam7*TrepYEadjYe - 4._dp*(TrepYEadjYeYeadjepYE)& 
-&  - 12._dp*(TrepYUadjepYDYdadjYu) + 6*Lam4*TrepYUadjepYU + 3*Lam6*TrepYUadjYu +         & 
+&  + 6*Lam4*TrepYUadjepYU + 12._dp*(TrepYUadjYdYdadjepYU) + 3*Lam6*TrepYUadjYu +         & 
 &  3*Lam7*TrepYUadjYu - 12._dp*(TrepYUadjYuYuadjepYU) + 3*Lam6*TrYdadjepYD +             & 
-&  3*Lam7*TrYdadjepYD + 6*Lam4*TrYdadjYd + 12._dp*(TrYdadjYuYuadjYd) + Lam6*TrYeadjepYE +& 
-&  Lam7*TrYeadjepYE + 2*Lam4*TrYeadjYe + 3*Lam6*TrYuadjepYU + 3*Lam7*TrYuadjepYU +       & 
-&  6*Lam4*TrYuadjYu
+&  3*Lam7*TrYdadjepYD - 12._dp*(TrYdadjepYUYuadjepYD) + 6*Lam4*TrYdadjYd +               & 
+&  Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam4*TrYeadjYe + 3*Lam6*TrYuadjepYU +         & 
+&  3*Lam7*TrYuadjepYU + 6*Lam4*TrYuadjYu
 
  
  
@@ -735,12 +735,12 @@ betaLam31  = 27._dp*(g1p4)/100._dp - (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)        
 & /4._dp + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2) + 4._dp*(Lam6p2)             & 
 &  + 4._dp*(Lam7p2) - (9*g1p2*Lam3)/5._dp - 9*g2p2*Lam3 + 6*Lam1*Lam3 + 6*Lam2*Lam3 +    & 
 &  2*Lam1*Lam4 + 2*Lam2*Lam4 + 16*Lam6*Lam7 + 6*Lam3*TrepYDadjepYD - 12._dp*(TrepYDadjepYDYdadjYd)& 
-&  - 12._dp*(TrepYDadjepYUepYUadjepYD) + 12._dp*(TrepYDadjepYUYuadjYd) + 3*(Lam6 +       & 
-&  Lam7)*TrepYDadjYd + 2*Lam3*TrepYEadjepYE - 4._dp*(TrepYEadjepYEYeadjYe)               & 
-&  + Lam6*TrepYEadjYe + Lam7*TrepYEadjYe + 12._dp*(TrepYUadjepYDYdadjYu) +               & 
-&  6*Lam3*TrepYUadjepYU - 12._dp*(TrepYUadjepYUYuadjYu) + 3*Lam6*TrepYUadjYu +           & 
-&  3*Lam7*TrepYUadjYu + 3*Lam6*TrYdadjepYD + 3*Lam7*TrYdadjepYD + 6*Lam3*TrYdadjYd -     & 
-&  12._dp*(TrYdadjYuYuadjYd) + Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam3*TrYeadjYe +  & 
+&  + 3*(Lam6 + Lam7)*TrepYDadjYd + 12._dp*(TrepYDadjYuepYUadjYd) - 12._dp*(TrepYDadjYuYuadjepYD)& 
+&  + 2*Lam3*TrepYEadjepYE - 4._dp*(TrepYEadjepYEYeadjYe) + Lam6*TrepYEadjYe +            & 
+&  Lam7*TrepYEadjYe + 6*Lam3*TrepYUadjepYU - 12._dp*(TrepYUadjepYUYuadjYu)               & 
+&  - 12._dp*(TrepYUadjYdYdadjepYU) + 3*Lam6*TrepYUadjYu + 3*Lam7*TrepYUadjYu +           & 
+&  3*Lam6*TrYdadjepYD + 3*Lam7*TrYdadjepYD + 12._dp*(TrYdadjepYUYuadjepYD)               & 
+&  + 6*Lam3*TrYdadjYd + Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam3*TrYeadjYe +         & 
 &  3*Lam6*TrYuadjepYU + 3*Lam7*TrYuadjepYU + 6*Lam3*TrYuadjYu
 
  
@@ -767,9 +767,9 @@ betaLam21  = 27._dp*(g1p4)/100._dp + (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)        
 & /4._dp + 12._dp*(Lam2p2) + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2)            & 
 &  + 24._dp*(Lam7p2) - (9*g1p2*Lam2)/5._dp - 9*g2p2*Lam2 + 4*Lam3*Lam4 + 12*Lam2*TrepYDadjepYD -& 
 &  12._dp*(TrepYDadjepYDepYDadjepYD) + 6*Lam7*TrepYDadjYd + 4*Lam2*TrepYEadjepYE -       & 
-&  4._dp*(TrepYEadjepYEepYEadjepYE) + 2*Lam7*TrepYEadjYe + 6*Lam7*TrepYUadjYu +          & 
-&  6*Lam7*TrYdadjepYD + 2*Lam7*TrYeadjepYE + 6*Lam7*TrYuadjepYU + 12*Lam2*TrYuadjYu -    & 
-&  12._dp*(TrYuadjYuYuadjYu)
+&  4._dp*(TrepYEadjepYEepYEadjepYE) + 2*Lam7*TrepYEadjYe + 12*Lam2*TrepYUadjepYU -       & 
+&  12._dp*(TrepYUadjepYUepYUadjepYU) + 6*Lam7*TrepYUadjYu + 6*Lam7*TrYdadjepYD +         & 
+&  2*Lam7*TrYeadjepYE + 6*Lam7*TrYuadjepYU
 
  
  
@@ -788,38 +788,13 @@ End If
 Call Chop(DLam2) 
 
 !-------------------- 
-! epYU 
-!-------------------- 
- 
-betaepYU1  = epYU*(-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)          & 
-&  + 3._dp*(TrepYUadjepYU) + 3._dp*(TrYdadjYd) + TrYeadjYe) + (epYUadjepYDepYD +         & 
-&  3._dp*(epYUadjepYUepYU) - 3._dp*(epYUadjYdYd) + epYUadjYuYu + 6*TrepYDadjYd*Yu +      & 
-&  2*TrepYEadjYe*Yu + 6*TrepYUadjYu*Yu - 4._dp*(YuadjYdepYD) + 2._dp*(YuadjYuepYU))/2._dp
-
- 
- 
-If (TwoLoopRGE) Then 
-betaepYU2 = 0
-
- 
-DepYU = oo16pi2*( betaepYU1 + oo16pi2 * betaepYU2 ) 
-
- 
-Else 
-DepYU = oo16pi2* betaepYU1 
-End If 
- 
- 
-Call Chop(DepYU) 
-
-!-------------------- 
 ! Yu 
 !-------------------- 
  
-betaYu1  = epYU*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2) + 3._dp*(TrepYDadjepYD)  & 
-&  + TrepYEadjepYE + 3._dp*(TrYuadjYu))*Yu + (-4._dp*(epYUadjepYDYd) + 2._dp*(epYUadjepYUYu)& 
-&  - 3._dp*(YuadjepYDepYD) + YuadjepYUepYU + YuadjYdYd + 3._dp*(YuadjYuYu))/2._dp
+betaYu1  = epYU*(3._dp*(TrepYDadjYd) + TrepYEadjYe + 3._dp*(TrYuadjepYU))             & 
+&  + (-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2) + 3._dp*(TrYdadjYd)      & 
+&  + TrYeadjYe + 3._dp*(TrYuadjYu))*Yu + (2._dp*(epYUadjepYUYu) - 4._dp*(epYUadjYdepYD)  & 
+&  + YuadjepYDepYD + YuadjepYUepYU - 3._dp*(YuadjYdYd) + 3._dp*(YuadjYuYu))/2._dp
 
  
  
@@ -838,13 +813,38 @@ End If
 Call Chop(DYu) 
 
 !-------------------- 
+! epYU 
+!-------------------- 
+ 
+betaepYU1  = epYU*(-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)          & 
+&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrepYUadjepYU)) + (-3._dp*(epYUadjepYDepYD)& 
+&  + 3._dp*(epYUadjepYUepYU) + epYUadjYdYd + epYUadjYuYu + 6*TrepYUadjYu*Yu +            & 
+&  6*TrYdadjepYD*Yu + 2*TrYeadjepYE*Yu - 4._dp*(YuadjepYDYd) + 2._dp*(YuadjYuepYU))/2._dp
+
+ 
+ 
+If (TwoLoopRGE) Then 
+betaepYU2 = 0
+
+ 
+DepYU = oo16pi2*( betaepYU1 + oo16pi2 * betaepYU2 ) 
+
+ 
+Else 
+DepYU = oo16pi2* betaepYU1 
+End If 
+ 
+ 
+Call Chop(DepYU) 
+
+!-------------------- 
 ! Yd 
 !-------------------- 
  
-betaYd1  = epYD*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-((g1p2 + 9._dp*(g2p2) + 32._dp*(g3p2) - 12._dp*(TrepYUadjepYU) - 12._dp*(TrYdadjYd)& 
-&  - 4._dp*(TrYeadjYe))*Yd) + 2*(2._dp*(epYDadjepYDYd) - 4._dp*(epYDadjepYUYu)           & 
-&  + YdadjepYDepYD - 3._dp*(YdadjepYUepYU) + 3._dp*(YdadjYdYd) + YdadjYuYu))/4._dp
+betaYd1  = epYD*(3._dp*(TrepYUadjYu) + 3._dp*(TrYdadjepYD) + TrYeadjepYE)             & 
+&  + (-((g1p2 + 9._dp*(g2p2) + 32._dp*(g3p2) - 12._dp*(TrYdadjYd) - 4._dp*(TrYeadjYe)    & 
+&  - 12._dp*(TrYuadjYu))*Yd) + 2*(2._dp*(epYDadjepYDYd) - 4._dp*(epYDadjYuepYU)          & 
+&  + YdadjepYDepYD + YdadjepYUepYU + 3._dp*(YdadjYdYd) - 3._dp*(YdadjYuYu)))/4._dp
 
  
  
@@ -866,9 +866,9 @@ Call Chop(DYd)
 ! Ye 
 !-------------------- 
  
-betaYe1  = epYE*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrepYUadjepYU) + 3._dp*(TrYdadjYd)& 
-&  + TrYeadjYe)*Ye + (2._dp*(epYEadjepYEYe) + YeadjepYEepYE + 3._dp*(YeadjYeYe))/2._dp
+betaYe1  = epYE*(3._dp*(TrepYUadjYu) + 3._dp*(TrYdadjepYD) + TrYeadjepYE)             & 
+&  + (-9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrYdadjYd) + TrYeadjYe +         & 
+&  3._dp*(TrYuadjYu))*Ye + (2._dp*(epYEadjepYEYe) + YeadjepYEepYE + 3._dp*(YeadjYeYe))/2._dp
 
  
  
@@ -891,9 +891,9 @@ Call Chop(DYe)
 !-------------------- 
  
 betaepYD1  = epYD*(-1._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)            & 
-&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrYuadjYu)) + (3._dp*(epYDadjepYDepYD)& 
-&  + epYDadjepYUepYU + epYDadjYdYd - 3._dp*(epYDadjYuYu) + 6*TrepYDadjYd*Yd +            & 
-&  2*TrepYEadjYe*Yd + 6*TrepYUadjYu*Yd + 2._dp*(YdadjYdepYD) - 4._dp*(YdadjYuepYU))/2._dp
+&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrepYUadjepYU)) + (3._dp*(epYDadjepYDepYD)& 
+&  - 3._dp*(epYDadjepYUepYU) + epYDadjYdYd + epYDadjYuYu + 6*TrepYDadjYd*Yd +            & 
+&  2*TrepYEadjYe*Yd + 6*TrYuadjepYU*Yd - 4._dp*(YdadjepYUYu) + 2._dp*(YdadjYdepYD))/2._dp
 
  
  
@@ -917,7 +917,7 @@ Call Chop(DepYD)
  
 betaepYE1  = 3._dp*(epYEadjepYEepYE)/2._dp + epYEadjYeYe/2._dp + epYE*(-              & 
 & 9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE +      & 
-&  3._dp*(TrYuadjYu)) + 3*TrepYDadjYd*Ye + TrepYEadjYe*Ye + 3*TrepYUadjYu*Ye +           & 
+&  3._dp*(TrepYUadjepYU)) + 3*TrepYDadjYd*Ye + TrepYEadjYe*Ye + 3*TrYuadjepYU*Ye +       & 
 &  YeadjYeepYE
 
  
@@ -942,9 +942,9 @@ Call Chop(DepYE)
  
 betaM121  = -6*Lam6*M112 - (9*g1p2*M12)/10._dp - (9*g2p2*M12)/2._dp + 2*Lam3*M12 +    & 
 &  4*Lam4*M12 + 6*Lam5*M12 - 6*Lam7*M222 + 3*M12*TrepYDadjepYD - 3*M112*TrepYDadjYd +    & 
-&  M12*TrepYEadjepYE - M112*TrepYEadjYe + 3*M12*TrepYUadjepYU - 3*M222*TrepYUadjYu -     & 
+&  M12*TrepYEadjepYE - M112*TrepYEadjYe + 3*M12*TrepYUadjepYU - 3*M112*TrepYUadjYu -     & 
 &  3*M222*TrYdadjepYD + 3*M12*TrYdadjYd - M222*TrYeadjepYE + M12*TrYeadjYe -             & 
-&  3*M112*TrYuadjepYU + 3*M12*TrYuadjYu
+&  3*M222*TrYuadjepYU + 3*M12*TrYuadjYu
 
  
  
@@ -967,8 +967,8 @@ Call Chop(DM12)
 !-------------------- 
  
 betaM1121  = (-9*g1p2*M112)/10._dp - (9*g2p2*M112)/2._dp + 6*Lam1*M112 -              & 
-&  12*Lam6*M12 + 4*Lam3*M222 + 2*Lam4*M222 + 6*M112*TrepYUadjepYU - 6*M12*TrepYUadjYu -  & 
-&  6*M12*TrYdadjepYD + 6*M112*TrYdadjYd - 2*M12*TrYeadjepYE + 2*M112*TrYeadjYe
+&  12*Lam6*M12 + 4*Lam3*M222 + 2*Lam4*M222 - 6*M12*TrYdadjepYD + 6*M112*TrYdadjYd -      & 
+&  2*M12*TrYeadjepYE + 2*M112*TrYeadjYe - 6*M12*TrYuadjepYU + 6*M112*TrYuadjYu
 
  
  
@@ -992,7 +992,7 @@ Call Chop(DM112)
  
 betaM2221  = 4*Lam3*M112 + 2*Lam4*M112 - 12*Lam7*M12 - (9*g1p2*M222)/10._dp -         & 
 &  (9*g2p2*M222)/2._dp + 6*Lam2*M222 + 6*M222*TrepYDadjepYD - 6*M12*TrepYDadjYd +        & 
-&  2*M222*TrepYEadjepYE - 2*M12*TrepYEadjYe - 6*M12*TrYuadjepYU + 6*M222*TrYuadjYu
+&  2*M222*TrepYEadjepYE - 2*M12*TrepYEadjYe + 6*M222*TrepYUadjepYU - 6*M12*TrepYUadjYu
 
  
  
@@ -1011,20 +1011,20 @@ End If
 Call Chop(DM222) 
 
 Call ParametersToG131(Dg1,Dg2,Dg3,DLam6,DLam5,DLam7,DLam1,DLam4,DLam3,DLam2,          & 
-& DepYU,DYu,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,f)
+& DYu,DepYU,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,f)
 
 Iname = Iname - 1 
  
 End Subroutine rge131  
 
 Subroutine GToParameters133(g,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,            & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 Implicit None 
 Real(dp), Intent(in) :: g(133) 
 Real(dp),Intent(out) :: g1,g2,g3,v,v2
 
-Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Integer i1, i2, i3, i4, SumI 
@@ -1046,7 +1046,7 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-epYU(i1,i2) = Cmplx( g(SumI+18), g(SumI+19), dp) 
+Yu(i1,i2) = Cmplx( g(SumI+18), g(SumI+19), dp) 
 End Do 
  End Do 
  
@@ -1054,7 +1054,7 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-Yu(i1,i2) = Cmplx( g(SumI+36), g(SumI+37), dp) 
+epYU(i1,i2) = Cmplx( g(SumI+36), g(SumI+37), dp) 
 End Do 
  End Do 
  
@@ -1107,13 +1107,13 @@ Iname = Iname - 1
 End Subroutine GToParameters133
 
 Subroutine ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,              & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g)
 
 Implicit None 
 Real(dp), Intent(out) :: g(133) 
 Real(dp), Intent(in) :: g1,g2,g3,v,v2
 
-Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp), Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Integer i1, i2, i3, i4, SumI 
@@ -1142,8 +1142,8 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-g(SumI+18) = Real(epYU(i1,i2), dp) 
-g(SumI+19) = Aimag(epYU(i1,i2)) 
+g(SumI+18) = Real(Yu(i1,i2), dp) 
+g(SumI+19) = Aimag(Yu(i1,i2)) 
 End Do 
 End Do 
 
@@ -1151,8 +1151,8 @@ Do i1 = 1,3
 Do i2 = 1,3
 SumI = (i2-1) + (i1-1)*3
 SumI = SumI*2 
-g(SumI+36) = Real(Yu(i1,i2), dp) 
-g(SumI+37) = Aimag(Yu(i1,i2)) 
+g(SumI+36) = Real(epYU(i1,i2), dp) 
+g(SumI+37) = Aimag(epYU(i1,i2)) 
 End Do 
 End Do 
 
@@ -1217,54 +1217,54 @@ Real(dp) :: g1,betag11,betag12,Dg1,g2,betag21,betag22,Dg2,g3,betag31,betag32,   
 Complex(dp) :: Lam6,betaLam61,betaLam62,DLam6,Lam5,betaLam51,betaLam52,               & 
 & DLam5,Lam7,betaLam71,betaLam72,DLam7,Lam1,betaLam11,betaLam12,DLam1,Lam4,              & 
 & betaLam41,betaLam42,DLam4,Lam3,betaLam31,betaLam32,DLam3,Lam2,betaLam21,               & 
-& betaLam22,DLam2,epYU(3,3),betaepYU1(3,3),betaepYU2(3,3),DepYU(3,3),adjepYU(3,3)        & 
-& ,Yu(3,3),betaYu1(3,3),betaYu2(3,3),DYu(3,3),adjYu(3,3),Yd(3,3),betaYd1(3,3)            & 
+& betaLam22,DLam2,Yu(3,3),betaYu1(3,3),betaYu2(3,3),DYu(3,3),adjYu(3,3),epYU(3,3)        & 
+& ,betaepYU1(3,3),betaepYU2(3,3),DepYU(3,3),adjepYU(3,3),Yd(3,3),betaYd1(3,3)            & 
 & ,betaYd2(3,3),DYd(3,3),adjYd(3,3),Ye(3,3),betaYe1(3,3),betaYe2(3,3),DYe(3,3)           & 
 & ,adjYe(3,3),epYD(3,3),betaepYD1(3,3),betaepYD2(3,3),DepYD(3,3),adjepYD(3,3)            & 
 & ,epYE(3,3),betaepYE1(3,3),betaepYE2(3,3),DepYE(3,3),adjepYE(3,3),M12,betaM121,         & 
 & betaM122,DM12,M112,betaM1121,betaM1122,DM112,M222,betaM2221,betaM2222,DM222
-Complex(dp) :: epYDadjepYD(3,3),epYDadjYd(3,3),epYEadjepYE(3,3),epYEadjYe(3,3),epYUadjepYD(3,3),     & 
-& epYUadjepYU(3,3),epYUadjYu(3,3),YdadjepYD(3,3),YdadjYd(3,3),YdadjYu(3,3),              & 
-& YeadjepYE(3,3),YeadjYe(3,3),YuadjepYU(3,3),YuadjYd(3,3),YuadjYu(3,3),adjepYDepYD(3,3), & 
+Complex(dp) :: epYDadjepYD(3,3),epYDadjYd(3,3),epYEadjepYE(3,3),epYEadjYe(3,3),epYUadjepYU(3,3),     & 
+& epYUadjYd(3,3),epYUadjYu(3,3),YdadjepYD(3,3),YdadjepYU(3,3),YdadjYd(3,3),              & 
+& YeadjepYE(3,3),YeadjYe(3,3),YuadjepYD(3,3),YuadjepYU(3,3),YuadjYu(3,3),adjepYDepYD(3,3),& 
 & adjepYDYd(3,3),adjepYEepYE(3,3),adjepYEYe(3,3),adjepYUepYU(3,3),adjepYUYu(3,3),        & 
 & adjYdepYD(3,3),adjYdYd(3,3),adjYeepYE(3,3),adjYeYe(3,3),adjYuepYU(3,3),adjYuYu(3,3),   & 
-& epYDadjepYDepYD(3,3),epYDadjepYDYd(3,3),epYDadjepYUepYU(3,3),epYDadjepYUYu(3,3),       & 
-& epYDadjYdYd(3,3),epYDadjYuYu(3,3),epYEadjepYEepYE(3,3),epYEadjepYEYe(3,3),             & 
-& epYEadjYeYe(3,3),epYUadjepYDepYD(3,3),epYUadjepYDYd(3,3),epYUadjepYUepYU(3,3),         & 
-& epYUadjepYUYu(3,3),epYUadjYdYd(3,3),epYUadjYuYu(3,3),YdadjepYDepYD(3,3),               & 
-& YdadjepYUepYU(3,3),YdadjYdepYD(3,3),YdadjYdYd(3,3),YdadjYuepYU(3,3),YdadjYuYu(3,3),    & 
-& YeadjepYEepYE(3,3),YeadjYeepYE(3,3),YeadjYeYe(3,3),YuadjepYDepYD(3,3),YuadjepYUepYU(3,3),& 
-& YuadjYdepYD(3,3),YuadjYdYd(3,3),YuadjYuepYU(3,3),YuadjYuYu(3,3),adjepYDepYDadjepYD(3,3),& 
-& adjepYDepYDadjYd(3,3),adjepYDYdadjepYD(3,3),adjepYDYdadjYd(3,3),adjepYDYdadjYu(3,3),   & 
-& adjepYEepYEadjepYE(3,3),adjepYEepYEadjYe(3,3),adjepYEYeadjepYE(3,3),adjepYEYeadjYe(3,3),& 
-& adjepYUepYUadjepYD(3,3),adjepYUepYUadjepYU(3,3),adjepYUepYUadjYu(3,3),adjepYUYuadjepYU(3,3),& 
-& adjepYUYuadjYd(3,3),adjepYUYuadjYu(3,3),adjYdepYDadjepYD(3,3),adjYdepYDadjYd(3,3),     & 
-& adjYdYdadjepYD(3,3),adjYdYdadjYd(3,3),adjYeepYEadjepYE(3,3),adjYeepYEadjYe(3,3),       & 
-& adjYeYeadjepYE(3,3),adjYeYeadjYe(3,3),adjYuepYUadjepYU(3,3),adjYuepYUadjYu(3,3),       & 
-& adjYuYuadjepYU(3,3),adjYuYuadjYd(3,3),adjYuYuadjYu(3,3),epYDadjepYDepYDadjepYD(3,3),   & 
+& epYDadjepYDepYD(3,3),epYDadjepYDYd(3,3),epYDadjepYUepYU(3,3),epYDadjYdYd(3,3),         & 
+& epYDadjYuepYU(3,3),epYDadjYuYu(3,3),epYEadjepYEepYE(3,3),epYEadjepYEYe(3,3),           & 
+& epYEadjYeYe(3,3),epYUadjepYDepYD(3,3),epYUadjepYUepYU(3,3),epYUadjepYUYu(3,3),         & 
+& epYUadjYdepYD(3,3),epYUadjYdYd(3,3),epYUadjYuYu(3,3),YdadjepYDepYD(3,3),               & 
+& YdadjepYUepYU(3,3),YdadjepYUYu(3,3),YdadjYdepYD(3,3),YdadjYdYd(3,3),YdadjYuYu(3,3),    & 
+& YeadjepYEepYE(3,3),YeadjYeepYE(3,3),YeadjYeYe(3,3),YuadjepYDepYD(3,3),YuadjepYDYd(3,3),& 
+& YuadjepYUepYU(3,3),YuadjYdYd(3,3),YuadjYuepYU(3,3),YuadjYuYu(3,3),adjepYDepYDadjepYD(3,3),& 
+& adjepYDepYDadjYd(3,3),adjepYDYdadjepYD(3,3),adjepYDYdadjYd(3,3),adjepYEepYEadjepYE(3,3),& 
+& adjepYEepYEadjYe(3,3),adjepYEYeadjepYE(3,3),adjepYEYeadjYe(3,3),adjepYUepYUadjepYU(3,3),& 
+& adjepYUepYUadjYu(3,3),adjepYUYuadjepYD(3,3),adjepYUYuadjepYU(3,3),adjepYUYuadjYu(3,3), & 
+& adjYdepYDadjepYD(3,3),adjYdepYDadjYd(3,3),adjYdYdadjepYD(3,3),adjYdYdadjepYU(3,3),     & 
+& adjYdYdadjYd(3,3),adjYeepYEadjepYE(3,3),adjYeepYEadjYe(3,3),adjYeYeadjepYE(3,3),       & 
+& adjYeYeadjYe(3,3),adjYuepYUadjepYU(3,3),adjYuepYUadjYd(3,3),adjYuepYUadjYu(3,3),       & 
+& adjYuYuadjepYD(3,3),adjYuYuadjepYU(3,3),adjYuYuadjYu(3,3),epYDadjepYDepYDadjepYD(3,3), & 
 & epYDadjepYDepYDadjYd(3,3),epYDadjepYDYdadjepYD(3,3),epYDadjepYDYdadjYd(3,3),           & 
-& epYDadjepYUepYUadjepYD(3,3),epYDadjepYUYuadjYd(3,3),epYDadjYdepYDadjepYD(3,3),         & 
-& epYDadjYdepYDadjYd(3,3),epYDadjYdYdadjepYD(3,3),epYDadjYdYdadjYd(3,3),epYEadjepYEepYEadjepYE(3,3),& 
+& epYDadjYdepYDadjepYD(3,3),epYDadjYdepYDadjYd(3,3),epYDadjYdYdadjepYD(3,3),             & 
+& epYDadjYdYdadjYd(3,3),epYDadjYuepYUadjYd(3,3),epYDadjYuYuadjepYD(3,3),epYEadjepYEepYEadjepYE(3,3),& 
 & epYEadjepYEepYEadjYe(3,3),epYEadjepYEYeadjepYE(3,3),epYEadjepYEYeadjYe(3,3),           & 
 & epYEadjYeepYEadjepYE(3,3),epYEadjYeepYEadjYe(3,3),epYEadjYeYeadjepYE(3,3),             & 
-& epYEadjYeYeadjYe(3,3),epYUadjepYDYdadjYu(3,3),epYUadjepYUepYUadjepYU(3,3),             & 
-& epYUadjepYUepYUadjYu(3,3),epYUadjepYUYuadjepYU(3,3),epYUadjepYUYuadjYu(3,3),           & 
+& epYEadjYeYeadjYe(3,3),epYUadjepYUepYUadjepYU(3,3),epYUadjepYUepYUadjYu(3,3),           & 
+& epYUadjepYUYuadjepYU(3,3),epYUadjepYUYuadjYu(3,3),epYUadjYdYdadjepYU(3,3),             & 
 & epYUadjYuepYUadjepYU(3,3),epYUadjYuepYUadjYu(3,3),epYUadjYuYuadjepYU(3,3),             & 
-& epYUadjYuYuadjYu(3,3),YdadjepYDYdadjepYD(3,3),YdadjepYDYdadjYd(3,3),YdadjYdYdadjepYD(3,3),& 
-& YdadjYdYdadjYd(3,3),YdadjYuYuadjYd(3,3),YeadjepYEYeadjepYE(3,3),YeadjepYEYeadjYe(3,3), & 
+& epYUadjYuYuadjYu(3,3),YdadjepYDYdadjepYD(3,3),YdadjepYDYdadjYd(3,3),YdadjepYUYuadjepYD(3,3),& 
+& YdadjYdYdadjepYD(3,3),YdadjYdYdadjYd(3,3),YeadjepYEYeadjepYE(3,3),YeadjepYEYeadjYe(3,3),& 
 & YeadjYeYeadjepYE(3,3),YeadjYeYeadjYe(3,3),YuadjepYUYuadjepYU(3,3),YuadjepYUYuadjYu(3,3),& 
 & YuadjYuYuadjepYU(3,3),YuadjYuYuadjYu(3,3)
 
 Complex(dp) :: TrepYDadjepYD,TrepYDadjYd,TrepYEadjepYE,TrepYEadjYe,TrepYUadjepYU,TrepYUadjYu,        & 
 & TrYdadjepYD,TrYdadjYd,TrYeadjepYE,TrYeadjYe,TrYuadjepYU,TrYuadjYu,TrepYDadjepYDepYDadjepYD,& 
-& TrepYDadjepYDepYDadjYd,TrepYDadjepYDYdadjepYD,TrepYDadjepYDYdadjYd,TrepYDadjepYUepYUadjepYD,& 
-& TrepYDadjepYUYuadjYd,TrepYDadjYdepYDadjepYD,TrepYDadjYdepYDadjYd,TrepYDadjYdYdadjepYD, & 
-& TrepYDadjYdYdadjYd,TrepYEadjepYEepYEadjepYE,TrepYEadjepYEepYEadjYe,TrepYEadjepYEYeadjepYE,& 
+& TrepYDadjepYDepYDadjYd,TrepYDadjepYDYdadjepYD,TrepYDadjepYDYdadjYd,TrepYDadjYdepYDadjepYD,& 
+& TrepYDadjYdepYDadjYd,TrepYDadjYdYdadjepYD,TrepYDadjYdYdadjYd,TrepYDadjYuepYUadjYd,     & 
+& TrepYDadjYuYuadjepYD,TrepYEadjepYEepYEadjepYE,TrepYEadjepYEepYEadjYe,TrepYEadjepYEYeadjepYE,& 
 & TrepYEadjepYEYeadjYe,TrepYEadjYeepYEadjepYE,TrepYEadjYeepYEadjYe,TrepYEadjYeYeadjepYE, & 
-& TrepYEadjYeYeadjYe,TrepYUadjepYDYdadjYu,TrepYUadjepYUepYUadjepYU,TrepYUadjepYUepYUadjYu,& 
-& TrepYUadjepYUYuadjepYU,TrepYUadjepYUYuadjYu,TrepYUadjYuepYUadjepYU,TrepYUadjYuepYUadjYu,& 
+& TrepYEadjYeYeadjYe,TrepYUadjepYUepYUadjepYU,TrepYUadjepYUepYUadjYu,TrepYUadjepYUYuadjepYU,& 
+& TrepYUadjepYUYuadjYu,TrepYUadjYdYdadjepYU,TrepYUadjYuepYUadjepYU,TrepYUadjYuepYUadjYu, & 
 & TrepYUadjYuYuadjepYU,TrepYUadjYuYuadjYu,TrYdadjepYDYdadjepYD,TrYdadjepYDYdadjYd,       & 
-& TrYdadjYdYdadjepYD,TrYdadjYdYdadjYd,TrYdadjYuYuadjYd,TrYeadjepYEYeadjepYE,             & 
+& TrYdadjepYUYuadjepYD,TrYdadjYdYdadjepYD,TrYdadjYdYdadjYd,TrYeadjepYEYeadjepYE,         & 
 & TrYeadjepYEYeadjYe,TrYeadjYeYeadjepYE,TrYeadjYeYeadjYe,TrYuadjepYUYuadjepYU,           & 
 & TrYuadjepYUYuadjYu,TrYuadjYuYuadjepYU,TrYuadjYuYuadjYu
 
@@ -1278,11 +1278,11 @@ NameOfUnit(Iname) = 'rge133'
 OnlyDiagonal = .Not.GenerationMixing 
 q = t 
  
-Call GToParameters133(gy,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,            & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
+Call GToParameters133(gy,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,              & 
+& epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
-Call Adjungate(epYU,adjepYU)
 Call Adjungate(Yu,adjYu)
+Call Adjungate(epYU,adjepYU)
 Call Adjungate(Yd,adjYd)
 Call Adjungate(Ye,adjYe)
 Call Adjungate(epYD,adjepYD)
@@ -1293,19 +1293,19 @@ Forall(i2=1:3)  epYDadjepYD(i2,i2) =  Real(epYDadjepYD(i2,i2),dp)
  epYEadjepYE = Matmul(epYE,adjepYE) 
 Forall(i2=1:3)  epYEadjepYE(i2,i2) =  Real(epYEadjepYE(i2,i2),dp) 
  epYEadjYe = Matmul(epYE,adjYe) 
- epYUadjepYD = Matmul(epYU,adjepYD) 
  epYUadjepYU = Matmul(epYU,adjepYU) 
 Forall(i2=1:3)  epYUadjepYU(i2,i2) =  Real(epYUadjepYU(i2,i2),dp) 
+ epYUadjYd = Matmul(epYU,adjYd) 
  epYUadjYu = Matmul(epYU,adjYu) 
  YdadjepYD = Matmul(Yd,adjepYD) 
+ YdadjepYU = Matmul(Yd,adjepYU) 
  YdadjYd = Matmul(Yd,adjYd) 
 Forall(i2=1:3)  YdadjYd(i2,i2) =  Real(YdadjYd(i2,i2),dp) 
- YdadjYu = Matmul(Yd,adjYu) 
  YeadjepYE = Matmul(Ye,adjepYE) 
  YeadjYe = Matmul(Ye,adjYe) 
 Forall(i2=1:3)  YeadjYe(i2,i2) =  Real(YeadjYe(i2,i2),dp) 
+ YuadjepYD = Matmul(Yu,adjepYD) 
  YuadjepYU = Matmul(Yu,adjepYU) 
- YuadjYd = Matmul(Yu,adjYd) 
  YuadjYu = Matmul(Yu,adjYu) 
 Forall(i2=1:3)  YuadjYu(i2,i2) =  Real(YuadjYu(i2,i2),dp) 
  adjepYDepYD = Matmul(adjepYD,epYD) 
@@ -1329,30 +1329,30 @@ Forall(i2=1:3)  adjYuYu(i2,i2) =  Real(adjYuYu(i2,i2),dp)
  epYDadjepYDepYD = Matmul(epYD,adjepYDepYD) 
  epYDadjepYDYd = Matmul(epYD,adjepYDYd) 
  epYDadjepYUepYU = Matmul(epYD,adjepYUepYU) 
- epYDadjepYUYu = Matmul(epYD,adjepYUYu) 
  epYDadjYdYd = Matmul(epYD,adjYdYd) 
+ epYDadjYuepYU = Matmul(epYD,adjYuepYU) 
  epYDadjYuYu = Matmul(epYD,adjYuYu) 
  epYEadjepYEepYE = Matmul(epYE,adjepYEepYE) 
  epYEadjepYEYe = Matmul(epYE,adjepYEYe) 
  epYEadjYeYe = Matmul(epYE,adjYeYe) 
  epYUadjepYDepYD = Matmul(epYU,adjepYDepYD) 
- epYUadjepYDYd = Matmul(epYU,adjepYDYd) 
  epYUadjepYUepYU = Matmul(epYU,adjepYUepYU) 
  epYUadjepYUYu = Matmul(epYU,adjepYUYu) 
+ epYUadjYdepYD = Matmul(epYU,adjYdepYD) 
  epYUadjYdYd = Matmul(epYU,adjYdYd) 
  epYUadjYuYu = Matmul(epYU,adjYuYu) 
  YdadjepYDepYD = Matmul(Yd,adjepYDepYD) 
  YdadjepYUepYU = Matmul(Yd,adjepYUepYU) 
+ YdadjepYUYu = Matmul(Yd,adjepYUYu) 
  YdadjYdepYD = Matmul(Yd,adjYdepYD) 
  YdadjYdYd = Matmul(Yd,adjYdYd) 
- YdadjYuepYU = Matmul(Yd,adjYuepYU) 
  YdadjYuYu = Matmul(Yd,adjYuYu) 
  YeadjepYEepYE = Matmul(Ye,adjepYEepYE) 
  YeadjYeepYE = Matmul(Ye,adjYeepYE) 
  YeadjYeYe = Matmul(Ye,adjYeYe) 
  YuadjepYDepYD = Matmul(Yu,adjepYDepYD) 
+ YuadjepYDYd = Matmul(Yu,adjepYDYd) 
  YuadjepYUepYU = Matmul(Yu,adjepYUepYU) 
- YuadjYdepYD = Matmul(Yu,adjYdepYD) 
  YuadjYdYd = Matmul(Yu,adjYdYd) 
  YuadjYuepYU = Matmul(Yu,adjYuepYU) 
  YuadjYuYu = Matmul(Yu,adjYuYu) 
@@ -1360,43 +1360,43 @@ Forall(i2=1:3)  adjYuYu(i2,i2) =  Real(adjYuYu(i2,i2),dp)
  adjepYDepYDadjYd = Matmul(adjepYD,epYDadjYd) 
  adjepYDYdadjepYD = Matmul(adjepYD,YdadjepYD) 
  adjepYDYdadjYd = Matmul(adjepYD,YdadjYd) 
- adjepYDYdadjYu = Matmul(adjepYD,YdadjYu) 
  adjepYEepYEadjepYE = Matmul(adjepYE,epYEadjepYE) 
  adjepYEepYEadjYe = Matmul(adjepYE,epYEadjYe) 
  adjepYEYeadjepYE = Matmul(adjepYE,YeadjepYE) 
  adjepYEYeadjYe = Matmul(adjepYE,YeadjYe) 
- adjepYUepYUadjepYD = Matmul(adjepYU,epYUadjepYD) 
  adjepYUepYUadjepYU = Matmul(adjepYU,epYUadjepYU) 
  adjepYUepYUadjYu = Matmul(adjepYU,epYUadjYu) 
+ adjepYUYuadjepYD = Matmul(adjepYU,YuadjepYD) 
  adjepYUYuadjepYU = Matmul(adjepYU,YuadjepYU) 
- adjepYUYuadjYd = Matmul(adjepYU,YuadjYd) 
  adjepYUYuadjYu = Matmul(adjepYU,YuadjYu) 
  adjYdepYDadjepYD = Matmul(adjYd,epYDadjepYD) 
  adjYdepYDadjYd = Matmul(adjYd,epYDadjYd) 
  adjYdYdadjepYD = Matmul(adjYd,YdadjepYD) 
+ adjYdYdadjepYU = Matmul(adjYd,YdadjepYU) 
  adjYdYdadjYd = Matmul(adjYd,YdadjYd) 
  adjYeepYEadjepYE = Matmul(adjYe,epYEadjepYE) 
  adjYeepYEadjYe = Matmul(adjYe,epYEadjYe) 
  adjYeYeadjepYE = Matmul(adjYe,YeadjepYE) 
  adjYeYeadjYe = Matmul(adjYe,YeadjYe) 
  adjYuepYUadjepYU = Matmul(adjYu,epYUadjepYU) 
+ adjYuepYUadjYd = Matmul(adjYu,epYUadjYd) 
  adjYuepYUadjYu = Matmul(adjYu,epYUadjYu) 
+ adjYuYuadjepYD = Matmul(adjYu,YuadjepYD) 
  adjYuYuadjepYU = Matmul(adjYu,YuadjepYU) 
- adjYuYuadjYd = Matmul(adjYu,YuadjYd) 
  adjYuYuadjYu = Matmul(adjYu,YuadjYu) 
  epYDadjepYDepYDadjepYD = Matmul(epYD,adjepYDepYDadjepYD) 
 Forall(i2=1:3)  epYDadjepYDepYDadjepYD(i2,i2) =  Real(epYDadjepYDepYDadjepYD(i2,i2),dp) 
  epYDadjepYDepYDadjYd = Matmul(epYD,adjepYDepYDadjYd) 
  epYDadjepYDYdadjepYD = Matmul(epYD,adjepYDYdadjepYD) 
  epYDadjepYDYdadjYd = Matmul(epYD,adjepYDYdadjYd) 
- epYDadjepYUepYUadjepYD = Matmul(epYD,adjepYUepYUadjepYD) 
-Forall(i2=1:3)  epYDadjepYUepYUadjepYD(i2,i2) =  Real(epYDadjepYUepYUadjepYD(i2,i2),dp) 
- epYDadjepYUYuadjYd = Matmul(epYD,adjepYUYuadjYd) 
  epYDadjYdepYDadjepYD = Matmul(epYD,adjYdepYDadjepYD) 
  epYDadjYdepYDadjYd = Matmul(epYD,adjYdepYDadjYd) 
  epYDadjYdYdadjepYD = Matmul(epYD,adjYdYdadjepYD) 
 Forall(i2=1:3)  epYDadjYdYdadjepYD(i2,i2) =  Real(epYDadjYdYdadjepYD(i2,i2),dp) 
  epYDadjYdYdadjYd = Matmul(epYD,adjYdYdadjYd) 
+ epYDadjYuepYUadjYd = Matmul(epYD,adjYuepYUadjYd) 
+ epYDadjYuYuadjepYD = Matmul(epYD,adjYuYuadjepYD) 
+Forall(i2=1:3)  epYDadjYuYuadjepYD(i2,i2) =  Real(epYDadjYuYuadjepYD(i2,i2),dp) 
  epYEadjepYEepYEadjepYE = Matmul(epYE,adjepYEepYEadjepYE) 
 Forall(i2=1:3)  epYEadjepYEepYEadjepYE(i2,i2) =  Real(epYEadjepYEepYEadjepYE(i2,i2),dp) 
  epYEadjepYEepYEadjYe = Matmul(epYE,adjepYEepYEadjYe) 
@@ -1407,12 +1407,13 @@ Forall(i2=1:3)  epYEadjepYEepYEadjepYE(i2,i2) =  Real(epYEadjepYEepYEadjepYE(i2,
  epYEadjYeYeadjepYE = Matmul(epYE,adjYeYeadjepYE) 
 Forall(i2=1:3)  epYEadjYeYeadjepYE(i2,i2) =  Real(epYEadjYeYeadjepYE(i2,i2),dp) 
  epYEadjYeYeadjYe = Matmul(epYE,adjYeYeadjYe) 
- epYUadjepYDYdadjYu = Matmul(epYU,adjepYDYdadjYu) 
  epYUadjepYUepYUadjepYU = Matmul(epYU,adjepYUepYUadjepYU) 
 Forall(i2=1:3)  epYUadjepYUepYUadjepYU(i2,i2) =  Real(epYUadjepYUepYUadjepYU(i2,i2),dp) 
  epYUadjepYUepYUadjYu = Matmul(epYU,adjepYUepYUadjYu) 
  epYUadjepYUYuadjepYU = Matmul(epYU,adjepYUYuadjepYU) 
  epYUadjepYUYuadjYu = Matmul(epYU,adjepYUYuadjYu) 
+ epYUadjYdYdadjepYU = Matmul(epYU,adjYdYdadjepYU) 
+Forall(i2=1:3)  epYUadjYdYdadjepYU(i2,i2) =  Real(epYUadjYdYdadjepYU(i2,i2),dp) 
  epYUadjYuepYUadjepYU = Matmul(epYU,adjYuepYUadjepYU) 
  epYUadjYuepYUadjYu = Matmul(epYU,adjYuepYUadjYu) 
  epYUadjYuYuadjepYU = Matmul(epYU,adjYuYuadjepYU) 
@@ -1420,11 +1421,10 @@ Forall(i2=1:3)  epYUadjYuYuadjepYU(i2,i2) =  Real(epYUadjYuYuadjepYU(i2,i2),dp)
  epYUadjYuYuadjYu = Matmul(epYU,adjYuYuadjYu) 
  YdadjepYDYdadjepYD = Matmul(Yd,adjepYDYdadjepYD) 
  YdadjepYDYdadjYd = Matmul(Yd,adjepYDYdadjYd) 
+ YdadjepYUYuadjepYD = Matmul(Yd,adjepYUYuadjepYD) 
  YdadjYdYdadjepYD = Matmul(Yd,adjYdYdadjepYD) 
  YdadjYdYdadjYd = Matmul(Yd,adjYdYdadjYd) 
 Forall(i2=1:3)  YdadjYdYdadjYd(i2,i2) =  Real(YdadjYdYdadjYd(i2,i2),dp) 
- YdadjYuYuadjYd = Matmul(Yd,adjYuYuadjYd) 
-Forall(i2=1:3)  YdadjYuYuadjYd(i2,i2) =  Real(YdadjYuYuadjYd(i2,i2),dp) 
  YeadjepYEYeadjepYE = Matmul(Ye,adjepYEYeadjepYE) 
  YeadjepYEYeadjYe = Matmul(Ye,adjepYEYeadjYe) 
  YeadjYeYeadjepYE = Matmul(Ye,adjYeYeadjepYE) 
@@ -1451,12 +1451,12 @@ Forall(i2=1:3)  YuadjYuYuadjYu(i2,i2) =  Real(YuadjYuYuadjYu(i2,i2),dp)
  TrepYDadjepYDepYDadjYd = cTrace(epYDadjepYDepYDadjYd) 
  TrepYDadjepYDYdadjepYD = cTrace(epYDadjepYDYdadjepYD) 
  TrepYDadjepYDYdadjYd = cTrace(epYDadjepYDYdadjYd) 
- TrepYDadjepYUepYUadjepYD = Real(cTrace(epYDadjepYUepYUadjepYD),dp) 
- TrepYDadjepYUYuadjYd = cTrace(epYDadjepYUYuadjYd) 
  TrepYDadjYdepYDadjepYD = cTrace(epYDadjYdepYDadjepYD) 
  TrepYDadjYdepYDadjYd = cTrace(epYDadjYdepYDadjYd) 
  TrepYDadjYdYdadjepYD = Real(cTrace(epYDadjYdYdadjepYD),dp) 
  TrepYDadjYdYdadjYd = cTrace(epYDadjYdYdadjYd) 
+ TrepYDadjYuepYUadjYd = cTrace(epYDadjYuepYUadjYd) 
+ TrepYDadjYuYuadjepYD = Real(cTrace(epYDadjYuYuadjepYD),dp) 
  TrepYEadjepYEepYEadjepYE = Real(cTrace(epYEadjepYEepYEadjepYE),dp) 
  TrepYEadjepYEepYEadjYe = cTrace(epYEadjepYEepYEadjYe) 
  TrepYEadjepYEYeadjepYE = cTrace(epYEadjepYEYeadjepYE) 
@@ -1465,20 +1465,20 @@ Forall(i2=1:3)  YuadjYuYuadjYu(i2,i2) =  Real(YuadjYuYuadjYu(i2,i2),dp)
  TrepYEadjYeepYEadjYe = cTrace(epYEadjYeepYEadjYe) 
  TrepYEadjYeYeadjepYE = Real(cTrace(epYEadjYeYeadjepYE),dp) 
  TrepYEadjYeYeadjYe = cTrace(epYEadjYeYeadjYe) 
- TrepYUadjepYDYdadjYu = cTrace(epYUadjepYDYdadjYu) 
  TrepYUadjepYUepYUadjepYU = Real(cTrace(epYUadjepYUepYUadjepYU),dp) 
  TrepYUadjepYUepYUadjYu = cTrace(epYUadjepYUepYUadjYu) 
  TrepYUadjepYUYuadjepYU = cTrace(epYUadjepYUYuadjepYU) 
  TrepYUadjepYUYuadjYu = cTrace(epYUadjepYUYuadjYu) 
+ TrepYUadjYdYdadjepYU = Real(cTrace(epYUadjYdYdadjepYU),dp) 
  TrepYUadjYuepYUadjepYU = cTrace(epYUadjYuepYUadjepYU) 
  TrepYUadjYuepYUadjYu = cTrace(epYUadjYuepYUadjYu) 
  TrepYUadjYuYuadjepYU = Real(cTrace(epYUadjYuYuadjepYU),dp) 
  TrepYUadjYuYuadjYu = cTrace(epYUadjYuYuadjYu) 
  TrYdadjepYDYdadjepYD = cTrace(YdadjepYDYdadjepYD) 
  TrYdadjepYDYdadjYd = cTrace(YdadjepYDYdadjYd) 
+ TrYdadjepYUYuadjepYD = cTrace(YdadjepYUYuadjepYD) 
  TrYdadjYdYdadjepYD = cTrace(YdadjYdYdadjepYD) 
  TrYdadjYdYdadjYd = Real(cTrace(YdadjYdYdadjYd),dp) 
- TrYdadjYuYuadjYd = Real(cTrace(YdadjYuYuadjYd),dp) 
  TrYeadjepYEYeadjepYE = cTrace(YeadjepYEYeadjepYE) 
  TrYeadjepYEYeadjYe = cTrace(YeadjepYEYeadjYe) 
  TrYeadjYeYeadjepYE = cTrace(YeadjYeYeadjepYE) 
@@ -1576,15 +1576,15 @@ betaLam61  = (-18*g1p2*Lam6 - 90*g2p2*Lam6 + 120*Lam1*Lam6 + 60*Lam3*Lam6 +     
 &  80*Lam4*Lam6 + 100*Lam5*Lam6 + 60*Lam3*Lam7 + 40*Lam4*Lam7 + 20*Lam5*Lam7 +           & 
 &  30*Lam6*TrepYDadjepYD + 15*(Lam1 + Lam3 + Lam4 + Lam5)*TrepYDadjYd - 60._dp*(TrepYDadjYdYdadjYd)& 
 &  + 10*Lam6*TrepYEadjepYE + 5*Lam1*TrepYEadjYe + 5*Lam3*TrepYEadjYe + 5*Lam4*TrepYEadjYe +& 
-&  5*Lam5*TrepYEadjYe - 20._dp*(TrepYEadjYeYeadjYe) + 90*Lam6*TrepYUadjepYU -            & 
-&  30._dp*(TrepYUadjepYUepYUadjYu) - 60._dp*(TrepYUadjepYUYuadjepYU) + 15*Lam1*TrepYUadjYu +& 
-&  15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 30._dp*(TrepYUadjYuepYUadjepYU)& 
-&  + 15*Lam1*TrYdadjepYD + 15*Lam3*TrYdadjepYD + 15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD -& 
-&  30._dp*(TrYdadjepYDYdadjYd) + 90*Lam6*TrYdadjYd - 30._dp*(TrYdadjYdYdadjepYD)         & 
-&  + 5*Lam1*TrYeadjepYE + 5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE + 5*Lam5*TrYeadjepYE - & 
-&  10._dp*(TrYeadjepYEYeadjYe) + 30*Lam6*TrYeadjYe - 10._dp*(TrYeadjYeYeadjepYE)         & 
-&  + 15*Lam1*TrYuadjepYU + 15*Lam3*TrYuadjepYU + 15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU +& 
-&  30*Lam6*TrYuadjYu)/10._dp
+&  5*Lam5*TrepYEadjYe - 20._dp*(TrepYEadjYeYeadjYe) + 30*Lam6*TrepYUadjepYU +            & 
+&  15*Lam1*TrepYUadjYu + 15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu -& 
+&  60._dp*(TrepYUadjYuYuadjYu) + 15*Lam1*TrYdadjepYD + 15*Lam3*TrYdadjepYD +             & 
+&  15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD - 30._dp*(TrYdadjepYDYdadjYd)               & 
+&  + 90*Lam6*TrYdadjYd - 30._dp*(TrYdadjYdYdadjepYD) + 5*Lam1*TrYeadjepYE +              & 
+&  5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE + 5*Lam5*TrYeadjepYE - 10._dp*(TrYeadjepYEYeadjYe)& 
+&  + 30*Lam6*TrYeadjYe - 10._dp*(TrYeadjYeYeadjepYE) + 15*Lam1*TrYuadjepYU +             & 
+&  15*Lam3*TrYuadjepYU + 15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU - 30._dp*(TrYuadjepYUYuadjYu)& 
+&  + 90*Lam6*TrYuadjYu - 30._dp*(TrYuadjYuYuadjepYU))/10._dp
 
  
  
@@ -1642,13 +1642,13 @@ betaLam71  = (60*Lam3*Lam6 + 40*Lam4*Lam6 + 20*Lam5*Lam6 - 18*g1p2*Lam7 -       
 &  + 15*(Lam2 + Lam3 + Lam4 + Lam5)*TrepYDadjYd - 30._dp*(TrepYDadjYdepYDadjepYD)        & 
 &  + 30*Lam7*TrepYEadjepYE - 10._dp*(TrepYEadjepYEepYEadjYe) - 20._dp*(TrepYEadjepYEYeadjepYE)& 
 &  + 5*Lam2*TrepYEadjYe + 5*Lam3*TrepYEadjYe + 5*Lam4*TrepYEadjYe + 5*Lam5*TrepYEadjYe - & 
-&  10._dp*(TrepYEadjYeepYEadjepYE) + 30*Lam7*TrepYUadjepYU + 15*Lam2*TrepYUadjYu +       & 
-&  15*Lam3*TrepYUadjYu + 15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 60._dp*(TrepYUadjYuYuadjYu)& 
+&  10._dp*(TrepYEadjYeepYEadjepYE) + 90*Lam7*TrepYUadjepYU - 30._dp*(TrepYUadjepYUepYUadjYu)& 
+&  - 60._dp*(TrepYUadjepYUYuadjepYU) + 15*Lam2*TrepYUadjYu + 15*Lam3*TrepYUadjYu +       & 
+&  15*Lam4*TrepYUadjYu + 15*Lam5*TrepYUadjYu - 30._dp*(TrepYUadjYuepYUadjepYU)           & 
 &  + 15*Lam2*TrYdadjepYD + 15*Lam3*TrYdadjepYD + 15*Lam4*TrYdadjepYD + 15*Lam5*TrYdadjepYD +& 
 &  30*Lam7*TrYdadjYd + 5*Lam2*TrYeadjepYE + 5*Lam3*TrYeadjepYE + 5*Lam4*TrYeadjepYE +    & 
 &  5*Lam5*TrYeadjepYE + 10*Lam7*TrYeadjYe + 15*Lam2*TrYuadjepYU + 15*Lam3*TrYuadjepYU +  & 
-&  15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU - 30._dp*(TrYuadjepYUYuadjYu)               & 
-&  + 90*Lam7*TrYuadjYu - 30._dp*(TrYuadjYuYuadjepYU))/10._dp
+&  15*Lam4*TrYuadjepYU + 15*Lam5*TrYuadjepYU + 30*Lam7*TrYuadjYu)/10._dp
 
  
  
@@ -1673,9 +1673,9 @@ Call Chop(DLam7)
 betaLam11  = 27._dp*(g1p4)/100._dp + (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)              & 
 & /4._dp + 12._dp*(Lam1p2) + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2)            & 
 &  + 24._dp*(Lam6p2) - (9*g1p2*Lam1)/5._dp - 9*g2p2*Lam1 + 4*Lam3*Lam4 + 6*Lam6*TrepYDadjYd +& 
-&  2*Lam6*TrepYEadjYe + 12*Lam1*TrepYUadjepYU - 12._dp*(TrepYUadjepYUepYUadjepYU)        & 
-&  + 6*Lam6*TrepYUadjYu + 6*Lam6*TrYdadjepYD + 12*Lam1*TrYdadjYd - 12._dp*(TrYdadjYdYdadjYd)& 
-&  + 2*Lam6*TrYeadjepYE + 4*Lam1*TrYeadjYe - 4._dp*(TrYeadjYeYeadjYe) + 6*Lam6*TrYuadjepYU
+&  2*Lam6*TrepYEadjYe + 6*Lam6*TrepYUadjYu + 6*Lam6*TrYdadjepYD + 12*Lam1*TrYdadjYd -    & 
+&  12._dp*(TrYdadjYdYdadjYd) + 2*Lam6*TrYeadjepYE + 4*Lam1*TrYeadjYe - 4._dp*(TrYeadjYeYeadjYe)& 
+&  + 6*Lam6*TrYuadjepYU + 12*Lam1*TrYuadjYu - 12._dp*(TrYuadjYuYuadjYu)
 
  
  
@@ -1699,14 +1699,14 @@ Call Chop(DLam1)
  
 betaLam41  = (9*g1p2*g2p2)/5._dp + 4._dp*(Lam4p2) + 8._dp*(Lam5p2) + 10._dp*(Lam6p2)  & 
 &  + 10._dp*(Lam7p2) - (9*g1p2*Lam4)/5._dp - 9*g2p2*Lam4 + 2*Lam1*Lam4 + 2*Lam2*Lam4 +   & 
-&  8*Lam3*Lam4 + 4*Lam6*Lam7 + 6*Lam4*TrepYDadjepYD + 12._dp*(TrepYDadjepYUepYUadjepYD)  & 
-&  - 12._dp*(TrepYDadjepYUYuadjYd) + 3*(Lam6 + Lam7)*TrepYDadjYd - 12._dp*(TrepYDadjYdYdadjepYD)& 
+&  8*Lam3*Lam4 + 4*Lam6*Lam7 + 6*Lam4*TrepYDadjepYD + 3*(Lam6 + Lam7)*TrepYDadjYd -      & 
+&  12._dp*(TrepYDadjYdYdadjepYD) - 12._dp*(TrepYDadjYuepYUadjYd) + 12._dp*(TrepYDadjYuYuadjepYD)& 
 &  + 2*Lam4*TrepYEadjepYE + Lam6*TrepYEadjYe + Lam7*TrepYEadjYe - 4._dp*(TrepYEadjYeYeadjepYE)& 
-&  - 12._dp*(TrepYUadjepYDYdadjYu) + 6*Lam4*TrepYUadjepYU + 3*Lam6*TrepYUadjYu +         & 
+&  + 6*Lam4*TrepYUadjepYU + 12._dp*(TrepYUadjYdYdadjepYU) + 3*Lam6*TrepYUadjYu +         & 
 &  3*Lam7*TrepYUadjYu - 12._dp*(TrepYUadjYuYuadjepYU) + 3*Lam6*TrYdadjepYD +             & 
-&  3*Lam7*TrYdadjepYD + 6*Lam4*TrYdadjYd + 12._dp*(TrYdadjYuYuadjYd) + Lam6*TrYeadjepYE +& 
-&  Lam7*TrYeadjepYE + 2*Lam4*TrYeadjYe + 3*Lam6*TrYuadjepYU + 3*Lam7*TrYuadjepYU +       & 
-&  6*Lam4*TrYuadjYu
+&  3*Lam7*TrYdadjepYD - 12._dp*(TrYdadjepYUYuadjepYD) + 6*Lam4*TrYdadjYd +               & 
+&  Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam4*TrYeadjYe + 3*Lam6*TrYuadjepYU +         & 
+&  3*Lam7*TrYuadjepYU + 6*Lam4*TrYuadjYu
 
  
  
@@ -1732,12 +1732,12 @@ betaLam31  = 27._dp*(g1p4)/100._dp - (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)        
 & /4._dp + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2) + 4._dp*(Lam6p2)             & 
 &  + 4._dp*(Lam7p2) - (9*g1p2*Lam3)/5._dp - 9*g2p2*Lam3 + 6*Lam1*Lam3 + 6*Lam2*Lam3 +    & 
 &  2*Lam1*Lam4 + 2*Lam2*Lam4 + 16*Lam6*Lam7 + 6*Lam3*TrepYDadjepYD - 12._dp*(TrepYDadjepYDYdadjYd)& 
-&  - 12._dp*(TrepYDadjepYUepYUadjepYD) + 12._dp*(TrepYDadjepYUYuadjYd) + 3*(Lam6 +       & 
-&  Lam7)*TrepYDadjYd + 2*Lam3*TrepYEadjepYE - 4._dp*(TrepYEadjepYEYeadjYe)               & 
-&  + Lam6*TrepYEadjYe + Lam7*TrepYEadjYe + 12._dp*(TrepYUadjepYDYdadjYu) +               & 
-&  6*Lam3*TrepYUadjepYU - 12._dp*(TrepYUadjepYUYuadjYu) + 3*Lam6*TrepYUadjYu +           & 
-&  3*Lam7*TrepYUadjYu + 3*Lam6*TrYdadjepYD + 3*Lam7*TrYdadjepYD + 6*Lam3*TrYdadjYd -     & 
-&  12._dp*(TrYdadjYuYuadjYd) + Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam3*TrYeadjYe +  & 
+&  + 3*(Lam6 + Lam7)*TrepYDadjYd + 12._dp*(TrepYDadjYuepYUadjYd) - 12._dp*(TrepYDadjYuYuadjepYD)& 
+&  + 2*Lam3*TrepYEadjepYE - 4._dp*(TrepYEadjepYEYeadjYe) + Lam6*TrepYEadjYe +            & 
+&  Lam7*TrepYEadjYe + 6*Lam3*TrepYUadjepYU - 12._dp*(TrepYUadjepYUYuadjYu)               & 
+&  - 12._dp*(TrepYUadjYdYdadjepYU) + 3*Lam6*TrepYUadjYu + 3*Lam7*TrepYUadjYu +           & 
+&  3*Lam6*TrYdadjepYD + 3*Lam7*TrYdadjepYD + 12._dp*(TrYdadjepYUYuadjepYD)               & 
+&  + 6*Lam3*TrYdadjYd + Lam6*TrYeadjepYE + Lam7*TrYeadjepYE + 2*Lam3*TrYeadjYe +         & 
 &  3*Lam6*TrYuadjepYU + 3*Lam7*TrYuadjepYU + 6*Lam3*TrYuadjYu
 
  
@@ -1764,9 +1764,9 @@ betaLam21  = 27._dp*(g1p4)/100._dp + (9*g1p2*g2p2)/10._dp + 9._dp*(g2p4)        
 & /4._dp + 12._dp*(Lam2p2) + 4._dp*(Lam3p2) + 2._dp*(Lam4p2) + 2._dp*(Lam5p2)            & 
 &  + 24._dp*(Lam7p2) - (9*g1p2*Lam2)/5._dp - 9*g2p2*Lam2 + 4*Lam3*Lam4 + 12*Lam2*TrepYDadjepYD -& 
 &  12._dp*(TrepYDadjepYDepYDadjepYD) + 6*Lam7*TrepYDadjYd + 4*Lam2*TrepYEadjepYE -       & 
-&  4._dp*(TrepYEadjepYEepYEadjepYE) + 2*Lam7*TrepYEadjYe + 6*Lam7*TrepYUadjYu +          & 
-&  6*Lam7*TrYdadjepYD + 2*Lam7*TrYeadjepYE + 6*Lam7*TrYuadjepYU + 12*Lam2*TrYuadjYu -    & 
-&  12._dp*(TrYuadjYuYuadjYu)
+&  4._dp*(TrepYEadjepYEepYEadjepYE) + 2*Lam7*TrepYEadjYe + 12*Lam2*TrepYUadjepYU -       & 
+&  12._dp*(TrepYUadjepYUepYUadjepYU) + 6*Lam7*TrepYUadjYu + 6*Lam7*TrYdadjepYD +         & 
+&  2*Lam7*TrYeadjepYE + 6*Lam7*TrYuadjepYU
 
  
  
@@ -1785,38 +1785,13 @@ End If
 Call Chop(DLam2) 
 
 !-------------------- 
-! epYU 
-!-------------------- 
- 
-betaepYU1  = epYU*(-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)          & 
-&  + 3._dp*(TrepYUadjepYU) + 3._dp*(TrYdadjYd) + TrYeadjYe) + (epYUadjepYDepYD +         & 
-&  3._dp*(epYUadjepYUepYU) - 3._dp*(epYUadjYdYd) + epYUadjYuYu + 6*TrepYDadjYd*Yu +      & 
-&  2*TrepYEadjYe*Yu + 6*TrepYUadjYu*Yu - 4._dp*(YuadjYdepYD) + 2._dp*(YuadjYuepYU))/2._dp
-
- 
- 
-If (TwoLoopRGE) Then 
-betaepYU2 = 0
-
- 
-DepYU = oo16pi2*( betaepYU1 + oo16pi2 * betaepYU2 ) 
-
- 
-Else 
-DepYU = oo16pi2* betaepYU1 
-End If 
- 
- 
-Call Chop(DepYU) 
-
-!-------------------- 
 ! Yu 
 !-------------------- 
  
-betaYu1  = epYU*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2) + 3._dp*(TrepYDadjepYD)  & 
-&  + TrepYEadjepYE + 3._dp*(TrYuadjYu))*Yu + (-4._dp*(epYUadjepYDYd) + 2._dp*(epYUadjepYUYu)& 
-&  - 3._dp*(YuadjepYDepYD) + YuadjepYUepYU + YuadjYdYd + 3._dp*(YuadjYuYu))/2._dp
+betaYu1  = epYU*(3._dp*(TrepYDadjYd) + TrepYEadjYe + 3._dp*(TrYuadjepYU))             & 
+&  + (-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2) + 3._dp*(TrYdadjYd)      & 
+&  + TrYeadjYe + 3._dp*(TrYuadjYu))*Yu + (2._dp*(epYUadjepYUYu) - 4._dp*(epYUadjYdepYD)  & 
+&  + YuadjepYDepYD + YuadjepYUepYU - 3._dp*(YuadjYdYd) + 3._dp*(YuadjYuYu))/2._dp
 
  
  
@@ -1835,13 +1810,38 @@ End If
 Call Chop(DYu) 
 
 !-------------------- 
+! epYU 
+!-------------------- 
+ 
+betaepYU1  = epYU*(-17._dp*(g1p2)/20._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)          & 
+&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrepYUadjepYU)) + (-3._dp*(epYUadjepYDepYD)& 
+&  + 3._dp*(epYUadjepYUepYU) + epYUadjYdYd + epYUadjYuYu + 6*TrepYUadjYu*Yu +            & 
+&  6*TrYdadjepYD*Yu + 2*TrYeadjepYE*Yu - 4._dp*(YuadjepYDYd) + 2._dp*(YuadjYuepYU))/2._dp
+
+ 
+ 
+If (TwoLoopRGE) Then 
+betaepYU2 = 0
+
+ 
+DepYU = oo16pi2*( betaepYU1 + oo16pi2 * betaepYU2 ) 
+
+ 
+Else 
+DepYU = oo16pi2* betaepYU1 
+End If 
+ 
+ 
+Call Chop(DepYU) 
+
+!-------------------- 
 ! Yd 
 !-------------------- 
  
-betaYd1  = epYD*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-((g1p2 + 9._dp*(g2p2) + 32._dp*(g3p2) - 12._dp*(TrepYUadjepYU) - 12._dp*(TrYdadjYd)& 
-&  - 4._dp*(TrYeadjYe))*Yd) + 2*(2._dp*(epYDadjepYDYd) - 4._dp*(epYDadjepYUYu)           & 
-&  + YdadjepYDepYD - 3._dp*(YdadjepYUepYU) + 3._dp*(YdadjYdYd) + YdadjYuYu))/4._dp
+betaYd1  = epYD*(3._dp*(TrepYUadjYu) + 3._dp*(TrYdadjepYD) + TrYeadjepYE)             & 
+&  + (-((g1p2 + 9._dp*(g2p2) + 32._dp*(g3p2) - 12._dp*(TrYdadjYd) - 4._dp*(TrYeadjYe)    & 
+&  - 12._dp*(TrYuadjYu))*Yd) + 2*(2._dp*(epYDadjepYDYd) - 4._dp*(epYDadjYuepYU)          & 
+&  + YdadjepYDepYD + YdadjepYUepYU + 3._dp*(YdadjYdYd) - 3._dp*(YdadjYuYu)))/4._dp
 
  
  
@@ -1863,9 +1863,9 @@ Call Chop(DYd)
 ! Ye 
 !-------------------- 
  
-betaYe1  = epYE*(3._dp*(TrYdadjepYD) + TrYeadjepYE + 3._dp*(TrYuadjepYU))             & 
-&  + (-9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrepYUadjepYU) + 3._dp*(TrYdadjYd)& 
-&  + TrYeadjYe)*Ye + (2._dp*(epYEadjepYEYe) + YeadjepYEepYE + 3._dp*(YeadjYeYe))/2._dp
+betaYe1  = epYE*(3._dp*(TrepYUadjYu) + 3._dp*(TrYdadjepYD) + TrYeadjepYE)             & 
+&  + (-9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrYdadjYd) + TrYeadjYe +         & 
+&  3._dp*(TrYuadjYu))*Ye + (2._dp*(epYEadjepYEYe) + YeadjepYEepYE + 3._dp*(YeadjYeYe))/2._dp
 
  
  
@@ -1888,9 +1888,9 @@ Call Chop(DYe)
 !-------------------- 
  
 betaepYD1  = epYD*(-1._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp - 8._dp*(g3p2)            & 
-&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrYuadjYu)) + (3._dp*(epYDadjepYDepYD)& 
-&  + epYDadjepYUepYU + epYDadjYdYd - 3._dp*(epYDadjYuYu) + 6*TrepYDadjYd*Yd +            & 
-&  2*TrepYEadjYe*Yd + 6*TrepYUadjYu*Yd + 2._dp*(YdadjYdepYD) - 4._dp*(YdadjYuepYU))/2._dp
+&  + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE + 3._dp*(TrepYUadjepYU)) + (3._dp*(epYDadjepYDepYD)& 
+&  - 3._dp*(epYDadjepYUepYU) + epYDadjYdYd + epYDadjYuYu + 6*TrepYDadjYd*Yd +            & 
+&  2*TrepYEadjYe*Yd + 6*TrYuadjepYU*Yd - 4._dp*(YdadjepYUYu) + 2._dp*(YdadjYdepYD))/2._dp
 
  
  
@@ -1914,7 +1914,7 @@ Call Chop(DepYD)
  
 betaepYE1  = 3._dp*(epYEadjepYEepYE)/2._dp + epYEadjYeYe/2._dp + epYE*(-              & 
 & 9._dp*(g1p2)/4._dp - 9._dp*(g2p2)/4._dp + 3._dp*(TrepYDadjepYD) + TrepYEadjepYE +      & 
-&  3._dp*(TrYuadjYu)) + 3*TrepYDadjYd*Ye + TrepYEadjYe*Ye + 3*TrepYUadjYu*Ye +           & 
+&  3._dp*(TrepYUadjepYU)) + 3*TrepYDadjYd*Ye + TrepYEadjYe*Ye + 3*TrYuadjepYU*Ye +       & 
 &  YeadjYeepYE
 
  
@@ -1939,9 +1939,9 @@ Call Chop(DepYE)
  
 betaM121  = -6*Lam6*M112 - (9*g1p2*M12)/10._dp - (9*g2p2*M12)/2._dp + 2*Lam3*M12 +    & 
 &  4*Lam4*M12 + 6*Lam5*M12 - 6*Lam7*M222 + 3*M12*TrepYDadjepYD - 3*M112*TrepYDadjYd +    & 
-&  M12*TrepYEadjepYE - M112*TrepYEadjYe + 3*M12*TrepYUadjepYU - 3*M222*TrepYUadjYu -     & 
+&  M12*TrepYEadjepYE - M112*TrepYEadjYe + 3*M12*TrepYUadjepYU - 3*M112*TrepYUadjYu -     & 
 &  3*M222*TrYdadjepYD + 3*M12*TrYdadjYd - M222*TrYeadjepYE + M12*TrYeadjYe -             & 
-&  3*M112*TrYuadjepYU + 3*M12*TrYuadjYu
+&  3*M222*TrYuadjepYU + 3*M12*TrYuadjYu
 
  
  
@@ -1964,8 +1964,8 @@ Call Chop(DM12)
 !-------------------- 
  
 betaM1121  = (-9*g1p2*M112)/10._dp - (9*g2p2*M112)/2._dp + 6*Lam1*M112 -              & 
-&  12*Lam6*M12 + 4*Lam3*M222 + 2*Lam4*M222 + 6*M112*TrepYUadjepYU - 6*M12*TrepYUadjYu -  & 
-&  6*M12*TrYdadjepYD + 6*M112*TrYdadjYd - 2*M12*TrYeadjepYE + 2*M112*TrYeadjYe
+&  12*Lam6*M12 + 4*Lam3*M222 + 2*Lam4*M222 - 6*M12*TrYdadjepYD + 6*M112*TrYdadjYd -      & 
+&  2*M12*TrYeadjepYE + 2*M112*TrYeadjYe - 6*M12*TrYuadjepYU + 6*M112*TrYuadjYu
 
  
  
@@ -1989,7 +1989,7 @@ Call Chop(DM112)
  
 betaM2221  = 4*Lam3*M112 + 2*Lam4*M112 - 12*Lam7*M12 - (9*g1p2*M222)/10._dp -         & 
 &  (9*g2p2*M222)/2._dp + 6*Lam2*M222 + 6*M222*TrepYDadjepYD - 6*M12*TrepYDadjYd +        & 
-&  2*M222*TrepYEadjepYE - 2*M12*TrepYEadjYe - 6*M12*TrYuadjepYU + 6*M222*TrYuadjYu
+&  2*M222*TrepYEadjepYE - 2*M12*TrepYEadjYe + 6*M222*TrepYUadjepYU - 6*M12*TrepYUadjYu
 
  
  
@@ -2011,10 +2011,9 @@ Call Chop(DM222)
 ! v 
 !-------------------- 
  
-betav1  = (9*g1p2*v + 45*g2p2*v - 60*TrepYUadjepYU*v - 60*TrYdadjYd*v -               & 
-&  20*TrYeadjYe*v - 30*TrepYDadjYd*v2 - 10*TrepYEadjYe*v2 - 30*TrepYUadjYu*v2 -          & 
-&  30*TrYdadjepYD*v2 - 10*TrYeadjepYE*v2 - 30*TrYuadjepYU*v2 + 3*g1p2*v*Xi +             & 
-&  15*g2p2*v*Xi)/20._dp
+betav1  = (9*g1p2*v + 45*g2p2*v - 60*TrYdadjYd*v - 20*TrYeadjYe*v - 60*TrYuadjYu*v -  & 
+&  30*TrepYDadjYd*v2 - 10*TrepYEadjYe*v2 - 30*TrepYUadjYu*v2 - 30*TrYdadjepYD*v2 -       & 
+&  10*TrYeadjepYE*v2 - 30*TrYuadjepYU*v2 + 3*g1p2*v*Xi + 15*g2p2*v*Xi)/20._dp
 
  
  
@@ -2036,7 +2035,7 @@ End If
  
 betav21  = (-30*TrepYDadjYd*v - 10*TrepYEadjYe*v - 30*TrepYUadjYu*v - 30*TrYdadjepYD*v -& 
 &  10*TrYeadjepYE*v - 30*TrYuadjepYU*v + 9*g1p2*v2 + 45*g2p2*v2 - 60*TrepYDadjepYD*v2 -  & 
-&  20*TrepYEadjepYE*v2 - 60*TrYuadjYu*v2 + 3*g1p2*v2*Xi + 15*g2p2*v2*Xi)/20._dp
+&  20*TrepYEadjepYE*v2 - 60*TrepYUadjepYU*v2 + 3*g1p2*v2*Xi + 15*g2p2*v2*Xi)/20._dp
 
  
  
@@ -2053,7 +2052,7 @@ End If
  
  
 Call ParametersToG133(Dg1,Dg2,Dg3,DLam6,DLam5,DLam7,DLam1,DLam4,DLam3,DLam2,          & 
-& DepYU,DYu,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,Dv,Dv2,f)
+& DYu,DepYU,DYd,DYe,DepYD,DepYE,DM12,DM112,DM222,Dv,Dv2,f)
 
 Iname = Iname - 1 
  

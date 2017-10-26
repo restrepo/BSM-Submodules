@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:25 on 25.10.2017   
+! File created at 22:52 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -45,13 +45,13 @@ Contains
  
 Subroutine OneLoopMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,            & 
 & MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,               & 
-& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,              & 
+& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,              & 
 & Yd,Ye,epYD,epYE,M12,M112,M222,kont)
 
 Implicit None 
 Real(dp),Intent(inout) :: g1,g2,g3
 
-Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
@@ -135,11 +135,11 @@ RXiZ = RXi
  
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
 & Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
-& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,              & 
 & M12,M112,M222,GenerationMixing,kont)
 
 M112Tree  = M112
-M222Tree  = M222
+M12Tree  = M12
 
  
  If (CalculateOneLoopMasses) Then 
@@ -175,15 +175,15 @@ v=vSM
 v2=0 
 End if 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
 & Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
-& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,              & 
 & M12,M112,M222,GenerationMixing,kont)
 
 Call CouplingsForLoopMasses(Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,Lam6,ZH,g1,g2,              & 
-& TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,epYU,Yu,ZUL,ZUR,Lam1,ZP,g3,cplAhAhUhh,              & 
+& TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,Yu,epYU,ZUL,ZUR,Lam1,ZP,g3,cplAhAhUhh,              & 
 & cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,cplcFdFdUhhR,cplcFeFeUhhL,           & 
 & cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,cplcgWpCgWpCUhh,cplcgZgZUhh,      & 
 & cplUhhhhhh,cplUhhhhsigma1,cplUhhHmcHm,cplUhhHmcVWm,cplUhhsigma1sigma1,cplUhhsigma1VZ,  & 
@@ -229,7 +229,7 @@ Call OneLoopTadpoleshh(v,v2,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,       
 & Tad1Loop(1:2))
 
 M112Tree  = M112
-M222Tree  = M222
+M12Tree  = M12
 If (CalculateTwoLoopHiggsMasses) Then 
     If(GaugelessLimit) Then 
   vFix = 0._dp 
@@ -249,10 +249,10 @@ CASE ( 1 , 2 )
 
  CASE ( 3 ) ! Diagrammatic method 
   ! Make sure that there are no exactly degenerated masses! 
-   epYU_saveEP =epYU
-   where (aint(Abs(epYU)).eq.epYU) epYU=epYU*(1 + 1*1.0E-12_dp)
    Yu_saveEP =Yu
-   where (aint(Abs(Yu)).eq.Yu) Yu=Yu*(1 + 2*1.0E-12_dp)
+   where (aint(Abs(Yu)).eq.Yu) Yu=Yu*(1 + 1*1.0E-12_dp)
+   epYU_saveEP =epYU
+   where (aint(Abs(epYU)).eq.epYU) epYU=epYU*(1 + 2*1.0E-12_dp)
    Yd_saveEP =Yd
    where (aint(Abs(Yd)).eq.Yd) Yd=Yd*(1 + 3*1.0E-12_dp)
    Ye_saveEP =Ye
@@ -264,15 +264,15 @@ CASE ( 1 , 2 )
 
 If (NewGBC) Then 
 Call CalculatePi2S(125._dp**2,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,            & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
 
 Else 
 Call CalculatePi2S(0._dp,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,            & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,kont,ti_ep2L,Pi2S_EffPot,PiP2S_EffPot)
 
 End if 
-   epYU =epYU_saveEP 
    Yu =Yu_saveEP 
+   epYU =epYU_saveEP 
    Yd =Yd_saveEP 
    Ye =Ye_saveEP 
    epYD =epYD_saveEP 
@@ -297,17 +297,17 @@ ti_ep2L = 0._dp
 
 End if 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
 
 M1121L = M112
-M2221L = M222
+M121L = M12
 Tad1Loop(1:2) = Tad1Loop(1:2) - ti_ep2L 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,Tad1Loop)
 
 M1122L = M112
-M2222L = M222
-Call OneLoophh(M12,Lam6,Lam5,Lam7,M1122L,M2222L,Lam1,Lam4,Lam3,Lam2,v,v2,             & 
+M122L = M12
+Call OneLoophh(M122L,Lam6,Lam5,Lam7,M1122L,M222,Lam1,Lam4,Lam3,Lam2,v,v2,             & 
 & MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,MFd,MFd2,MFe,MFe2,MFu,MFu2,MHm,            & 
 & MHm2,MVWm,MVWm2,cplAhAhUhh,cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,          & 
 & cplcFdFdUhhR,cplcFeFeUhhL,cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,        & 
@@ -316,7 +316,7 @@ Call OneLoophh(M12,Lam6,Lam5,Lam7,M1122L,M2222L,Lam1,Lam4,Lam3,Lam2,v,v2,       
 & cplUhhUhhhhhh,cplUhhUhhHmcHm,cplUhhUhhsigma1sigma1,cplUhhUhhcVWmVWm,cplUhhUhhVZVZ,     & 
 & 0.1_dp*delta_mass,Mhh_1L,Mhh2_1L,ZH_1L,kont)
 
-Call OneLoopHm(g2,M12,Lam6,Lam5,Lam7,M1121L,M2221L,Lam1,Lam4,Lam3,Lam2,               & 
+Call OneLoopHm(g2,M121L,Lam6,Lam5,Lam7,M1121L,M222,Lam1,Lam4,Lam3,Lam2,               & 
 & v,v2,MHm,MHm2,MAh,MAh2,MVWm,MVWm2,MFu,MFu2,MFd,MFd2,MFe,MFe2,Mhh,Mhh2,Msigma1,         & 
 & Msigma12,MVZ,MVZ2,cplAhHmcUHm,cplAhcUHmVWm,cplcFuFdcUHmL,cplcFuFdcUHmR,cplcFvFecUHmL,  & 
 & cplcFvFecUHmR,cplcgZgWmcUHm,cplcgWmgZUHm,cplcgWpCgZcUHm,cplcgZgWpCUHm,cplhhHmcUHm,     & 
@@ -331,7 +331,7 @@ Call OneLoopFd(Yd,epYD,v,v2,MFd,MFd2,MAh,MAh2,Mhh,Mhh2,Msigma1,Msigma12,        
 & cplcUFdFdVPL,cplcUFdFdVPR,cplcUFdFdVZL,cplcUFdFdVZR,cplcUFdFuHmL,cplcUFdFuHmR,         & 
 & cplcUFdFuVWmL,cplcUFdFuVWmR,0.1_dp*delta_mass,MFd_1L,MFd2_1L,ZDL_1L,ZDR_1L,kont)
 
-Call OneLoopFu(epYU,Yu,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,MVWm2,           & 
+Call OneLoopFu(Yu,epYU,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,MVWm2,           & 
 & Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,cplcUFuFuAhL,cplcUFuFuAhR,cplcUFuFdcHmL,            & 
 & cplcUFuFdcHmR,cplcUFuFdcVWmL,cplcUFuFdcVWmR,cplcUFuFuhhL,cplcUFuFuhhR,cplcUFuFusigma1L,& 
 & cplcUFuFusigma1R,cplcUFuFuVGL,cplcUFuFuVGR,cplcUFuFuVPL,cplcUFuFuVPR,cplcUFuFuVZL,     & 
@@ -352,7 +352,7 @@ Call OneLoopsigma1(g1,g2,Lam6,Lam5,M1122L,Lam1,Lam4,Lam3,v,v2,TW,MAh,MAh2,      
 & cplHmsigma1sigma1cHm,cplsigma1sigma1sigma1sigma1,cplsigma1sigma1cVWmVWm,               & 
 & cplsigma1sigma1VZVZ,0.1_dp*delta_mass,Msigma1_1L,Msigma12_1L,kont)
 
-Call OneLoopAh(g1,g2,Lam5,Lam7,M2222L,Lam4,Lam3,Lam2,v,v2,TW,MAh,MAh2,Mhh,            & 
+Call OneLoopAh(g1,g2,Lam5,Lam7,M222,Lam4,Lam3,Lam2,v,v2,TW,MAh,MAh2,Mhh,              & 
 & Mhh2,Msigma1,Msigma12,MFd,MFd2,MFe,MFe2,MFu,MFu2,MVZ,MVZ2,MHm,MHm2,MVWm,               & 
 & MVWm2,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,           & 
 & cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,cplcgWmgWmAh,cplcgWpCgWpCAh,cplAhhhhh,             & 
@@ -405,7 +405,7 @@ mf_l2 = mf_l**2
  If (WriteTreeLevelTadpoleSolutions) Then 
 ! Saving tree-level parameters for output
 M112  = M112Tree 
-M222  = M222Tree 
+M12  = M12Tree 
 End if 
 
 
@@ -3299,7 +3299,7 @@ SigSR = oo16pi2*SigSR
  
 End Subroutine DerSigma1LoopFd 
  
-Subroutine OneLoopFu(epYU,Yu,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,           & 
+Subroutine OneLoopFu(Yu,epYU,v,v2,MFu,MFu2,MAh,MAh2,MHm,MHm2,MFd,MFd2,MVWm,           & 
 & MVWm2,Mhh,Mhh2,Msigma1,Msigma12,MVZ,MVZ2,cplcUFuFuAhL,cplcUFuFuAhR,cplcUFuFdcHmL,      & 
 & cplcUFuFdcHmR,cplcUFuFdcVWmL,cplcUFuFdcVWmR,cplcUFuFuhhL,cplcUFuFuhhR,cplcUFuFusigma1L,& 
 & cplcUFuFusigma1R,cplcUFuFuVGL,cplcUFuFuVGR,cplcUFuFuVPL,cplcUFuFuVPR,cplcUFuFuVZL,     & 
@@ -3311,7 +3311,7 @@ Real(dp), Intent(in) :: MFu(3),MFu2(3),MAh,MAh2,MHm(2),MHm2(2),MFd(3),MFd2(3),MV
 
 Real(dp), Intent(in) :: v,v2
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3)
 
 Complex(dp), Intent(in) :: cplcUFuFuAhL(3,3),cplcUFuFuAhR(3,3),cplcUFuFdcHmL(3,3,2),cplcUFuFdcHmR(3,3,2),        & 
 & cplcUFuFdcVWmL(3,3),cplcUFuFdcVWmR(3,3),cplcUFuFuhhL(3,3,2),cplcUFuFuhhR(3,3,2),       & 
@@ -3339,32 +3339,32 @@ Complex(dp) :: ZUL2(3,3), ZUR2(3,3)
 NameOfUnit(Iname) = 'OneLoopMFu'
  
 mat1a(1,1) = 0._dp 
-mat1a(1,1) = mat1a(1,1)+(v*epYU(1,1))/sqrt(2._dp)
-mat1a(1,1) = mat1a(1,1)+(v2*Yu(1,1))/sqrt(2._dp)
+mat1a(1,1) = mat1a(1,1)+(v2*epYU(1,1))/sqrt(2._dp)
+mat1a(1,1) = mat1a(1,1)+(v*Yu(1,1))/sqrt(2._dp)
 mat1a(1,2) = 0._dp 
-mat1a(1,2) = mat1a(1,2)+(v*epYU(2,1))/sqrt(2._dp)
-mat1a(1,2) = mat1a(1,2)+(v2*Yu(2,1))/sqrt(2._dp)
+mat1a(1,2) = mat1a(1,2)+(v2*epYU(2,1))/sqrt(2._dp)
+mat1a(1,2) = mat1a(1,2)+(v*Yu(2,1))/sqrt(2._dp)
 mat1a(1,3) = 0._dp 
-mat1a(1,3) = mat1a(1,3)+(v*epYU(3,1))/sqrt(2._dp)
-mat1a(1,3) = mat1a(1,3)+(v2*Yu(3,1))/sqrt(2._dp)
+mat1a(1,3) = mat1a(1,3)+(v2*epYU(3,1))/sqrt(2._dp)
+mat1a(1,3) = mat1a(1,3)+(v*Yu(3,1))/sqrt(2._dp)
 mat1a(2,1) = 0._dp 
-mat1a(2,1) = mat1a(2,1)+(v*epYU(1,2))/sqrt(2._dp)
-mat1a(2,1) = mat1a(2,1)+(v2*Yu(1,2))/sqrt(2._dp)
+mat1a(2,1) = mat1a(2,1)+(v2*epYU(1,2))/sqrt(2._dp)
+mat1a(2,1) = mat1a(2,1)+(v*Yu(1,2))/sqrt(2._dp)
 mat1a(2,2) = 0._dp 
-mat1a(2,2) = mat1a(2,2)+(v*epYU(2,2))/sqrt(2._dp)
-mat1a(2,2) = mat1a(2,2)+(v2*Yu(2,2))/sqrt(2._dp)
+mat1a(2,2) = mat1a(2,2)+(v2*epYU(2,2))/sqrt(2._dp)
+mat1a(2,2) = mat1a(2,2)+(v*Yu(2,2))/sqrt(2._dp)
 mat1a(2,3) = 0._dp 
-mat1a(2,3) = mat1a(2,3)+(v*epYU(3,2))/sqrt(2._dp)
-mat1a(2,3) = mat1a(2,3)+(v2*Yu(3,2))/sqrt(2._dp)
+mat1a(2,3) = mat1a(2,3)+(v2*epYU(3,2))/sqrt(2._dp)
+mat1a(2,3) = mat1a(2,3)+(v*Yu(3,2))/sqrt(2._dp)
 mat1a(3,1) = 0._dp 
-mat1a(3,1) = mat1a(3,1)+(v*epYU(1,3))/sqrt(2._dp)
-mat1a(3,1) = mat1a(3,1)+(v2*Yu(1,3))/sqrt(2._dp)
+mat1a(3,1) = mat1a(3,1)+(v2*epYU(1,3))/sqrt(2._dp)
+mat1a(3,1) = mat1a(3,1)+(v*Yu(1,3))/sqrt(2._dp)
 mat1a(3,2) = 0._dp 
-mat1a(3,2) = mat1a(3,2)+(v*epYU(2,3))/sqrt(2._dp)
-mat1a(3,2) = mat1a(3,2)+(v2*Yu(2,3))/sqrt(2._dp)
+mat1a(3,2) = mat1a(3,2)+(v2*epYU(2,3))/sqrt(2._dp)
+mat1a(3,2) = mat1a(3,2)+(v*Yu(2,3))/sqrt(2._dp)
 mat1a(3,3) = 0._dp 
-mat1a(3,3) = mat1a(3,3)+(v*epYU(3,3))/sqrt(2._dp)
-mat1a(3,3) = mat1a(3,3)+(v2*Yu(3,3))/sqrt(2._dp)
+mat1a(3,3) = mat1a(3,3)+(v2*epYU(3,3))/sqrt(2._dp)
+mat1a(3,3) = mat1a(3,3)+(v*Yu(3,3))/sqrt(2._dp)
 
  
  !---------------------------------------- 

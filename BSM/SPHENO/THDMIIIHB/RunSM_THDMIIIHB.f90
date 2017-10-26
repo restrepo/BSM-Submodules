@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:31 on 25.10.2017   
+! File created at 22:58 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -22,21 +22,21 @@ Logical,Private,Save::OnlyDiagonal
 Contains 
  
  Subroutine RunSM_and_SUSY_RGEs(Qout,g1input,g2input,g3input,Lam6input,Lam5input,      & 
-& Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,           & 
+& Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,Yuinput,epYUinput,Ydinput,           & 
 & Yeinput,epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,               & 
-& g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
+& g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,               & 
 & M112,M222,v,v2,CKMout,sinW2_out,Alpha_out,AlphaS_out,realCKM)
 
 Implicit None 
 Real(dp),Intent(in) :: g1input,g2input,g3input,vinput,v2input
 
-Complex(dp),Intent(in) :: Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,epYUinput(3,3), & 
-& Yuinput(3,3),Ydinput(3,3),Yeinput(3,3),epYDinput(3,3),epYEinput(3,3),M12input,         & 
+Complex(dp),Intent(in) :: Lam6input,Lam5input,Lam7input,Lam1input,Lam4input,Lam3input,Lam2input,Yuinput(3,3),   & 
+& epYUinput(3,3),Ydinput(3,3),Yeinput(3,3),epYDinput(3,3),epYEinput(3,3),M12input,       & 
 & M112input,M222input
 
 Real(dp),Intent(out) :: g1,g2,g3,v,v2
 
-Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(out) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp), Intent(in) :: Qout 
@@ -56,11 +56,11 @@ Real(dp) :: scale_save, Qin, tz, dt, g1D(133), g62_SM(62)
 Qin=sqrt(getRenormalizationScale()) 
 scale_save = Qin 
 Call ParametersToG133(g1input,g2input,g3input,Lam6input,Lam5input,Lam7input,          & 
-& Lam1input,Lam4input,Lam3input,Lam2input,epYUinput,Yuinput,Ydinput,Yeinput,             & 
+& Lam1input,Lam4input,Lam3input,Lam2input,Yuinput,epYUinput,Ydinput,Yeinput,             & 
 & epYDinput,epYEinput,M12input,M112input,M222input,vinput,v2input,g1D)
 
-Call GToParameters133(g1D,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,           & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
+Call GToParameters133(g1D,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,             & 
+& epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2)
 
 g1 = Sqrt(3._dp/5._dp)*g1 
 
@@ -112,7 +112,7 @@ sinW2_out = g1**2/(g1**2+g2**2)
 Alpha_out = sinW2_out*g2**2/(4._dp*Pi) 
 AlphaS_out = g3**2/(4._dp*Pi) 
 Call SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,g1,g2,              & 
-& g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,.False.)
+& g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,.False.)
 
 End if 
 

@@ -78,7 +78,7 @@ DEFINITION[a_][MINPAR]={
 {{5},{Value->0}} (*Lambda5Input*), 
 {{6},{Value->0}} (*Lambda6Input*), 
 {{7},{Value->0}} (*Lambda7Input*), 
-{{9},{Value->0}} (*M12input*)}; 
+{{9},{Value->0}} (*M222Input*)}; 
  
 DEFINITION[a_][SPhenoInput]={ 
 {{1},{Value->-1}}, (* error level *)

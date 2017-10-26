@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:28 on 25.10.2017   
+! File created at 22:55 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -29,7 +29,7 @@ Use Wrapper_OneLoopDecay_Hm_THDMIIIHB
 Contains 
  
 Subroutine getZCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,               & 
-& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,       & 
+& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,       & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -100,7 +100,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g1,g2,TW,g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
-& ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
+& ZEL(3,3),ZER(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),Yu(3,3),Ye(3,3)
 
 Complex(dp), Intent(in) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -2217,7 +2217,7 @@ Subroutine WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,         
 & MVZ2OS,MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,               & 
 & MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,               & 
 & MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,            & 
-& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,              & 
+& Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,              & 
 & cplAhAhAh,cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,& 
 & cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,& 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -2252,7 +2252,7 @@ Subroutine WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,         
 & GcplhhHmcVWm,GcplhhcHmVWm,GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,   & 
 & GcplHmcVWmVP,GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,       & 
 & GcplcFvFecHmL,GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,       & 
-& dg1,dg2,dg3,dM12,depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
+& dg1,dg2,dg3,dM12,dYu,depYU,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
 & dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,           & 
 & dCosTW,dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,             & 
 & ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,ctcplAhAhAh,ctcplAhAhhh,ctcplAhAhsigma1,             & 
@@ -2276,7 +2276,7 @@ Subroutine WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,         
 Implicit None 
 Real(dp),Intent(inout) :: g1,g2,g3
 
-Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: v,v2
@@ -2396,7 +2396,7 @@ Real(dp), Intent(in) :: MLambda, deltaM
 Integer, Intent(out) :: kont 
 Real(dp),Intent(out) :: dg1,dg2,dg3,dv,dv2,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
 
-Complex(dp),Intent(out) :: dM12,depYU(3,3),dYu(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
+Complex(dp),Intent(out) :: dM12,dYu(3,3),depYU(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
 & dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,dZDL(3,3),dZDR(3,3),dZUL(3,3),         & 
 & dZUR(3,3),dZEL(3,3),dZER(3,3)
 
@@ -3640,15 +3640,15 @@ ZfVZVP = 2._dp*PiVZVP/(MVZ2-MVP2 )
 g1 = Sqrt(5._dp/3._dp)*g1 
 ! ----------------------- 
  
-Call ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,               & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g1D)
+Call ParametersToG133(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,            & 
+& Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,g1D)
 
 TwoLoopRGEsave=TwoLoopRGE 
 TwoLoopRGE=.False. 
 Call rge133(133,0._dp,g1D,g1D) 
 TwoLoopRGE=TwoLoopRGEsave 
 Call GToParameters133(g1D,dg1,dg2,dg3,dLam6,dLam5,dLam7,dLam1,dLam4,dLam3,            & 
-& dLam2,depYU,dYu,dYd,dYe,depYD,depYE,dM12,dM112,dM222,dv,dv2)
+& dLam2,dYu,depYU,dYd,dYe,depYD,depYE,dM12,dM112,dM222,dv,dv2)
 
 
  
@@ -3666,8 +3666,8 @@ dg1 = 0.5_dp*divergence*dg1
 dg2 = 0.5_dp*divergence*dg2 
 dg3 = 0.5_dp*divergence*dg3 
 dM12 = 0.5_dp*divergence*dM12 
-depYU = 0.5_dp*divergence*depYU 
 dYu = 0.5_dp*divergence*dYu 
+depYU = 0.5_dp*divergence*depYU 
 dYd = 0.5_dp*divergence*dYd 
 dYe = 0.5_dp*divergence*dYe 
 depYD = 0.5_dp*divergence*depYD 
@@ -3715,9 +3715,9 @@ dZP = 0.25_dp*MatMul(ZfHm- Conjg(Transpose(ZfHm)),ZP)
 ! Calculating the CT vertices 
 ! -----------------------------------------------------------
 Call CalculateCouplingCT(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,               & 
-& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,dLam7,dv,dLam5,            & 
+& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,dLam7,dv,dLam5,            & 
 & dLam4,dLam3,dLam2,dv2,dZH,dLam6,dZP,dLam1,dg1,dg2,dSinTW,dCosTW,dTanTW,dg3,            & 
-& depYD,dZDL,dZDR,depYE,dZEL,dZER,dYu,dZUL,dZUR,dYd,depYU,dYe,ctcplAhAhAh,               & 
+& depYD,dZDL,dZDR,depYE,dZEL,dZER,depYU,dZUL,dZUR,dYd,dYu,dYe,ctcplAhAhAh,               & 
 & ctcplAhAhhh,ctcplAhAhsigma1,ctcplAhhhhh,ctcplAhhhsigma1,ctcplAhHmcHm,ctcplAhsigma1sigma1,& 
 & ctcplhhhhhh,ctcplhhhhsigma1,ctcplhhHmcHm,ctcplhhsigma1sigma1,ctcplHmsigma1cHm,         & 
 & ctcplsigma1sigma1sigma1,ctcplAhhhVZ,ctcplAhHmcVWm,ctcplAhcHmVWm,ctcplhhHmcVWm,         & 
@@ -3740,7 +3740,7 @@ Subroutine CalculateOneLoopDecays(gP1LFu,gP1LFe,gP1LFd,gP1Lhh,gP1LAh,gP1LHm,    
 & MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,MFeOS,MFe2OS,Msigma1OS,            & 
 & Msigma12OS,MAhOS,MAh2OS,MVZOS,MVZ2OS,MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,             & 
 & ZULOS,ZUROS,ZELOS,ZEROS,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,              & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,epsI,deltaM,kont)
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,epsI,deltaM,kont)
 
 Implicit None 
 Real(dp), Intent(in) :: epsI, deltaM 
@@ -3750,14 +3750,14 @@ Integer :: divset, i1
 Complex(dp) :: divvalue, YuSM(3,3), YdSM(3,3), YeSM(3,3) 
 Real(dp),Intent(inout) :: g1,g2,g3
 
-Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: v,v2
 
 Real(dp) :: dg1,dg2,dg3,dv,dv2,dZH(2,2),dZP(2,2),dSinTW,dCosTW,dTanTW
 
-Complex(dp) :: dM12,depYU(3,3),dYu(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
+Complex(dp) :: dM12,dYu(3,3),depYU(3,3),dYd(3,3),dYe(3,3),depYD(3,3),depYE(3,3),dLam6,               & 
 & dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,dZDL(3,3),dZDR(3,3),dZUL(3,3),         & 
 & dZUR(3,3),dZEL(3,3),dZER(3,3)
 
@@ -3977,11 +3977,11 @@ End if
 
 ! DR parameters 
 Call SolveTadpoleEquations(g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,               & 
-& epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
+& Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,(/ ZeroC, ZeroC /))
 
 Call TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,        & 
 & Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,            & 
-& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,              & 
 & M12,M112,M222,GenerationMixing,kont)
 
 ! Stabilize numerics 
@@ -4029,7 +4029,7 @@ ZRUUe = MatMul(ZEROS, Conjg(Transpose(ZER)))
 End if 
 ! Couplings 
 Call AllCouplingsReallyAll(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,             & 
-& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,       & 
+& g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,       & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -4081,7 +4081,7 @@ Call CouplingsColoredQuartics(Lam2,Lam7,ZH,Lam5,Lam4,Lam3,ZP,Lam6,Lam1,         
 
 If (externalZfactors) Then 
 Call getZCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,g1,g2,               & 
-& TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,             & 
+& TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,             & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -4178,7 +4178,7 @@ Call WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,        
 & MVWmOS,MVWm2OS,ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,             & 
 & MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,              & 
 & MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,            & 
-& Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplAhAhAh,              & 
+& Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplAhAhAh,              & 
 & cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,          & 
 & cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,& 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -4213,7 +4213,7 @@ Call WaveFunctionRenormalisation(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,        
 & GcplhhHmcVWm,GcplhhcHmVWm,GcplHmsigma1cVWm,GcplHmcHmVP,GcplHmcHmVZ,Gcplsigma1cHmVWm,   & 
 & GcplHmcVWmVP,GcplHmcVWmVZ,GcplcHmVPVWm,GcplcHmVWmVZ,GcplcFuFdcHmL,GcplcFuFdcHmR,       & 
 & GcplcFvFecHmL,GcplcFvFecHmR,GcplcFdFuHmL,GcplcFdFuHmR,GcplcFeFvHmL,GcplcFeFvHmR,       & 
-& dg1,dg2,dg3,dM12,depYU,dYu,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
+& dg1,dg2,dg3,dM12,dYu,depYU,dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,          & 
 & dLam1,dLam4,dLam3,dLam2,dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,           & 
 & dCosTW,dTanTW,ZfVG,ZfvL,Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,             & 
 & ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,ZfVZVP,ctcplAhAhAh,ctcplAhAhhh,ctcplAhAhsigma1,             & 
@@ -4245,7 +4245,7 @@ Call OneLoopDecay_Fu(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
@@ -4280,7 +4280,7 @@ Call OneLoopDecay_Fe(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
@@ -4311,7 +4311,7 @@ Call OneLoopDecay_Fd(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
@@ -4346,7 +4346,7 @@ Call OneLoopDecay_hh(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
@@ -4399,7 +4399,7 @@ Call OneLoopDecay_Ah(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 
@@ -4447,7 +4447,7 @@ Call OneLoopDecay_Hm(MhhOS,Mhh2OS,MHmOS,MHm2OS,MFdOS,MFd2OS,MFuOS,MFu2OS,       
 & ZHOS,ZPOS,ZDLOS,ZDROS,ZULOS,ZUROS,ZELOS,ZEROS,MAh,MAh2,MFd,MFd2,MFe,MFe2,              & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,depYU,dYu,            & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,dg1,dg2,dg3,dM12,dYu,depYU,            & 
 & dYd,dYe,depYD,depYE,dLam6,dLam5,dLam7,dM112,dM222,dLam1,dLam4,dLam3,dLam2,             & 
 & dv,dv2,dZH,dZP,dZDL,dZDR,dZUL,dZUR,dZEL,dZER,dSinTW,dCosTW,dTanTW,ZfVG,ZfvL,           & 
 & Zfsigma1,ZfAh,ZfVP,ZfVZ,ZfVWm,Zfhh,ZfHm,ZfDL,ZfDR,ZfUL,ZfUR,ZfEL,ZfER,ZfVPVZ,          & 

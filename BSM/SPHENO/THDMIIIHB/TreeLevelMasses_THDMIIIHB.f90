@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:25 on 25.10.2017   
+! File created at 22:52 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -23,14 +23,14 @@ Contains
  
 Subroutine TreeMasses(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,               & 
 & MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,               & 
-& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,              & 
+& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,              & 
 & Yd,Ye,epYD,epYE,M12,M112,M222,GenerationMixing,kont)
 
 Implicit None 
  
 Real(dp),Intent(in) :: g1,g2,g3
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(out) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
@@ -121,7 +121,7 @@ kont = kontSave
 Call CalculateMFd(Yd,epYD,v,v2,ZDL,ZDR,MFd,kont)
 
 MFd2 = MFd**2 
-Call CalculateMFu(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Call CalculateMFu(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 MFu2 = MFu**2 
 Call CalculateMFe(Ye,epYE,v,v2,ZEL,ZER,MFe,kont)
@@ -168,7 +168,7 @@ End Subroutine  TreeMasses
  
  
 Subroutine RunningFermionMasses(MFeIN,MFe2IN,MFdIN,MFd2IN,MFuIN,MFu2IN,               & 
-& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,              & 
+& v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,              & 
 & M12,M112,M222,kont)
 
 Implicit None 
@@ -176,7 +176,7 @@ Implicit None
 Integer, Intent(inout) :: kont 
 Real(dp),Intent(in) :: g1,g2,g3
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(in) :: v,v2
@@ -195,7 +195,7 @@ Call CalculateMFd(Yd,epYD,v,v2,ZDL,ZDR,MFd,kont)
 MFd2 = MFd**2 
 MFdIN(1:2) = MFd(1:2) 
 MFd2IN(1:2) = MFd2(1:2) 
-Call CalculateMFu(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Call CalculateMFu(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 MFu2 = MFu**2 
 MFuIN(1:2) = MFu(1:2) 
@@ -204,14 +204,14 @@ End Subroutine RunningFermionMasses
 
 Subroutine TreeMassesEffPot(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,             & 
 & MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,              & 
-& ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,              & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,GenerationMixing,kont)
+& ZH,ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,           & 
+& Yd,Ye,epYD,epYE,M12,M112,M222,GenerationMixing,kont)
 
 Implicit None 
  
 Real(dp),Intent(in) :: g1,g2,g3
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(out) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
@@ -272,7 +272,7 @@ kont = kontSave
 Call CalculateMFdEffPot(Yd,epYD,v,v2,ZDL,ZDR,MFd,kont)
 
 MFd2 = MFd**2 
-Call CalculateMFuEffPot(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Call CalculateMFuEffPot(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 MFu2 = MFu**2 
 Call CalculateMFeEffPot(Ye,epYE,v,v2,ZEL,ZER,MFe,kont)
@@ -663,11 +663,11 @@ Iname = Iname - 1
  
 End Subroutine CalculateMFd 
 
-Subroutine CalculateMFu(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Subroutine CalculateMFu(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 Real(dp),Intent(in) :: v,v2
 
-Complex(dp),Intent(in) :: epYU(3,3),Yu(3,3)
+Complex(dp),Intent(in) :: Yu(3,3),epYU(3,3)
 
 Integer, Intent(inout) :: kont 
 Integer :: i1,i2,i3,i4, ierr 
@@ -688,32 +688,32 @@ MFu = 0._dp
 ZUL = 0._dp 
 ZUR = 0._dp 
 mat(1,1) = 0._dp 
-mat(1,1) = mat(1,1)+(v*epYU(1,1))/sqrt(2._dp)
-mat(1,1) = mat(1,1)+(v2*Yu(1,1))/sqrt(2._dp)
+mat(1,1) = mat(1,1)+(v2*epYU(1,1))/sqrt(2._dp)
+mat(1,1) = mat(1,1)+(v*Yu(1,1))/sqrt(2._dp)
 mat(1,2) = 0._dp 
-mat(1,2) = mat(1,2)+(v*epYU(2,1))/sqrt(2._dp)
-mat(1,2) = mat(1,2)+(v2*Yu(2,1))/sqrt(2._dp)
+mat(1,2) = mat(1,2)+(v2*epYU(2,1))/sqrt(2._dp)
+mat(1,2) = mat(1,2)+(v*Yu(2,1))/sqrt(2._dp)
 mat(1,3) = 0._dp 
-mat(1,3) = mat(1,3)+(v*epYU(3,1))/sqrt(2._dp)
-mat(1,3) = mat(1,3)+(v2*Yu(3,1))/sqrt(2._dp)
+mat(1,3) = mat(1,3)+(v2*epYU(3,1))/sqrt(2._dp)
+mat(1,3) = mat(1,3)+(v*Yu(3,1))/sqrt(2._dp)
 mat(2,1) = 0._dp 
-mat(2,1) = mat(2,1)+(v*epYU(1,2))/sqrt(2._dp)
-mat(2,1) = mat(2,1)+(v2*Yu(1,2))/sqrt(2._dp)
+mat(2,1) = mat(2,1)+(v2*epYU(1,2))/sqrt(2._dp)
+mat(2,1) = mat(2,1)+(v*Yu(1,2))/sqrt(2._dp)
 mat(2,2) = 0._dp 
-mat(2,2) = mat(2,2)+(v*epYU(2,2))/sqrt(2._dp)
-mat(2,2) = mat(2,2)+(v2*Yu(2,2))/sqrt(2._dp)
+mat(2,2) = mat(2,2)+(v2*epYU(2,2))/sqrt(2._dp)
+mat(2,2) = mat(2,2)+(v*Yu(2,2))/sqrt(2._dp)
 mat(2,3) = 0._dp 
-mat(2,3) = mat(2,3)+(v*epYU(3,2))/sqrt(2._dp)
-mat(2,3) = mat(2,3)+(v2*Yu(3,2))/sqrt(2._dp)
+mat(2,3) = mat(2,3)+(v2*epYU(3,2))/sqrt(2._dp)
+mat(2,3) = mat(2,3)+(v*Yu(3,2))/sqrt(2._dp)
 mat(3,1) = 0._dp 
-mat(3,1) = mat(3,1)+(v*epYU(1,3))/sqrt(2._dp)
-mat(3,1) = mat(3,1)+(v2*Yu(1,3))/sqrt(2._dp)
+mat(3,1) = mat(3,1)+(v2*epYU(1,3))/sqrt(2._dp)
+mat(3,1) = mat(3,1)+(v*Yu(1,3))/sqrt(2._dp)
 mat(3,2) = 0._dp 
-mat(3,2) = mat(3,2)+(v*epYU(2,3))/sqrt(2._dp)
-mat(3,2) = mat(3,2)+(v2*Yu(2,3))/sqrt(2._dp)
+mat(3,2) = mat(3,2)+(v2*epYU(2,3))/sqrt(2._dp)
+mat(3,2) = mat(3,2)+(v*Yu(2,3))/sqrt(2._dp)
 mat(3,3) = 0._dp 
-mat(3,3) = mat(3,3)+(v*epYU(3,3))/sqrt(2._dp)
-mat(3,3) = mat(3,3)+(v2*Yu(3,3))/sqrt(2._dp)
+mat(3,3) = mat(3,3)+(v2*epYU(3,3))/sqrt(2._dp)
+mat(3,3) = mat(3,3)+(v*Yu(3,3))/sqrt(2._dp)
 
  
 mat2 = Matmul(Transpose(Conjg(mat)),mat) 
@@ -1481,11 +1481,11 @@ Iname = Iname - 1
  
 End Subroutine CalculateMFdEffPot 
 
-Subroutine CalculateMFuEffPot(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Subroutine CalculateMFuEffPot(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 Real(dp),Intent(in) :: v,v2
 
-Complex(dp),Intent(in) :: epYU(3,3),Yu(3,3)
+Complex(dp),Intent(in) :: Yu(3,3),epYU(3,3)
 
 Integer, Intent(inout) :: kont 
 Integer :: i1,i2,i3,i4, ierr 
@@ -1506,32 +1506,32 @@ MFu = 0._dp
 ZUL = 0._dp 
 ZUR = 0._dp 
 mat(1,1) = 0._dp 
-mat(1,1) = mat(1,1)+(v*epYU(1,1))/sqrt(2._dp)
-mat(1,1) = mat(1,1)+(v2*Yu(1,1))/sqrt(2._dp)
+mat(1,1) = mat(1,1)+(v2*epYU(1,1))/sqrt(2._dp)
+mat(1,1) = mat(1,1)+(v*Yu(1,1))/sqrt(2._dp)
 mat(1,2) = 0._dp 
-mat(1,2) = mat(1,2)+(v*epYU(2,1))/sqrt(2._dp)
-mat(1,2) = mat(1,2)+(v2*Yu(2,1))/sqrt(2._dp)
+mat(1,2) = mat(1,2)+(v2*epYU(2,1))/sqrt(2._dp)
+mat(1,2) = mat(1,2)+(v*Yu(2,1))/sqrt(2._dp)
 mat(1,3) = 0._dp 
-mat(1,3) = mat(1,3)+(v*epYU(3,1))/sqrt(2._dp)
-mat(1,3) = mat(1,3)+(v2*Yu(3,1))/sqrt(2._dp)
+mat(1,3) = mat(1,3)+(v2*epYU(3,1))/sqrt(2._dp)
+mat(1,3) = mat(1,3)+(v*Yu(3,1))/sqrt(2._dp)
 mat(2,1) = 0._dp 
-mat(2,1) = mat(2,1)+(v*epYU(1,2))/sqrt(2._dp)
-mat(2,1) = mat(2,1)+(v2*Yu(1,2))/sqrt(2._dp)
+mat(2,1) = mat(2,1)+(v2*epYU(1,2))/sqrt(2._dp)
+mat(2,1) = mat(2,1)+(v*Yu(1,2))/sqrt(2._dp)
 mat(2,2) = 0._dp 
-mat(2,2) = mat(2,2)+(v*epYU(2,2))/sqrt(2._dp)
-mat(2,2) = mat(2,2)+(v2*Yu(2,2))/sqrt(2._dp)
+mat(2,2) = mat(2,2)+(v2*epYU(2,2))/sqrt(2._dp)
+mat(2,2) = mat(2,2)+(v*Yu(2,2))/sqrt(2._dp)
 mat(2,3) = 0._dp 
-mat(2,3) = mat(2,3)+(v*epYU(3,2))/sqrt(2._dp)
-mat(2,3) = mat(2,3)+(v2*Yu(3,2))/sqrt(2._dp)
+mat(2,3) = mat(2,3)+(v2*epYU(3,2))/sqrt(2._dp)
+mat(2,3) = mat(2,3)+(v*Yu(3,2))/sqrt(2._dp)
 mat(3,1) = 0._dp 
-mat(3,1) = mat(3,1)+(v*epYU(1,3))/sqrt(2._dp)
-mat(3,1) = mat(3,1)+(v2*Yu(1,3))/sqrt(2._dp)
+mat(3,1) = mat(3,1)+(v2*epYU(1,3))/sqrt(2._dp)
+mat(3,1) = mat(3,1)+(v*Yu(1,3))/sqrt(2._dp)
 mat(3,2) = 0._dp 
-mat(3,2) = mat(3,2)+(v*epYU(2,3))/sqrt(2._dp)
-mat(3,2) = mat(3,2)+(v2*Yu(2,3))/sqrt(2._dp)
+mat(3,2) = mat(3,2)+(v2*epYU(2,3))/sqrt(2._dp)
+mat(3,2) = mat(3,2)+(v*Yu(2,3))/sqrt(2._dp)
 mat(3,3) = 0._dp 
-mat(3,3) = mat(3,3)+(v*epYU(3,3))/sqrt(2._dp)
-mat(3,3) = mat(3,3)+(v2*Yu(3,3))/sqrt(2._dp)
+mat(3,3) = mat(3,3)+(v2*epYU(3,3))/sqrt(2._dp)
+mat(3,3) = mat(3,3)+(v*Yu(3,3))/sqrt(2._dp)
 
  
 mat2 = Matmul(Transpose(Conjg(mat)),mat) 
@@ -1907,13 +1907,13 @@ End Subroutine CalculateVWmEffPot
 
 Subroutine TreeMassesSM(MFd,MFd2,MFe,MFe2,MFu,MFu2,MVWm,MVWm2,MVZ,MVZ2,               & 
 & TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZW,ZZ,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,               & 
-& Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,GenerationMixing,kont)
+& Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,GenerationMixing,kont)
 
 Implicit None 
  
 Real(dp),Intent(in) :: g1,g2,g3
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(out) :: MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),MVWm,MVWm2,MVZ,MVZ2,TW,ZZ(2,2)
@@ -1932,7 +1932,7 @@ kont = 0
 Call CalculateMFd(Yd,epYD,v,v2,ZDL,ZDR,MFd,kont)
 
 MFd2 = MFd**2 
-Call CalculateMFu(epYU,Yu,v,v2,ZUL,ZUR,MFu,kont)
+Call CalculateMFu(Yu,epYU,v,v2,ZUL,ZUR,MFu,kont)
 
 MFu2 = MFu**2 
 Call CalculateMFe(Ye,epYE,v,v2,ZEL,ZER,MFe,kont)

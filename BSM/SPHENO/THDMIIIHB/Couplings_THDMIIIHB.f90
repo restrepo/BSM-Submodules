@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:25 on 25.10.2017   
+! File created at 22:52 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -17,7 +17,7 @@ Use Mathematics, Only: CompareMatrices, Adjungate
 Contains 
  
  Subroutine AllCouplingsReallyAll(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,               & 
-& ZP,Lam1,g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,         & 
+& ZP,Lam1,g1,g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,         & 
 & cplAhAhhh,cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,          & 
 & cplhhhhhh,cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,& 
 & cplAhAhAhAh,cplAhAhAhhh,cplAhAhAhsigma1,cplAhAhhhhh,cplAhAhhhsigma1,cplAhAhHmcHm,      & 
@@ -54,7 +54,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g1,g2,TW,g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
-& ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
+& ZEL(3,3),ZER(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),Yu(3,3),Ye(3,3)
 
 Complex(dp), Intent(out) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -718,7 +718,7 @@ cplcFuFuAhL = 0._dp
 cplcFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFuAhT(gt1,gt2,Yu,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
+Call CouplingcFuFuAhT(gt1,gt2,epYU,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -752,7 +752,7 @@ cplcFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFdcHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFuFdcHmL(gt1,gt2,gt3)& 
+Call CouplingcFuFdcHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFuFdcHmL(gt1,gt2,gt3)& 
 & ,cplcFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -801,7 +801,7 @@ cplcFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuhhT(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)         & 
+Call CouplingcFuFuhhT(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)         & 
 & ,cplcFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -814,7 +814,7 @@ cplcFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFdFuHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
+Call CouplingcFdFuHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
 & ,cplcFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -826,8 +826,7 @@ cplcFuFusigma1L = 0._dp
 cplcFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFusigma1T(gt1,gt2,epYU,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)               & 
-& ,cplcFuFusigma1R(gt1,gt2))
+Call CouplingcFuFusigma1T(gt1,gt2,Yu,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2),cplcFuFusigma1R(gt1,gt2))
 
  End Do 
 End Do 
@@ -1170,7 +1169,7 @@ Iname = Iname - 1
 End Subroutine AllCouplingsReallyAll
 
 Subroutine AllCouplings(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,g1,             & 
-& g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,          & 
+& g2,TW,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,          & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplAhhhVZ,cplAhHmcVWm,cplAhcHmVWm,cplhhHmcVWm,cplhhsigma1VZ,cplhhcHmVWm,               & 
@@ -1190,7 +1189,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g1,g2,TW,g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
-& ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
+& ZEL(3,3),ZER(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),Yu(3,3),Ye(3,3)
 
 Complex(dp), Intent(out) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -1476,7 +1475,7 @@ cplcFuFuAhL = 0._dp
 cplcFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFuAhT(gt1,gt2,Yu,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
+Call CouplingcFuFuAhT(gt1,gt2,epYU,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -1510,7 +1509,7 @@ cplcFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFdcHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFuFdcHmL(gt1,gt2,gt3)& 
+Call CouplingcFuFdcHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFuFdcHmL(gt1,gt2,gt3)& 
 & ,cplcFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -1559,7 +1558,7 @@ cplcFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuhhT(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)         & 
+Call CouplingcFuFuhhT(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)         & 
 & ,cplcFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -1572,7 +1571,7 @@ cplcFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFdFuHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
+Call CouplingcFdFuHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
 & ,cplcFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -1584,8 +1583,7 @@ cplcFuFusigma1L = 0._dp
 cplcFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFusigma1T(gt1,gt2,epYU,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)               & 
-& ,cplcFuFusigma1R(gt1,gt2))
+Call CouplingcFuFusigma1T(gt1,gt2,Yu,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2),cplcFuFusigma1R(gt1,gt2))
 
  End Do 
 End Do 
@@ -5133,12 +5131,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFeAhT  
  
  
-Subroutine CouplingcFuFuAhT(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuAhT(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -5165,13 +5163,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -5317,7 +5315,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFdsigma1T  
  
  
-Subroutine CouplingcFuFdcHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,              & 
+Subroutine CouplingcFuFdcHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,              & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -5325,7 +5323,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -5360,12 +5358,12 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,1)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,2)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 resR = 0._dp 
@@ -5576,14 +5574,14 @@ Iname = Iname - 1
 End Subroutine CouplingcFvFecHmT  
  
  
-Subroutine CouplingcFuFuhhT(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuhhT(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZH(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -5618,23 +5616,23 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -5648,7 +5646,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFuFuhhT  
  
  
-Subroutine CouplingcFdFuHmT(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,               & 
+Subroutine CouplingcFdFuHmT(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,               & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -5656,7 +5654,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -5702,12 +5700,12 @@ End Do
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
+resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
+resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -5721,12 +5719,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFuHmT  
  
  
-Subroutine CouplingcFuFusigma1T(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFusigma1T(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -5753,13 +5751,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -7537,7 +7535,7 @@ Iname = Iname - 1
 End Subroutine CouplingsForEffPot4
 
 Subroutine CouplingsForEffPot3(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,              & 
-& Lam1,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,           & 
+& Lam1,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,           & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplVGVGVG,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,     & 
@@ -7550,7 +7548,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
-& ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
+& ZEL(3,3),ZER(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),Yu(3,3),Ye(3,3)
 
 Complex(dp), Intent(out) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -7698,7 +7696,7 @@ cplcFuFuAhL = 0._dp
 cplcFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFuAh2L(gt1,gt2,Yu,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
+Call CouplingcFuFuAh2L(gt1,gt2,epYU,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -7733,7 +7731,7 @@ cplcFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFdcHm2L(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,               & 
+Call CouplingcFuFdcHm2L(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,               & 
 & cplcFuFdcHmL(gt1,gt2,gt3),cplcFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -7783,7 +7781,7 @@ cplcFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuhh2L(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)        & 
+Call CouplingcFuFuhh2L(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)        & 
 & ,cplcFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -7796,7 +7794,7 @@ cplcFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFdFuHm2L(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
+Call CouplingcFdFuHm2L(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,cplcFdFuHmL(gt1,gt2,gt3)& 
 & ,cplcFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -7808,8 +7806,8 @@ cplcFuFusigma1L = 0._dp
 cplcFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFusigma12L(gt1,gt2,epYU,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)              & 
-& ,cplcFuFusigma1R(gt1,gt2))
+Call CouplingcFuFusigma12L(gt1,gt2,Yu,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2),               & 
+& cplcFuFusigma1R(gt1,gt2))
 
  End Do 
 End Do 
@@ -9405,12 +9403,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFeAh2L  
  
  
-Subroutine CouplingcFuFuAh2L(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuAh2L(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -9437,13 +9435,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -9589,7 +9587,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFdsigma12L  
  
  
-Subroutine CouplingcFuFdcHm2L(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,             & 
+Subroutine CouplingcFuFdcHm2L(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,             & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -9597,7 +9595,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -9632,12 +9630,12 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,1)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,2)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 resR = 0._dp 
@@ -9848,14 +9846,14 @@ Iname = Iname - 1
 End Subroutine CouplingcFvFecHm2L  
  
  
-Subroutine CouplingcFuFuhh2L(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuhh2L(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZH(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -9890,23 +9888,23 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -9920,7 +9918,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFuFuhh2L  
  
  
-Subroutine CouplingcFdFuHm2L(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,              & 
+Subroutine CouplingcFdFuHm2L(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,              & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -9928,7 +9926,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -9974,12 +9972,12 @@ End Do
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
+resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
+resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -9993,12 +9991,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFuHm2L  
  
  
-Subroutine CouplingcFuFusigma12L(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFusigma12L(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -10025,13 +10023,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -10204,7 +10202,7 @@ End Subroutine CouplingcFuFuVG2L
  
  
 Subroutine CouplingsFor2LPole3(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,              & 
-& Lam1,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,           & 
+& Lam1,g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,           & 
 & cplAhAhsigma1,cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,          & 
 & cplhhhhsigma1,cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,       & 
 & cplVGVGVG,cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,     & 
@@ -10217,7 +10215,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),ZP(2,2),g3
 
 Complex(dp), Intent(in) :: Lam7,Lam5,Lam4,Lam3,Lam2,Lam6,Lam1,epYD(3,3),ZDL(3,3),ZDR(3,3),epYE(3,3),             & 
-& ZEL(3,3),ZER(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),epYU(3,3),Ye(3,3)
+& ZEL(3,3),ZER(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Yd(3,3),Yu(3,3),Ye(3,3)
 
 Complex(dp), Intent(out) :: cplAhAhAh,cplAhAhhh(2),cplAhAhsigma1,cplAhhhhh(2,2),cplAhhhsigma1(2),cplAhHmcHm(2,2), & 
 & cplAhsigma1sigma1,cplhhhhhh(2,2,2),cplhhhhsigma1(2,2),cplhhHmcHm(2,2,2),               & 
@@ -10365,7 +10363,7 @@ cplcFuFuAhL = 0._dp
 cplcFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFuAh2LP(gt1,gt2,Yu,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
+Call CouplingcFuFuAh2LP(gt1,gt2,epYU,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -10400,7 +10398,7 @@ cplcFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFdcHm2LP(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,              & 
+Call CouplingcFuFdcHm2LP(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,              & 
 & cplcFuFdcHmL(gt1,gt2,gt3),cplcFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -10450,7 +10448,7 @@ cplcFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuhh2LP(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)       & 
+Call CouplingcFuFuhh2LP(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcFuFuhhL(gt1,gt2,gt3)       & 
 & ,cplcFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -10463,7 +10461,7 @@ cplcFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFdFuHm2LP(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,               & 
+Call CouplingcFdFuHm2LP(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,ZUR,               & 
 & cplcFdFuHmL(gt1,gt2,gt3),cplcFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -10475,7 +10473,7 @@ cplcFuFusigma1L = 0._dp
 cplcFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFusigma12LP(gt1,gt2,epYU,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)             & 
+Call CouplingcFuFusigma12LP(gt1,gt2,Yu,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)               & 
 & ,cplcFuFusigma1R(gt1,gt2))
 
  End Do 
@@ -11306,12 +11304,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFeAh2LP  
  
  
-Subroutine CouplingcFuFuAh2LP(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuAh2LP(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -11338,13 +11336,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -11490,7 +11488,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFdsigma12LP  
  
  
-Subroutine CouplingcFuFdcHm2LP(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,            & 
+Subroutine CouplingcFuFdcHm2LP(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,            & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -11498,7 +11496,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -11533,12 +11531,12 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,1)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)*ZP(gt3,2)
+resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 resR = 0._dp 
@@ -11749,14 +11747,14 @@ Iname = Iname - 1
 End Subroutine CouplingcFvFecHm2LP  
  
  
-Subroutine CouplingcFuFuhh2LP(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuhh2LP(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZH(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -11791,23 +11789,23 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -11821,7 +11819,7 @@ Iname = Iname - 1
 End Subroutine CouplingcFuFuhh2LP  
  
  
-Subroutine CouplingcFdFuHm2LP(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,ZUL,             & 
+Subroutine CouplingcFdFuHm2LP(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,ZUL,             & 
 & ZUR,resL,resR)
 
 Implicit None 
@@ -11829,7 +11827,7 @@ Implicit None
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -11875,12 +11873,12 @@ End Do
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
+resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,1)
 End Do 
 End Do 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR+Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
+resR = resR+Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZDL(gt1,j2)*ZP(gt3,2)
 End Do 
 End Do 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -11894,12 +11892,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFdFuHm2LP  
  
  
-Subroutine CouplingcFuFusigma12LP(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFusigma12LP(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -11926,13 +11924,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -13437,7 +13435,7 @@ End Subroutine Couplingsigma1sigma1sigma1sigma12LP
  
  
 Subroutine CouplingsForLoopMasses(Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,Lam6,ZH,              & 
-& g1,g2,TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,epYU,Yu,ZUL,ZUR,Lam1,ZP,g3,cplAhAhUhh,        & 
+& g1,g2,TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,Yu,epYU,ZUL,ZUR,Lam1,ZP,g3,cplAhAhUhh,        & 
 & cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,cplcFdFdUhhR,cplcFeFeUhhL,           & 
 & cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,cplcgWpCgWpCUhh,cplcgZgZUhh,      & 
 & cplUhhhhhh,cplUhhhhsigma1,cplUhhHmcHm,cplUhhHmcVWm,cplUhhsigma1sigma1,cplUhhsigma1VZ,  & 
@@ -13480,7 +13478,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),g1,g2,TW,ZP(2,2),g3
 
 Complex(dp), Intent(in) :: Lam5,Lam7,Lam4,Lam3,Lam2,Lam6,Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),Ye(3,3),            & 
-& epYE(3,3),ZEL(3,3),ZER(3,3),epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Lam1
+& epYE(3,3),ZEL(3,3),ZER(3,3),Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Lam1
 
 Complex(dp), Intent(out) :: cplAhAhUhh(2),cplAhUhhhh(2,2),cplAhUhhsigma1(2),cplAhUhhVZ(2),cplcFdFdUhhL(3,3,2),    & 
 & cplcFdFdUhhR(3,3,2),cplcFeFeUhhL(3,3,2),cplcFeFeUhhR(3,3,2),cplcFuFuUhhL(3,3,2),       & 
@@ -13598,7 +13596,7 @@ cplcFuFuUhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuUhhL(gt1,gt2,gt3,epYU,Yu,ZUL,ZUR,cplcFuFuUhhL(gt1,gt2,gt3)          & 
+Call CouplingcFuFuUhhL(gt1,gt2,gt3,Yu,epYU,ZUL,ZUR,cplcFuFuUhhL(gt1,gt2,gt3)          & 
 & ,cplcFuFuUhhR(gt1,gt2,gt3))
 
   End Do 
@@ -13782,7 +13780,7 @@ cplcFuFdcUHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFdcUHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZDL,ZDR,ZUL,ZUR,cplcFuFdcUHmL(gt1,gt2,gt3)& 
+Call CouplingcFuFdcUHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZDL,ZDR,ZUL,ZUR,cplcFuFdcUHmL(gt1,gt2,gt3)& 
 & ,cplcFuFdcUHmR(gt1,gt2,gt3))
 
   End Do 
@@ -14042,7 +14040,7 @@ cplcUFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFdFuHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZUL,ZUR,cplcUFdFuHmL(gt1,gt2,gt3)& 
+Call CouplingcUFdFuHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZUL,ZUR,cplcUFdFuHmL(gt1,gt2,gt3)& 
 & ,cplcUFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -14064,7 +14062,7 @@ cplcUFuFuAhL = 0._dp
 cplcUFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcUFuFuAhL(gt1,gt2,Yu,ZUL,ZUR,cplcUFuFuAhL(gt1,gt2),cplcUFuFuAhR(gt1,gt2))
+Call CouplingcUFuFuAhL(gt1,gt2,epYU,ZUL,ZUR,cplcUFuFuAhL(gt1,gt2),cplcUFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -14075,7 +14073,7 @@ cplcUFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFuFdcHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,cplcUFuFdcHmL(gt1,gt2,gt3)& 
+Call CouplingcUFuFdcHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,cplcUFuFdcHmL(gt1,gt2,gt3)& 
 & ,cplcUFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -14098,7 +14096,7 @@ cplcUFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFuFuhhL(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcUFuFuhhL(gt1,gt2,gt3)       & 
+Call CouplingcUFuFuhhL(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcUFuFuhhL(gt1,gt2,gt3)       & 
 & ,cplcUFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -14110,7 +14108,7 @@ cplcUFuFusigma1L = 0._dp
 cplcUFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcUFuFusigma1L(gt1,gt2,epYU,ZUL,ZUR,cplcUFuFusigma1L(gt1,gt2)             & 
+Call CouplingcUFuFusigma1L(gt1,gt2,Yu,ZUL,ZUR,cplcUFuFusigma1L(gt1,gt2)               & 
 & ,cplcUFuFusigma1R(gt1,gt2))
 
  End Do 
@@ -14298,8 +14296,7 @@ cplcFuFusigma1L = 0._dp
 cplcFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFusigma1L(gt1,gt2,epYU,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2)               & 
-& ,cplcFuFusigma1R(gt1,gt2))
+Call CouplingcFuFusigma1L(gt1,gt2,Yu,ZUL,ZUR,cplcFuFusigma1L(gt1,gt2),cplcFuFusigma1R(gt1,gt2))
 
  End Do 
 End Do 
@@ -14433,7 +14430,7 @@ cplcFuFuAhL = 0._dp
 cplcFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcFuFuAhL(gt1,gt2,Yu,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
+Call CouplingcFuFuAhL(gt1,gt2,epYU,ZUL,ZUR,cplcFuFuAhL(gt1,gt2),cplcFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -15250,12 +15247,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFeUhhL  
  
  
-Subroutine CouplingcFuFuUhhL(gt1,gt2,gt3,epYU,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuUhhL(gt1,gt2,gt3,Yu,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -15288,14 +15285,14 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 resL = 0._dp 
-If ((1.eq.gt3)) Then 
+If ((2.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
 resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 End If 
-If ((2.eq.gt3)) Then 
+If ((1.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
 resL = resL-((Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp))
@@ -15306,14 +15303,14 @@ resR = 0._dp
 If ((1.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 End If 
 If ((2.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 End If 
@@ -16753,13 +16750,13 @@ Iname = Iname - 1
 End Subroutine CouplingAhcUHmVWmL  
  
  
-Subroutine CouplingcFuFdcUHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZDL,ZDR,ZUL,ZUR,            & 
+Subroutine CouplingcFuFdcUHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZDL,ZDR,ZUL,ZUR,            & 
 & resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -16792,14 +16789,14 @@ If ((gt3.Lt.1).Or.(gt3.Gt.2)) Then
 End If 
 
 resL = 0._dp 
-If ((1.eq.gt3)) Then 
+If ((2.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
 resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*epYU(j1,j2)
 End Do 
 End Do 
 End If 
-If ((2.eq.gt3)) Then 
+If ((1.eq.gt3)) Then 
 Do j2 = 1,3
 Do j1 = 1,3
 resL = resL+Conjg(ZUR(gt1,j1))*Conjg(ZDL(gt2,j2))*Yu(j1,j2)
@@ -18397,14 +18394,14 @@ Iname = Iname - 1
 End Subroutine CouplingcUFdFdVZL  
  
  
-Subroutine CouplingcUFdFuHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZUL,ZUR,resL,resR)
+Subroutine CouplingcUFdFuHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -18450,12 +18447,12 @@ End If
 resR = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR+Conjg(epYU(j1,gt1))*ZUR(gt2,j1)*ZP(gt3,1)
+resR = resR+Conjg(Yu(j1,gt1))*ZUR(gt2,j1)*ZP(gt3,1)
 End Do 
 End If 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR+Conjg(Yu(j1,gt1))*ZUR(gt2,j1)*ZP(gt3,2)
+resR = resR+Conjg(epYU(j1,gt1))*ZUR(gt2,j1)*ZP(gt3,2)
 End Do 
 End If 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -18516,12 +18513,12 @@ Iname = Iname - 1
 End Subroutine CouplingcUFdFuVWmL  
  
  
-Subroutine CouplingcUFuFuAhL(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcUFuFuAhL(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -18548,13 +18545,13 @@ End If
 resL = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL+(Conjg(ZUL(gt2,j2))*Yu(gt1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUL(gt2,j2))*epYU(gt1,j2))/sqrt(2._dp)
 End Do 
 End If 
 resR = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,gt1))*ZUR(gt2,j1))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,gt1))*ZUR(gt2,j1))/sqrt(2._dp))
 End Do 
 End If 
 resL = -(0.,1.)*resL 
@@ -18572,14 +18569,14 @@ Iname = Iname - 1
 End Subroutine CouplingcUFuFuAhL  
  
  
-Subroutine CouplingcUFuFdcHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,resL,resR)
+Subroutine CouplingcUFuFdcHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZP(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -18614,12 +18611,12 @@ End If
 resL = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL+Conjg(ZDL(gt2,j2))*epYU(gt1,j2)*ZP(gt3,1)
+resL = resL+Conjg(ZDL(gt2,j2))*Yu(gt1,j2)*ZP(gt3,1)
 End Do 
 End If 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL+Conjg(ZDL(gt2,j2))*Yu(gt1,j2)*ZP(gt3,2)
+resL = resL+Conjg(ZDL(gt2,j2))*epYU(gt1,j2)*ZP(gt3,2)
 End Do 
 End If 
 resR = 0._dp 
@@ -18691,14 +18688,14 @@ Iname = Iname - 1
 End Subroutine CouplingcUFuFdcVWmL  
  
  
-Subroutine CouplingcUFuFuhhL(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,resL,resR)
+Subroutine CouplingcUFuFuhhL(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2,gt3
 Real(dp), Intent(in) :: ZH(2,2)
 
-Complex(dp), Intent(in) :: epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -18733,23 +18730,23 @@ End If
 resL = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL-((Conjg(ZUL(gt2,j2))*epYU(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
+resL = resL-((Conjg(ZUL(gt2,j2))*Yu(gt1,j2)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End If 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL-((Conjg(ZUL(gt2,j2))*Yu(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
+resL = resL-((Conjg(ZUL(gt2,j2))*epYU(gt1,j2)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End If 
 resR = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,gt1))*ZUR(gt2,j1)*ZH(gt3,1))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,gt1))*ZUR(gt2,j1)*ZH(gt3,1))/sqrt(2._dp))
 End Do 
 End If 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,gt1))*ZUR(gt2,j1)*ZH(gt3,2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,gt1))*ZUR(gt2,j1)*ZH(gt3,2))/sqrt(2._dp))
 End Do 
 End If 
 If ((Real(resL,dp).ne.Real(resL,dp)).or.(Real(resR,dp).ne.Real(resR,dp))) Then 
@@ -18763,12 +18760,12 @@ Iname = Iname - 1
 End Subroutine CouplingcUFuFuhhL  
  
  
-Subroutine CouplingcUFuFusigma1L(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
+Subroutine CouplingcUFuFusigma1L(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -18795,13 +18792,13 @@ End If
 resL = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j2 = 1,3
-resL = resL+(Conjg(ZUL(gt2,j2))*epYU(gt1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUL(gt2,j2))*Yu(gt1,j2))/sqrt(2._dp)
 End Do 
 End If 
 resR = 0._dp 
 If ((gt1.le.3).And.(gt1.ge.1)) Then 
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,gt1))*ZUR(gt2,j1))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,gt1))*ZUR(gt2,j1))/sqrt(2._dp))
 End Do 
 End If 
 resL = -(0.,1.)*resL 
@@ -19740,12 +19737,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFesigma1L  
  
  
-Subroutine CouplingcFuFusigma1L(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFusigma1L(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -19772,13 +19769,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -20499,12 +20496,12 @@ Iname = Iname - 1
 End Subroutine CouplingcFeFeAhL  
  
  
-Subroutine CouplingcFuFuAhL(gt1,gt2,Yu,ZUL,ZUR,resL,resR)
+Subroutine CouplingcFuFuAhL(gt1,gt2,epYU,ZUL,ZUR,resL,resR)
 
 Implicit None 
 
 Integer, Intent(in) :: gt1,gt2
-Complex(dp), Intent(in) :: Yu(3,3),ZUL(3,3),ZUR(3,3)
+Complex(dp), Intent(in) :: epYU(3,3),ZUL(3,3),ZUR(3,3)
 
 Complex(dp), Intent(out) :: resL, resR 
  
@@ -20531,13 +20528,13 @@ End If
 resL = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*Yu(j1,j2))/sqrt(2._dp)
+resL = resL+(Conjg(ZUR(gt1,j1))*Conjg(ZUL(gt2,j2))*epYU(j1,j2))/sqrt(2._dp)
 End Do 
 End Do 
 resR = 0._dp 
 Do j2 = 1,3
 Do j1 = 1,3
-resR = resR-((Conjg(Yu(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
+resR = resR-((Conjg(epYU(j1,j2))*ZUR(gt2,j1)*ZUL(gt1,j2))/sqrt(2._dp))
 End Do 
 End Do 
 resL = -(0.,1.)*resL 
@@ -22962,7 +22959,7 @@ Call CouplingcVWmVPVWmVZL(g2,TW,cplcVWmVPVWmVZ1,cplcVWmVPVWmVZ2,cplcVWmVPVWmVZ3)
 Iname = Iname - 1 
 End Subroutine CouplingsForVectorBosons
 
-Subroutine CouplingsForSMfermions(epYD,ZDL,ZDR,Yd,ZH,g3,g1,g2,TW,epYU,Yu,             & 
+Subroutine CouplingsForSMfermions(epYD,ZDL,ZDR,Yd,ZH,g3,g1,g2,TW,Yu,epYU,             & 
 & ZP,ZUL,ZUR,epYE,ZEL,ZER,Ye,cplcUFdFdAhL,cplcUFdFdAhR,cplcUFdFdhhL,cplcUFdFdhhR,        & 
 & cplcUFdFdsigma1L,cplcUFdFdsigma1R,cplcUFdFdVGL,cplcUFdFdVGR,cplcUFdFdVPL,              & 
 & cplcUFdFdVPR,cplcUFdFdVZL,cplcUFdFdVZR,cplcUFdFuHmL,cplcUFdFuHmR,cplcUFdFuVWmL,        & 
@@ -22976,7 +22973,7 @@ Subroutine CouplingsForSMfermions(epYD,ZDL,ZDR,Yd,ZH,g3,g1,g2,TW,epYU,Yu,       
 Implicit None 
 Real(dp), Intent(in) :: ZH(2,2),g3,g1,g2,TW,ZP(2,2)
 
-Complex(dp), Intent(in) :: epYD(3,3),ZDL(3,3),ZDR(3,3),Yd(3,3),epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),              & 
+Complex(dp), Intent(in) :: epYD(3,3),ZDL(3,3),ZDR(3,3),Yd(3,3),Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),              & 
 & epYE(3,3),ZEL(3,3),ZER(3,3),Ye(3,3)
 
 Complex(dp), Intent(out) :: cplcUFdFdAhL(3,3),cplcUFdFdAhR(3,3),cplcUFdFdhhL(3,3,2),cplcUFdFdhhR(3,3,2),          & 
@@ -23066,7 +23063,7 @@ cplcUFdFuHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFdFuHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZUL,ZUR,cplcUFdFuHmL(gt1,gt2,gt3)& 
+Call CouplingcUFdFuHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZUL,ZUR,cplcUFdFuHmL(gt1,gt2,gt3)& 
 & ,cplcUFdFuHmR(gt1,gt2,gt3))
 
   End Do 
@@ -23088,7 +23085,7 @@ cplcUFuFuAhL = 0._dp
 cplcUFuFuAhR = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcUFuFuAhL(gt1,gt2,Yu,ZUL,ZUR,cplcUFuFuAhL(gt1,gt2),cplcUFuFuAhR(gt1,gt2))
+Call CouplingcUFuFuAhL(gt1,gt2,epYU,ZUL,ZUR,cplcUFuFuAhL(gt1,gt2),cplcUFuFuAhR(gt1,gt2))
 
  End Do 
 End Do 
@@ -23099,7 +23096,7 @@ cplcUFuFdcHmR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFuFdcHmL(gt1,gt2,gt3,epYU,Yu,Yd,epYD,ZP,ZDL,ZDR,cplcUFuFdcHmL(gt1,gt2,gt3)& 
+Call CouplingcUFuFdcHmL(gt1,gt2,gt3,Yu,epYU,Yd,epYD,ZP,ZDL,ZDR,cplcUFuFdcHmL(gt1,gt2,gt3)& 
 & ,cplcUFuFdcHmR(gt1,gt2,gt3))
 
   End Do 
@@ -23122,7 +23119,7 @@ cplcUFuFuhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcUFuFuhhL(gt1,gt2,gt3,epYU,Yu,ZH,ZUL,ZUR,cplcUFuFuhhL(gt1,gt2,gt3)       & 
+Call CouplingcUFuFuhhL(gt1,gt2,gt3,Yu,epYU,ZH,ZUL,ZUR,cplcUFuFuhhL(gt1,gt2,gt3)       & 
 & ,cplcUFuFuhhR(gt1,gt2,gt3))
 
   End Do 
@@ -23134,7 +23131,7 @@ cplcUFuFusigma1L = 0._dp
 cplcUFuFusigma1R = 0._dp 
 Do gt1 = 1, 3
  Do gt2 = 1, 3
-Call CouplingcUFuFusigma1L(gt1,gt2,epYU,ZUL,ZUR,cplcUFuFusigma1L(gt1,gt2)             & 
+Call CouplingcUFuFusigma1L(gt1,gt2,Yu,ZUL,ZUR,cplcUFuFusigma1L(gt1,gt2)               & 
 & ,cplcUFuFusigma1R(gt1,gt2))
 
  End Do 
@@ -23252,7 +23249,7 @@ Iname = Iname - 1
 End Subroutine CouplingsForSMfermions
 
 Subroutine CouplingsForTadpoles(Lam5,Lam7,Lam4,Lam3,Lam2,v,v2,Lam6,ZH,g1,             & 
-& g2,TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,epYU,Yu,ZUL,ZUR,Lam1,ZP,cplAhAhUhh,              & 
+& g2,TW,Yd,epYD,ZDL,ZDR,Ye,epYE,ZEL,ZER,Yu,epYU,ZUL,ZUR,Lam1,ZP,cplAhAhUhh,              & 
 & cplAhUhhhh,cplAhUhhsigma1,cplAhUhhVZ,cplcFdFdUhhL,cplcFdFdUhhR,cplcFeFeUhhL,           & 
 & cplcFeFeUhhR,cplcFuFuUhhL,cplcFuFuUhhR,cplcgWmgWmUhh,cplcgWpCgWpCUhh,cplcgZgZUhh,      & 
 & cplUhhhhhh,cplUhhhhsigma1,cplUhhHmcHm,cplUhhHmcVWm,cplUhhsigma1sigma1,cplUhhsigma1VZ,  & 
@@ -23263,7 +23260,7 @@ Implicit None
 Real(dp), Intent(in) :: v,v2,ZH(2,2),g1,g2,TW,ZP(2,2)
 
 Complex(dp), Intent(in) :: Lam5,Lam7,Lam4,Lam3,Lam2,Lam6,Yd(3,3),epYD(3,3),ZDL(3,3),ZDR(3,3),Ye(3,3),            & 
-& epYE(3,3),ZEL(3,3),ZER(3,3),epYU(3,3),Yu(3,3),ZUL(3,3),ZUR(3,3),Lam1
+& epYE(3,3),ZEL(3,3),ZER(3,3),Yu(3,3),epYU(3,3),ZUL(3,3),ZUR(3,3),Lam1
 
 Complex(dp), Intent(out) :: cplAhAhUhh(2),cplAhUhhhh(2,2),cplAhUhhsigma1(2),cplAhUhhVZ(2),cplcFdFdUhhL(3,3,2),    & 
 & cplcFdFdUhhR(3,3,2),cplcFeFeUhhL(3,3,2),cplcFeFeUhhR(3,3,2),cplcFuFuUhhL(3,3,2),       & 
@@ -23339,7 +23336,7 @@ cplcFuFuUhhR = 0._dp
 Do gt1 = 1, 3
  Do gt2 = 1, 3
   Do gt3 = 1, 2
-Call CouplingcFuFuUhhL(gt1,gt2,gt3,epYU,Yu,ZUL,ZUR,cplcFuFuUhhL(gt1,gt2,gt3)          & 
+Call CouplingcFuFuUhhL(gt1,gt2,gt3,Yu,epYU,ZUL,ZUR,cplcFuFuUhhL(gt1,gt2,gt3)          & 
 & ,cplcFuFuUhhR(gt1,gt2,gt3))
 
   End Do 

@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:25 on 25.10.2017   
+! File created at 22:52 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -18,8 +18,8 @@ Contains
  
 Subroutine FuThreeBodyDecay(n_in,MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,             & 
 & Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,             & 
-& ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,               & 
-& Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,gTAh,gThh,gTHm,gTVWm,gTVZ,gFuFucFdFd,            & 
+& ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,            & 
+& Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,gTAh,gThh,gTHm,gTVWm,gTVZ,gFuFucFdFd,               & 
 & gFuFucFeFe,gFuFucFuFu,gFuFdcFeFv,gFuFucFvFv,epsI,deltaM,CheckRealStates,               & 
 & gT,gPartial,BR)
 
@@ -41,7 +41,7 @@ Complex(dp) :: cplcFdFdAhL(3,3),cplcFdFdAhR(3,3),cplcFdFdhhL(3,3,2),cplcFdFdhhR(
 
 Real(dp),Intent(in) :: g1,g2,g3,v,v2
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: gFuFucFdFd(3,3,3,3),gFuFucFeFe(3,3,3,3),gFuFucFuFu(3,3,3,3),gFuFdcFeFv(3,3,3,3),      & 
@@ -119,7 +119,7 @@ Do i_run = i_start, i_end
 Call CouplingsFor_Fu_decays_3B(MFu(i_run),i_run,MAh,MAh2,MFd,MFd2,MFe,MFe2,           & 
 & MFu,MFu2,Mhh,Mhh2,MHm,MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,            & 
 & ZUR,ZDL,ZEL,ZUL,ZH,ZP,ZW,ZZ,alphaH,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,             & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplcFdFdAhL,cplcFdFdAhR,               & 
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,v,v2,cplcFdFdAhL,cplcFdFdAhR,               & 
 & cplcFdFdhhL,cplcFdFdhhR,cplcFdFdVZL,cplcFdFdVZR,cplcFdFuHmL,cplcFdFuHmR,               & 
 & cplcFdFuVWmL,cplcFdFuVWmR,cplcFeFeAhL,cplcFeFeAhR,cplcFeFehhL,cplcFeFehhR,             & 
 & cplcFeFeVZL,cplcFeFeVZR,cplcFeFvHmL,cplcFeFvHmR,cplcFeFvVWmL,cplcFeFvVWmR,             & 

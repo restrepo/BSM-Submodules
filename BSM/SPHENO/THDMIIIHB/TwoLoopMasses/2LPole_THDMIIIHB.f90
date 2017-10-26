@@ -14,12 +14,12 @@ Use Pole2LFunctions
 Contains 
  
 Subroutine CalculatePi2S(p2,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,              & 
-& Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,M112,M222,kont,tad2L,Pi2S,Pi2P)
+& Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,M112,M222,kont,tad2L,Pi2S,Pi2P)
 
 Implicit None 
 Real(dp),Intent(in) :: g1,g2,g3
 
-Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(in) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(in) :: v,v2
@@ -81,7 +81,7 @@ epsfmass=0._dp
 epscouplings=1.0E-6_dp
 Call TreeMassesEffPot(MAh,MAh2,MFd,MFd2,MFe,MFe2,MFu,MFu2,Mhh,Mhh2,MHm,               & 
 & MHm2,Msigma1,Msigma12,MVWm,MVWm2,MVZ,MVZ2,TW,ZDR,ZER,ZUR,ZDL,ZEL,ZUL,ZH,               & 
-& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,              & 
+& ZP,ZW,ZZ,alphaH,v,v2,g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,              & 
 & Yd,Ye,epYD,epYE,M12,M112,M222,.True.,kont)
 
 If (Abs(Msigma12/Qscale).lt.TwoLoopRegulatorMass) Msigma12=Qscale*TwoLoopRegulatorMass
@@ -89,7 +89,7 @@ If (Abs(MAh2/Qscale).lt.TwoLoopRegulatorMass) MAh2=Qscale*TwoLoopRegulatorMass
 Where (Abs(Mhh2/Qscale).lt.TwoLoopRegulatorMass )Mhh2=Qscale*TwoLoopRegulatorMass
 Where (Abs(MHm2/Qscale).lt.TwoLoopRegulatorMass )MHm2=Qscale*TwoLoopRegulatorMass
 Call CouplingsFor2LPole3(Lam7,v,Lam5,Lam4,Lam3,Lam2,v2,ZH,Lam6,ZP,Lam1,               & 
-& g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,Yu,ZUL,ZUR,Yd,epYU,Ye,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,  & 
+& g3,epYD,ZDL,ZDR,epYE,ZEL,ZER,epYU,ZUL,ZUR,Yd,Yu,Ye,cplAhAhAh,cplAhAhhh,cplAhAhsigma1,  & 
 & cplAhhhhh,cplAhhhsigma1,cplAhHmcHm,cplAhsigma1sigma1,cplhhhhhh,cplhhhhsigma1,          & 
 & cplhhHmcHm,cplhhsigma1sigma1,cplHmsigma1cHm,cplsigma1sigma1sigma1,cplVGVGVG,           & 
 & cplcFdFdAhL,cplcFdFdAhR,cplcFeFeAhL,cplcFeFeAhR,cplcFuFuAhL,cplcFuFuAhR,               & 

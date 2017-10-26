@@ -3,7 +3,7 @@
 ! SARAH References: arXiv:0806.0538, 0909.2863, 1002.0840, 1207.0906, 1309.7223  
 ! (c) Florian Staub, 2013  
 ! ------------------------------------------------------------------------------  
-! File created at 17:28 on 25.10.2017   
+! File created at 22:55 on 25.10.2017   
 ! ----------------------------------------------------------------------  
  
  
@@ -236,31 +236,31 @@ Complex(dp) :: ZEROS_p2(3, 3)
 Complex(dp) :: M112Tree 
 Complex(dp) :: M1121L 
 Complex(dp) :: M1122L 
-Complex(dp) :: M222Tree 
-Complex(dp) :: M2221L 
-Complex(dp) :: M2222L 
+Complex(dp) :: M12Tree 
+Complex(dp) :: M121L 
+Complex(dp) :: M122L 
 Real(dp) :: mass_uncertainty_Q(15), mass_uncertainty_Yt(15), g_SM_save(62) 
 Logical :: GetMassUncertainty = .false. 
 Integer :: SolutionTadpoleNr = 1 
 Character(len=15)::HighScaleModel
 Real(dp) :: g1,g2,g3
 
-Complex(dp) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp) :: g1IN,g2IN,g3IN
 
-Complex(dp) :: Lam6IN,Lam5IN,Lam7IN,Lam1IN,Lam4IN,Lam3IN,Lam2IN,epYUIN(3,3),YuIN(3,3),               & 
+Complex(dp) :: Lam6IN,Lam5IN,Lam7IN,Lam1IN,Lam4IN,Lam3IN,Lam2IN,YuIN(3,3),epYUIN(3,3),               & 
 & YdIN(3,3),YeIN(3,3),epYDIN(3,3),epYEIN(3,3),M12IN,M112IN,M222IN
 
 Real(dp) :: g1MZ,g2MZ,g3MZ
 
-Complex(dp) :: Lam6MZ,Lam5MZ,Lam7MZ,Lam1MZ,Lam4MZ,Lam3MZ,Lam2MZ,epYUMZ(3,3),YuMZ(3,3),               & 
+Complex(dp) :: Lam6MZ,Lam5MZ,Lam7MZ,Lam1MZ,Lam4MZ,Lam3MZ,Lam2MZ,YuMZ(3,3),epYUMZ(3,3),               & 
 & YdMZ(3,3),YeMZ(3,3),epYDMZ(3,3),epYEMZ(3,3),M12MZ,M112MZ,M222MZ
 
 Real(dp) :: g1GUT,g2GUT,g3GUT
 
-Complex(dp) :: Lam6GUT,Lam5GUT,Lam7GUT,Lam1GUT,Lam4GUT,Lam3GUT,Lam2GUT,epYUGUT(3,3),YuGUT(3,3),      & 
+Complex(dp) :: Lam6GUT,Lam5GUT,Lam7GUT,Lam1GUT,Lam4GUT,Lam3GUT,Lam2GUT,YuGUT(3,3),epYUGUT(3,3),      & 
 & YdGUT(3,3),YeGUT(3,3),epYDGUT(3,3),epYEGUT(3,3),M12GUT,M112GUT,M222GUT
 
 Real(dp) :: MAh,MAh2,MFd(3),MFd2(3),MFe(3),MFe2(3),MFu(3),MFu2(3),Mhh(2),Mhh2(2),MHm(2),          & 
@@ -294,8 +294,8 @@ Real(dp) :: gForTadpoles(133)
 Complex(dp) :: tForTadpoles(2)
 Real(dp) :: g1_saveEP 
 Real(dp) :: g2_saveEP 
-Complex(dp) :: epYU_saveEP(3,3) 
 Complex(dp) :: Yu_saveEP(3,3) 
+Complex(dp) :: epYU_saveEP(3,3) 
 Complex(dp) :: Yd_saveEP(3,3) 
 Complex(dp) :: Ye_saveEP(3,3) 
 Complex(dp) :: epYD_saveEP(3,3) 
@@ -336,8 +336,8 @@ Logical, save :: InputValueforLam1 =.False.
 Logical, save :: InputValueforLam4 =.False. 
 Logical, save :: InputValueforLam3 =.False. 
 Logical, save :: InputValueforLam2 =.False. 
-Logical, save :: InputValueforepYU =.False. 
 Logical, save :: InputValueforYu =.False. 
+Logical, save :: InputValueforepYU =.False. 
 Logical, save :: InputValueforYd =.False. 
 Logical, save :: InputValueforYe =.False. 
 Logical, save :: InputValueforepYD =.False. 
@@ -359,7 +359,7 @@ Complex(dp) :: Lambda4Input
 Complex(dp) :: Lambda5Input
 Complex(dp) :: Lambda6Input
 Complex(dp) :: Lambda7Input
-Complex(dp) :: M12input
+Complex(dp) :: M222Input
 Real(dp) :: vMZ 
 Real(dp) :: vSUSY 
 Real(dp) :: v2MZ 
@@ -1001,8 +1001,8 @@ Lam1IN = 0._dp
 Lam4IN = 0._dp 
 Lam3IN = 0._dp 
 Lam2IN = 0._dp 
-epYUIN = 0._dp 
 YuIN = 0._dp 
+epYUIN = 0._dp 
 YdIN = 0._dp 
 YeIN = 0._dp 
 epYDIN = 0._dp 
@@ -1030,10 +1030,10 @@ Lam3 = 0._dp
 Lam3MZ = 0._dp 
 Lam2 = 0._dp 
 Lam2MZ = 0._dp 
-epYU = 0._dp 
-epYUMZ = 0._dp 
 Yu = 0._dp 
 YuMZ = 0._dp 
+epYU = 0._dp 
+epYUMZ = 0._dp 
 Yd = 0._dp 
 YdMZ = 0._dp 
 Ye = 0._dp 
@@ -1121,18 +1121,18 @@ Lambda4Input=(0._dp,0._dp)
 Lambda5Input=(0._dp,0._dp) 
 Lambda6Input=(0._dp,0._dp) 
 Lambda7Input=(0._dp,0._dp) 
-M12input=(0._dp,0._dp) 
+M222Input=(0._dp,0._dp) 
 End Subroutine Set_All_Parameters_0 
  
 
 
 Subroutine SetMatchingConditions(g1SM,g2SM,g3SM,YuSM,YdSM,YeSM,vSM,v,v2,              & 
-& g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU,Yu,Yd,Ye,epYD,epYE,M12,               & 
+& g1,g2,g3,Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu,epYU,Yd,Ye,epYD,epYE,M12,               & 
 & M112,M222,MZsuffix)
 
 Real(dp),Intent(inout) :: g1,g2,g3
 
-Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,epYU(3,3),Yu(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
+Complex(dp),Intent(inout) :: Lam6,Lam5,Lam7,Lam1,Lam4,Lam3,Lam2,Yu(3,3),epYU(3,3),Yd(3,3),Ye(3,3),epYD(3,3),       & 
 & epYE(3,3),M12,M112,M222
 
 Real(dp),Intent(inout) :: v,v2
