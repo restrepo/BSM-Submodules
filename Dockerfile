@@ -11,7 +11,7 @@ FROM jupyter/scipy-notebook
 USER root
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get install -y --no-install-recommends python3-pip  python2-pip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -19,7 +19,7 @@ RUN pip install pyslha bash_kernel
 
 USER $NB_USER
 
-#RUN conda create -n ipykernel_py2 python=2 ipykernel
+#RUN conda create -n ipykernel_py2 python=2 ipykernel --yes
 #RUN source activate ipykernel_py2    # On Windows, remove the word 'source'
 #RUN python -m ipykernel install --user
 
