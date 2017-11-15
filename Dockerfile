@@ -10,12 +10,14 @@ FROM jupyter/scipy-notebook
 #My packages
 USER root
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-pip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends python3-pip && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
 
-pip3 install pyslha bash_kernel
+pip install pyslha
+
+RUN conda install --quiet --yes bash_kernel
 
 USER $NB_USER
 
