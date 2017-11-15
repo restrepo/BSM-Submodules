@@ -15,11 +15,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
+RUN pip install pyslha
 
 USER $NB_USER
-
-RUN conda install --quiet --yes bash_kernel
 
 
 
