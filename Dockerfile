@@ -15,10 +15,13 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install pyslha
+RUN pip install pyslha bash_kernel 
 
 USER $NB_USER
 
+RUN conda create -n ipykernel_py2 python=2 ipykernel
+RUN source activate ipykernel_py2    # On Windows, remove the word 'source'
+RUN python -m ipykernel install --user
 
 
 # Make sure the contents of our repo are in ${HOME}
