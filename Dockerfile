@@ -1,4 +1,5 @@
-FROM rocker/binder:3.4.2
+FROM jupyter/scipy-notebook:cf6258237ff9
+RUN pip install --no-cache-dir notebook==5.2.1
 
 
 RUN pip install jupyter-console
@@ -8,7 +9,14 @@ RUN pip install bash_kernel
 
 ENV NB_USER sarah
 ENV NB_UID 1000
-ENV HOME /home/sarah
+ENV HOME /home/${NB_USER}
+
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+        --uid ${NB_UID} \
+	    ${NB_USER}
+	    
 WORKDIR ${HOME}
 
 USER ${NB_USER}
