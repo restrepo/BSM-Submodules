@@ -5,9 +5,17 @@
 
 FROM jupyter/scipy-notebook
 
+
+
 #My packages
 USER root
-RUN conda install --quiet --yes pyslha bash_kernel
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+pip3 install pyslha bash_kernel
 
 USER $NB_USER
 
