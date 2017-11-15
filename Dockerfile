@@ -26,7 +26,7 @@ USER $NB_USER
 
 # Make sure the contents of our repo are in ${HOME}
 COPY . ${HOME}
-RUN git submodule update --init --recursive
+
 USER root
 RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
