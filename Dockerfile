@@ -30,7 +30,7 @@ USER $NB_USER
 COPY . ${HOME}
 
 USER root
-RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
+RUN chown -R ${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
