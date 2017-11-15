@@ -17,7 +17,7 @@ RUN apt-get update && \
 
 RUN easy_install pip
 RUN pip install pyslha bash_kernel
-#RUN python -m bash_kernel.install
+RUN python -m bash_kernel.install
 
 USER $NB_USER
 
