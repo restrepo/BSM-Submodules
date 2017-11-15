@@ -4,7 +4,7 @@ RUN apt-get install bash-completion
 RUN pip install jupyter-console
 RUN pip install pyslha
 RUN pip install bash_kernel
-#
+
 
 ENV NB_USER sarah
 ENV NB_UID 1000
@@ -18,10 +18,10 @@ USER ${NB_USER}
 COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
-RUN python2 -m pip install ipykernel
+#RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
-python2 -m ipykernel install --user
+#python2 -m ipykernel install --user
 
 
 
