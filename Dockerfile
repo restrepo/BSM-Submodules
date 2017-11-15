@@ -11,11 +11,13 @@ FROM jupyter/scipy-notebook
 USER root
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-pip build-essential gfortran&& \
+    apt-get install -y --no-install-recommends python3-setuptools python3-dev build-essential gfortran&& \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install pyslha bash_kernel 
+RUN easy_install pip
+RUN pip install pyslha bash_kernel
+RUN python -m bash_kernel.install
 
 USER $NB_USER
 
@@ -28,7 +30,7 @@ USER $NB_USER
 COPY . ${HOME}
 
 USER root
-RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
+RUN chown -R ${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
