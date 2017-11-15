@@ -11,11 +11,13 @@ FROM jupyter/scipy-notebook
 USER root
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3-pip build-essential gfortran&& \
+    apt-get install -y --no-install-recommends python3-setuptools python3-dev build-essential gfortran&& \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install pyslha bash_kernel 
+RUN easy_install pip
+RUN pip install pyslha bash_kernel
+#RUN python -m bash_kernel.install
 
 USER $NB_USER
 
