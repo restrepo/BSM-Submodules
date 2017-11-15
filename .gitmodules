@@ -1,18 +1,18 @@
 [submodule "SARAH"]
 	path = SARAH
-	url = git@github.com:restrepo/SARAH.git
+	url = https://github.com/restrepo/SARAH.git
 [submodule "SPHENO"]
 	path = SPHENO
-	url = git@github.com:restrepo/SPHENO.git
+	url = https://github.com/restrepo/SPHENO.git
 [submodule "madgraph"]
 	path = madgraph
-	url = git@github.com:restrepo/madgraph.git
+	url = https://github.com/restrepo/madgraph.git
 [submodule "calchep"]
 	path = calchep
-	url = git@github.com:restrepo/calchep.git
+	url = https://github.com/restrepo/calchep.git
 [submodule "micromegas"]
 	path = micromegas
-	url = git@github.com:restrepo/micromegas.git
+	url = https://github.com/restrepo/micromegas.git
 [submodule "SSP"]
 	path = SSP
-	url = git@github.com:restrepo/SSP.git
+	url = https://github.com/restrepo/SSP.git
