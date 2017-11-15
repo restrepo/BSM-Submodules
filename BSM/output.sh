@@ -13,11 +13,19 @@ fi
  
 #Check
 # Creates Model if it did not exists
+
 if [ ! -d ../SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d SARAH/Models/$MODELDIR$sep$MODEL ];then
     mkdir -p ../SARAH/Models/$MODELDIR$sep$MODEL
     cp -r SARAH/Models/$MODELDIR$sep$MODEL/*  ../SARAH/Models/$MODELDIR$sep$MODEL
 fi
-
+if [ -d ../SARAH/Models/$MODELDIR$sep$MODEL ] && [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ];then
+    printf "SARAH model found in official repo. cp $MODELDIR$sep$MODEL in SARAH/Models/? (y/n)  \n "
+    read yn
+    if [ "$yn" == y ];then
+	mkdir -p SARAH/Models/$MODELDIR$sep$MODEL
+        cp -r ../SARAH/Models/$MODELDIR$sep$MODEL/* SARAH/Models/$MODELDIR$sep$MODEL  
+    fi
+fi
 
 declare -A ModelDir=( [SPHENO]=SPheno [calchep]=CHep  [micromegas]=CHep [madgraph]=UFO )
 SARAHDIR=../SARAH/Output/$MODELDIR$sep_sarah$MODEL/EWSB
