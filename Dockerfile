@@ -14,6 +14,7 @@ RUN pip install bash_kernel
 USER main
 
 RUN python -m bash_kernel.install
+RUN git submodule update --init --recursive
 
 RUN echo export ROOTSYS=/usr >> $HOME/.bashrc
 RUN echo export PATH=$PATH:$ROOTSYS/bin >> $HOME/.bashrc
