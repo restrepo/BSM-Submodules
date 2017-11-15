@@ -1,23 +1,36 @@
-FROM andrewosh/binder-base
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+# https://github.com/jupyter/docker-stacks
+# https://mybinder.org/v2/gh/restrepo/bsm-submodules/master
 
-MAINTAINER Andrew Osheroff <andrewosh@gmail.com>
+FROM jupyter/scipy-notebook
 
+
+
+#My packages
 USER root
 
-# Add Julia dependencies
-RUN apt-get update
-RUN apt-get install -y libroot-core-dev root-system-bin root-system-common libroot-tree-dev && apt-get clean
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN pip install pyslha
-RUN pip install bash_kernel
+RUN pip install pyslha bash_kernel 
 
-USER main
+USER $NB_USER
 
-RUN python -m bash_kernel.install
-RUN git submodule update --init --recursive
+#RUN conda create -n ipykernel_py2 python=2 ipykernel --yes
+#RUN source activate ipykernel_py2    # On Windows, remove the word 'source'
+#RUN python -m ipykernel install --user
 
-RUN echo export ROOTSYS=/usr >> $HOME/.bashrc
-RUN echo export PATH=$PATH:$ROOTSYS/bin >> $HOME/.bashrc
-RUN echo export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROOTSYS/lib  >> $HOME/.bashrc
-RUN echo export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$ROOTSYS/lib >> $HOME/.bashrc
+
+# Make sure the contents of our repo are in ${HOME}
+COPY . ${HOME}
+
+USER root
+RUN chown -R ${NB_UID}:${NB_UID} ${HOME}
+#RUN python2 -m pip install ipykernel
+
+USER ${NB_USER}
+
 
