@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
+git submodule update --init --recursive
 if [ "$1" == "--help" ] || [ "$1" == "-h" ];then
     echo USAGE $0 [--butler] [--clean]
     echo "Install from BSM dirs or..."
