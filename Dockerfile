@@ -10,16 +10,18 @@ FROM jupyter/scipy-notebook
 #My packages
 USER root
 
-#RUN apt-get update && \
-#    apt-get install -y --no-install-recommends python3-pip && \
-#    apt-get clean && \
-#    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-pip install pyslha
+
+
+USER $NB_USER
 
 RUN conda install --quiet --yes bash_kernel
 
-USER $NB_USER
+
 
 # Make sure the contents of our repo are in ${HOME}
 COPY . ${HOME}
