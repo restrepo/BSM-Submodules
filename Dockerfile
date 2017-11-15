@@ -34,5 +34,6 @@ RUN chown -R ${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
+RUN git checkout SM
 
 
