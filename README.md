@@ -1,3 +1,4 @@
+# Beyond the Standard Model Submodules
 Run SARAH models precompiled by the butler script of SARAH Toolbox.
 
 WARNING! Clone with `--recursive` option in order to download the Toolbox submodles:
@@ -7,7 +8,7 @@ git clone --recursive git@github.com:restrepo/BSM-Submodules.git
 
 Or try directly here:
 
-[![Binder](http://mybinder.org/badge.svg)](http://mybinder.org/repo/restrepo/SimplifiedDM-SDFDM-Toolbox)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/restrepo/BSM-Submodules/SM?filepath=index.ipynb)
 
 Design
 -----------------------------------------------------------------------------
