@@ -34,9 +34,8 @@ RUN chown -R ${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
-RUN echo "======================"
 RUN echo $(cat MODEL)
-RUN echo "======================"
 RUN git checkout $(cat MODEL)
+RUN sed -i "s/MODEL=SM/MODEL=$(ls -ld BSM/SPHENO/* | awk -F'/' '{print $NF}')/" index.ipynb
 
 
