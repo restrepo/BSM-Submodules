@@ -34,8 +34,7 @@ RUN chown -R ${NB_UID} ${HOME}
 #RUN python2 -m pip install ipykernel
 
 USER ${NB_USER}
-RUN MODEL=$(du BSM/SARAH/Models/ | awk -F"Models/" '{print $2}' | grep -E '^\w' | sed 's/\//+/g')
-RUN if [ $(echo "$MODEL" | wc -l ) == 2 ];then MODEL=$(echo "$MODEL" | grep '+')  ;fi 
+RUN MODEL=$(du BSM/SARAH/Models/ | awk -F"Models/" '{print $2}' | grep -E '^\w' | sed 's/\//+/g' | head -n1)
 RUN echo $MODEL > MODEL
 RUN git checkout $MODEL
 
