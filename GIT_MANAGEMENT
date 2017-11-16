@@ -28,9 +28,13 @@ to creates the MODEL dirs
 
 4) Go to BSM and run
 
- $./output.sh
+ $ ./output.sh
 
-5) Make the commit and push. After a fresh version of the branch
+ Aftee a successful run, add the resulting directories to the repository:
+
+ $ git add SARAH SPHENO madgraph calchep micromegas
+ 
+5) Make the commit and push into NEW+BRANCH. After a fresh version of the branch
 you can run directly 
 
   $ ./install
