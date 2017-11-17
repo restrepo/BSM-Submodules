@@ -1,6 +1,8 @@
+#TODO: check https://pypi.python.org/pypi/PyPDT
 import pyslha #pip install pyslha --upgrade
 import numpy as np
-import commands
+import commands3
+commands=commands3
 import os
 import re
 import pandas as pd
@@ -113,14 +115,14 @@ class model(object):
             spcfile=spcfile%s %self.low
         
         self.LHA=_readSLHAFile_with_comments(spcfile,ignorenobr=ignorenobr,ignorenomass=ignorenomass)
-        if self.LHA.blocks.has_key('SMINPUTS') and updateSMINPUTS:
+        if 'SMINPUTS' in self.LHA.blocks and updateSMINPUTS:
             self.LHA.blocks['SMINPUTS'][2]='%.8E    # G_F,Fermi constant'   %self.G_F
             self.LHA.blocks['SMINPUTS'][3]='%.8E    # alpha_s(MZ) SM MSbar' %self.alpha_s
             self.LHA.blocks['SMINPUTS'][4]='%.8E    # Z-boson pole mass'    %self.M_Z 
             self.LHA.blocks['SMINPUTS'][5]='%.8E    # m_b(mb) SM MSbar'     %self.m_b 
             self.LHA.blocks['SMINPUTS'][6]='%.8E    # m_top(pole)'          %self.m_top 
             self.LHA.blocks['SMINPUTS'][7]='%.8E    # m_tau(pole)'          %self.mtau
-        if self.LHA.blocks.has_key('SPHENOINPUT'):
+        if 'SPHENOINPUT' in self.LHA.blocks:
             self.LHA.blocks['SPHENOINPUT'][ 13]='1               # 3-Body decays: none (0), fermion (1), scalar (2), both (3)'
             self.LHA.blocks['SPHENOINPUT'][ 12]='1.000E-15       # write only branching ratios larger than this value'
             self.LHA.blocks['SPHENOINPUT'][ 15]='1.000E-40       # write only decay if width larger than this value'
@@ -418,7 +420,7 @@ class hep(model):
         
         for x in xrange:
             i=i+1
-            if i%10==0: print i
+            if i%10==0: print( i )
             if param:
                 self.LHA=func(x,self.LHA,param=param)
             else:
@@ -485,7 +487,7 @@ class hep(model):
         
         for x in xrange:
             i=i+1
-            if i%10==0: print i
+            if i%10==0: print( i)
             if param:
                 self.LHA=func(x,self.LHA,param=param)
             else:
@@ -514,13 +516,13 @@ class THDM(model):
         "See: http://stackoverflow.com/questions/23027846/def-init-self-args-kwargs-initialization-of-class-in-python"
         super(THDM, self).__init__(*args, **kwargs)
         #LHA
-        if self.LHA.blocks.has_key('EPSUIN'):
+        if 'EPSUIN' in self.LHA.blocks:
             for bly in ['EPSUIN','EPSDIN','EPSEIN']:
                 for i in range(1,4):
                     for j in range(1,4):
                         self.LHA.blocks['%s' %bly][i,j]="%.8E      #%s(%d,%d)" %(0,bly,i,j)
         else:
-            print "Use proper blocks !" 
+            print( "Use proper blocks !" )
 
         #general
         self.lambdas=np.zeros(8)
@@ -532,7 +534,7 @@ class THDM(model):
         self.lambdaL=0.01
         
     def __call__(self):
-        print lambdas
+        print( lambdas)
         print("call")
     def phys_to_gen(self,v=2.38711864E+02):
         '''based on  https://2hdmc.hepforge.org/ src: THDM.cpp:  '''
@@ -857,5 +859,5 @@ class CasasIbarra(hep):
         Mnu=np.array([Mnu[lo[0]],Mnu[lo[1]],Mnu[lo[2]]])
         U=np.matrix(U)
         U=np.asarray(np.hstack((U[:,lo[0]],U[:,lo[1]],U[:,lo[2]])))
-        print Mnu
-        print U    
+        print( Mnu)
+        print( U )   
