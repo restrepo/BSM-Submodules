@@ -26,7 +26,7 @@ def pdgid_to_name (id):
     """Convert a PDG ID to a printable string.
     """
     name = pdgid_names.get(id)
-    if not name: name = `id`
+    if not name: name = str(id)
     return name
 
 
@@ -34,7 +34,7 @@ def pdgid_to_root_name (id):
     """Convert a PDG ID to a string with root markup.
     """
     name = root_names.get(id)
-    if not name: name = `id`
+    if not name: name = str(id)
     return name
 
 
@@ -642,12 +642,12 @@ def _fill_dicts():
         if len(line) == 0 or line[0] == '#': continue
         ll = line.split('=', 1)
         if len(ll) < 2:
-            print 'bad line', line
+            print( 'bad line', line )
             continue
-        mname = string.strip(ll[0])
+        mname = ll[0].strip()
         ll = ll[1].split()
         if len(ll) < 1:
-            print 'bad line', line
+            print( 'bad line', line )
             continue
         id = ll[0]
         pname = None
@@ -661,7 +661,7 @@ def _fill_dicts():
         except ValueError:
             id = globals().get(id)
             if id == None:
-                print 'bad line', line
+                print( 'bad line', line )
                 continue
 
         if pname == None:
@@ -670,9 +670,9 @@ def _fill_dicts():
             rname = pname
 
         globals()[mname] = id
-        if not pdgid_names.has_key(id):
+        if id not in pdgid_names:
             pdgid_names[id] = pname
-        if not root_names.has_key(id):
+        if id not in root_names:
             root_names[id] = rname
     return
 
