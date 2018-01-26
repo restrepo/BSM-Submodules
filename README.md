@@ -68,11 +68,14 @@ git checkout -b vN.N
 inside the specific submodule.
 
 
-To update all the submodles, use:
+To update all the submodles which tracks branch is obtained using:
 ```
-git submodule update --remote --merge
+git pull --recurse-submodules
+git submodule update --remote --recursive
+git commit -am 'Updated Submodules tags'
+git push origin master
 ```
-See: https://stackoverflow.com/a/21195182/2268280
+
 
 Installation
 ------------------------------------------------------------------------------
