@@ -76,7 +76,6 @@ git commit -am 'Updated Submodules tags'
 git push origin master
 ```
 
-
 Installation
 ------------------------------------------------------------------------------
 Everything could be installed after the git clone. To choose an specific release version,
@@ -85,6 +84,46 @@ e.g vN.N, of some submodule, go there and
 git checkout -b vN.N
 ```
 Finally, be sure to execute `install.sh` to compile the SPHENO, calchep and micromegas submodules
+
+
+Debian 9 and related Linux distributions
+-------------------------------------------------------------
+In Debian 9 there is bug which breaks backward compatibility of compilers. It is fixed by declaring a global variable for the `ar` command. For example, by adding to the `~/.bashrc` file:
+
+```bash
+export ARFLAGS=rvU
+```
+
+In the new version of the `g++` compilers such as the one in Debian 9:
+
+`g++ (Debian 6.3.0-18) 6.3.0 20170516`
+
+we need to enforce the `c++98` standard in order to compile the `CalcOmega.cpp` file of `SARAH` models in `micrOMEGAS` without errors.
+
+It is done for example by changing the following line in `./micromegas/include/modelMakefile`:
+
+```c
+$(DLSET) $(CXX) $(CXXFLAGS)  -o $(main:.cpp=) $(main)  $(SSS)  $(lDL)  -lm -lpthread
+```
+to
+
+```c
+$(DLSET) $(CXX) $(CXXFLAGS) -std=c++98 -o $(main:.cpp=) $(main)  $(SSS)  $(lDL)  -lm -lpthread
+```
+
+In addition, `CalcOmega5.cpp` must be modified  for `micrOMEGAS` 5.0 which requires now a new argument in the `darkOmega` function.
+
+```c
+$ diff CalcOmega.cpp CalcOmega5.cpp
+14a15
+>		int* Err;
+25c26
+<			Omega = darkOmega(&Xf,fast,Beps);
+---
+>			Omega = darkOmega(&Xf,fast,Beps,Err);
+```
+
+
 
 Official README stars here
 -------------------------------------------------------------------------------
