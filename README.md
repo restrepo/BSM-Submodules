@@ -88,12 +88,13 @@ Finally, be sure to execute `install.sh` to compile the SPHENO, calchep and micr
 
 Debian 9 and related Linux distributions
 -------------------------------------------------------------
+#### Problems with the `ar` command
 In Debian 9 there is bug which breaks backward compatibility of compilers. It is fixed by declaring a global variable for the `ar` command. For example, by adding to the `~/.bashrc` file:
 
 ```bash
 export ARFLAGS=rvU
 ```
-
+#### Problems with C++ compiler
 In the new version of the `g++` compilers such as the one in Debian 9:
 
 `g++ (Debian 6.3.0-18) 6.3.0 20170516`
