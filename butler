@@ -15,6 +15,7 @@ include_calchep=True
 include_spheno=True
 include_whizard=True
 include_madgraph=True
+micromegas_version="_MOv5"
 
 MATH=/usr/local/bin/math
 
@@ -274,11 +275,11 @@ if test "$enable_micromegas" = yes; then
    ./newProject "$SARAHModelName" || die
    cd "$oldpwd"
    cp "$CHepDir"/* "$micromegas_wd/work/models" || die
-   cp "$CHepDir"/* "$micromegas_wd/calchep/models" || die
+   #cp "$CHepDir"/* "$micromegas_wd/calchep/models" || die
    cp "$CHepDir"/CalcOmega* "$micromegas_wd" || die
    echo building project...
    echo
-   make -C "$micromegas_wd" main=CalcOmega.cpp || die
+   make -C "$micromegas_wd" main=CalcOmega${micromegas_version}.cpp || die
    echo
    echo "MicrOMEGAs project for $SARAHModelName created successfully in $micromegas_wd"
    micromegasstat="project located in $micromegas_wd"
