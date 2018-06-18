@@ -22,23 +22,22 @@ directory.
 If the Model is new, put the model files under BSM/SARAH/Models
 4) Run
 ```bash
- $ ./install --butler
+ $ ./install,sh --butler
 ```
 to creates the MODEL dirs
 4) Go to BSM and run
 ```bash
  $ ./output.sh
 ```
-After a successful run, add the resulting directories created to the repository:
+After a successful run, add the resulting directories created to the repository (inside `BSM` dir). Then, you can run directly 
 ```bash
- $ git add SARAH SPHENO madgraph calchep micromegas
+  $ ./install.sh
 ```
-5) Make the commit and push into NEW+BRANCH. After a fresh version of the branch
-you can run directly 
+as a faster replacment of butler. To make the full test, it is recommended to work in a  clean cloned repository, or after clean the first `butler` generated code and executables with
 ```bash
-  $ ./install
+  $ ./install.sh --clean
 ```
-as a faster replacment of butler
+
 
 # Further details:
 
