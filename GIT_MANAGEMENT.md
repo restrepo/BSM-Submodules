@@ -58,3 +58,31 @@ Make the commit by incluging the the new version in the commit message:
  ```bash
   $ git push origin master --tags
 ```
+
+# Deprecated instructions
+
+
+* Update clean.sh and update and execute clean_repo.sh
+* To avoid clutter the repo with binary files, please execute from the main Toolbox dir
+
+```bash
+  ./butler CATEGORY/MODEL
+  cd micromegas/CATEGORYMODEL
+  make clean
+  cd ../../
+  git add SPHENO/CATEGORYMODEL
+  git add micromegas/CATEGORYMODEL
+  #Be sure to include so_generated dir
+  git add micromegas/SimplifiedDMSDFDM/work/so_generated/
+``` 
+
+* Rebuild micromegas binaries
+
+```bash
+  cd micromegas/CATEGORYMODEL
+  make main=CalcOmega.cpp
+  make main=CalcOmega_with_DDetection_MOv....cpp
+``` 
+
+
+
