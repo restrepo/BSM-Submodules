@@ -1,5 +1,5 @@
 In master, after clone this repo
-* See [GIT_MANAGEMENT](./GIT_MANAGEMENT) to build all the relevant tools of SARAH-Toolbox
+* See [GIT_MANAGEMENT.md](./GIT_MANAGEMENT.md) to build all the relevant tools of SARAH-Toolbox
 * Create branch  `CATEGORY+MODEL` and checkout there:
 ```bash
   checkout CATEGORY+MODEL
