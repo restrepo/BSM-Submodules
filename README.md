@@ -6,6 +6,13 @@ WARNING! Clone with `--recursive` option in order to download the Toolbox submod
 git clone --recursive git@github.com:restrepo/BSM-Submodules.git
 ```
 
+To clone an specific model, check the associtated branch in the format: `CATEGORY+MODEL` and clone with
+```
+git clone --recursive -b CATEGORY+MODEL git@github.com:restrepo/BSM-Submodules.git
+cd BSM-Submodules
+./install.sh #Fast butler
+```
+
 Or try directly here:
 
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/restrepo/BSM-Submodules/SM?filepath=index.ipynb)
