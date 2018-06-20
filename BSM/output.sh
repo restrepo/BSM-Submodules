@@ -51,3 +51,10 @@ done
 #version=$( grep -E "version\s*=" ../SPHENO/src/Control.F90  | awk -F'"|"' '{print $2}')
 # 
 # manage tags: https://stackoverflow.com/a/5480292/2268280
+# Install also RGE's
+if [ -d $SARAHDIR/../RGEs ];then # easy update
+    cp -r $SARAHDIR/../RGEs SARAH/Output/$MODELDIR$sep_sarah$MODEL
+else
+    printf "ERROR run:\ncd ..\n./install --butler first\n"
+    exit
+fi

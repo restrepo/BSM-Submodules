@@ -51,6 +51,15 @@ if [ ! -d SARAH/Models/$MODELDIR$sep$MODEL ] && [ -d  BSM/SARAH/Models/$MODELDIR
 fi
 if [ "$1" == '--butler' ];then
     ./butler $MODELDIR$sep$MODEL
+
+    printf "===============================================================================\n"
+    printf "\nWaiting for 180s (Use ./CalcRGEs.sh directly)\nSkip RGEs compilation? (y/n)"
+    read -6 180 yn
+    if [ "$yn" != y ];then
+	./CalRGEs.sh
+    fi
+
+    
     exit
 fi
 FULLMODELNAME=$(echo $MODELDIR$MODEL| sed 's/-//g')
@@ -131,5 +140,3 @@ for tool in "${!ModelDir[@]}";do
     fi
 done
 printf "$SUMMARY"
-printf "===============================================================================\n"
-
