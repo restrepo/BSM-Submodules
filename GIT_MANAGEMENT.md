@@ -13,19 +13,19 @@ directory.
    need to create a branch for a model (new or any of SARAH's Models) according to the standards in [README.md](README.md)
  ```bash
  $ git branch CATEGORY+MODEL
- $ git checkout NEW+BRANCH
+ $ git checkout CATEGORY+MODEL
  ```
 4) To run SARAH, generate the output of the several tools, and copy the output into the right tool directory, run either 
 ```
-./butler PATH_TO_MODEL
+./butler CATEGORY/MODEL
 ```
-or (the model is infered from the branch name):
+or just (the model is infered from the branch name):
 ```bash
  $ ./install.sh --butler
 ```
-If the Model is new, put the model files under `BSM/SARAH/Models`
- to creates the MODEL dirs
-4) Go to BSM and run
+5) We decide to use the official tools releases without modifications or additions. In this way, we store the created and generated files in the `BSM` directory for fast reinstallation.  
+   * For the created SARAH model files,  it is necessary to copy the model folder in  `BSM/SARAH/Models`.
+   * After a succesfull  butler run, the generated files for each tool can be copied automatically into the `BSM` folder by going into the BSM and run
 ```bash
  $ ./output.sh
 ```
