@@ -1,14 +1,13 @@
 # Butler replacement
 We depart from the SARAH standard and
-will install SARAH Toolbox directly in the primary
+will installed SARAH Toolbox directly in the primary
 directory.
 
-1) We do not need to explicitly execute the ./configure to have all the sources.
-   However note that some of them are disbled:
+1) We do not need to explicitly execute the ./configure to have all the sources because they are already included as GitHub submodules (see below). However note that some of them are disbled. We used:
 ```bash
  $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
 ```
-2) Symbolic links were removed and now they are real directories with the github submodules, which have tags for the release versions.
+2) Symbolic links were removed and now they are real directories with the GitHub submodules, which have tags for the release versions.
 
 3) Afer the recursive clone (check [README.md](README.md)) you
    need to create a branch for a model (new or any of SARAH's Models) according to the standards in [README.md](README.md)
