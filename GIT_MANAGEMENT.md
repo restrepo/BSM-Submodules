@@ -7,15 +7,15 @@ directory.
 ```bash
  $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
 ```
-2) Symbolic links were removed and now they are real directories with the GitHub submodules, which have tags for the release versions.
+1) Symbolic links were removed and now they are real directories with the GitHub submodules, which have tags for the release versions.
 
-3) Afer the recursive clone (check [README.md](README.md)) you
+1) Afer the recursive clone (check [README.md](README.md)) you
    need to create a branch for a model (new or any of SARAH's Models) according to the standards in [README.md](README.md)
  ```bash
  $ git branch CATEGORY+MODEL
  $ git checkout CATEGORY+MODEL
  ```
-4) To run SARAH, generate the output of the several tools, and copy the output into the right tool directory, run either 
+1) To run SARAH, generate the output of the several tools, and copy the output into the right tool directory, run either 
 ```
 ./butler CATEGORY/MODEL
 ```
@@ -23,7 +23,7 @@ or just (the model is infered from the branch name):
 ```bash
  $ ./install.sh --butler
 ```
-5) We decide to use the official tools releases without modifications or additions. In this way, we store the created and generated files in the `BSM` directory for fast reinstallation.  
+1) We decide to use the official tools releases without modifications or additions. In this way, we store the created and generated files in the `BSM` directory for fast reinstallation.  
    * For the created SARAH model files,  it is necessary to copy the model folder in  `BSM/SARAH/Models`.
    * After a succesfull  butler run, the generated files for each tool can be copied automatically into the `BSM` folder by going into the BSM and run
 ```bash
