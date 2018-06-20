@@ -8,7 +8,6 @@ directory.
  $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
 ```
 1) Symbolic links were removed and now they are real directories with the GitHub submodules, which have tags for the release versions.
-
 1) Afer the recursive clone (check [README.md](README.md)) you
    need to create a branch for a model (new or any of SARAH's Models) according to the standards in [README.md](README.md)
  ```bash
