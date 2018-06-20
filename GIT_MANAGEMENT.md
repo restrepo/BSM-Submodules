@@ -3,28 +3,29 @@ We depart from the SARAH standard and
 will install SARAH Toolbox directly in the primary
 directory.
 
-1) We need to explicitly execute the ./configure to have all the sources.
+1) We do not need to explicitly execute the ./configure to have all the sources.
    However note that some of them are disbled:
 ```bash
  $ ./configure --disable-whizard --disable-higgsbounds --disable-higgssignals
 ```
-2) Symbolic links were removed and now are real directories with the github submodules
-```bash
- $ rm link
- $ mv real_name link
-```
+2) Symbolic links were removed and now they are real directories with the github submodules, which have tags for the release versions.
+
 3) Afer the recursive clone (check [README.md](README.md)) you
-   need to create a branch for a model (new or any of SARAH's Models)
+   need to create a branch for a model (new or any of SARAH's Models) according to the standards in [README.md](README.md)
  ```bash
- $ git branch NEW+BRANCH
+ $ git branch CATEGORY+MODEL
  $ git checkout NEW+BRANCH
  ```
-If the Model is new, put the model files under BSM/SARAH/Models
-4) Run
-```bash
- $ ./install,sh --butler
+4) To run SARAH, generate the output of the several tools, and copy the output into the right tool directory, run either 
 ```
-to creates the MODEL dirs
+./butler PATH_TO_MODEL
+```
+or (the model is infered from the branch name):
+```bash
+ $ ./install.sh --butler
+```
+If the Model is new, put the model files under `BSM/SARAH/Models`
+ to creates the MODEL dirs
 4) Go to BSM and run
 ```bash
  $ ./output.sh
