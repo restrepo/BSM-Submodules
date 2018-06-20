@@ -6,7 +6,7 @@ WARNING! Clone with `--recursive` option in order to download the Toolbox submod
 git clone --recursive git@github.com:restrepo/BSM-Submodules.git
 ```
 
-To clone an specific model, check the associtated branch in the format: `CATEGORY+MODEL` and clone with
+To clone an specific model, check the associtated branch in the format: `CATEGORY+MODEL` (see below) and clone with
 ```
 git clone --recursive -b CATEGORY+MODEL git@github.com:restrepo/BSM-Submodules.git
 cd BSM-Submodules
@@ -33,13 +33,14 @@ Each new model MODEL is build inside a CATEGORY under the branch:
 
  `CATEGORY+MODEL`
 
-based in the predefined blocks in the fermion/scalars multiplets files. __Explore the branchs__!
+based in the predefined blocks in the fermion/scalars multiplets files. __Explore the branches__!
 
 Implemened CATEGORY's:
 
 - SM: Explore SARAH feautures
 - SimplifiedDM: Simplified Dark Matter Models
 - radinert:  Models with radiative neutrino masses and dark matter candidates with SM + Z2-odd particles 
+- B-L: $B-L$ models
 
 Each implemented model have a notebook in BSM dir:
 
