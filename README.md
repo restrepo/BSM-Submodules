@@ -15,7 +15,9 @@ cd BSM-Submodules
 
 Or try directly here:
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/restrepo/BSM-Submodules/SM?filepath=index.ipynb)
+<!-- [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/restrepo/BSM-Submodules/SM?filepath=index.ipynb) -->
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/restrepo/BSM-Submodules/master)
+
 
 Design
 -----------------------------------------------------------------------------
