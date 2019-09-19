@@ -78,10 +78,11 @@ git checkout -b vN.N
 inside the specific submodule.
 
 
-To update all the submodles which tracks branch is obtained using:
+After some change in the official submodule repository at [https://github.com/restrepo/sbm], 
+to update all the submodules inside this repository ([https://github.com/restrepo/BSM-Submodules]), which add an specific tag each submodule,  use the following sequence of git commands:
 ```
 git pull --recurse-submodules
-git submodule update --remote --recursive
+git submodule update --remote --recursive #Check changes in official sbm repo
 git commit -am 'Updated Submodules tags'
 git push origin master
 ```
