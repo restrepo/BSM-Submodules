@@ -2,7 +2,7 @@
 	path = SARAH
 	url = https://github.com/restrepo/SARAH.git
 [submodule "SPHENO"]
-	path = SPHENO
+	path = SPheno
 	url = https://github.com/restrepo/SPHENO.git
 [submodule "madgraph"]
 	path = madgraph
