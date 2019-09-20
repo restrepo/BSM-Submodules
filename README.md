@@ -1,6 +1,8 @@
 # Beyond the Standard Model Submodules
 Run SARAH models precompiled by the butler script of SARAH Toolbox.
 
+TUTORIAL: SARAH talk at IPP-UFRN-Natal (Sept. 2019): http://bit.ly/SARAHIIP
+
 WARNING! Clone with `--recursive` option in order to download the Toolbox submodles:
 ```
 git clone --recursive git@github.com:restrepo/BSM-Submodules.git
