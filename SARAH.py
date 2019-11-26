@@ -2,6 +2,7 @@ import re
 import cmdlike as cmd
 from collections import OrderedDict
 import json
+import numpy as np
 
 def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
     '''
@@ -265,4 +266,241 @@ def to_math(SM,file,definitions='ParticleDefinitions',
     f.close()
     f=open(file,'r')
     return f.read()
+    f.close()
+
+
+#Parameter defintions
+def get_hypercharge(field,particles):
+    try: 
+        Y=particles[particles['Field']==field].reset_index(
+              ).loc[0].get('Properties').get('Groups'
+                                   )[0]
+    except KeyError:
+        Y=None
+    return Y
+
+def get_Lorentz(field,particles):
+    try: 
+        Y=particles[particles['Field']==field].reset_index(
+              ).loc[0].get('Properties').get('Lorentz'
+                                   )
+    except KeyError:
+        Y=None
+    return Y
+
+def get_higgs_vev(smdict,k,particles):
+    '''
+    Get the vev associated to the Yukawa coupling
+    in `smdict` with Description `k`
+    '''
+    try:
+        H=smdict.get(k).get('Higgs')
+    except AttributeError:
+        H=''
+    if H:
+        H0=get_H0(H,particles)
+        hh=get_hh(H0,particles)
+        if not hh.empty:
+            v=hh.get('Properties').apply(lambda d: d.get('vev')).loc[0]
+    else:
+        v=''
+    return v
+
+def get_diagonal_basis(vev,p,particles):
+    try:
+        pp=particles[particles['Parents']==p].reset_index(drop=True).loc[0,'Field']
+        DF=particles[particles['Parents']==pp].reset_index(drop=True).loc[0,'Field']
+    except:
+        DF=''
+    if vev and DF:
+        db=r'''Sqrt[2]/%s* {{Mass[%s,1],0,0 },
+                {0, Mass[%s,2],0},
+                {0, 0, Mass[%s,3]}}''' %(vev,DF,DF,DF)
+    else:
+        db=''
+    return db
+
+def get_multiplet(WF,particles):
+    '''WF: Weyl Fermion'''
+    mltp=particles[particles['Parents']==WF]
+    if mltp.shape[0]==2:
+        chiral='Left'
+    elif mltp.shape[0]==1:
+        chiral='Right'
+    else:
+        chiral=None
+    j=0
+    multiplet={}
+    for p in mltp['Field']:
+        multiplet[p]={}
+        j=j+1
+        multiplet[p]['chiral']=chiral
+        if chiral=='Left':
+            multiplet[p]['dim']='doublet'
+            if j==1:
+                multiplet[p]['pos']='Up'
+            elif j==2:
+                multiplet[p]['pos']='Down'
+            else:
+                multiplet[p]['pos']=None
+        else:
+            multiplet[p]['dim']='singlet'
+    return multiplet
+
+def sorted_equality(l1,l2):
+    return sorted(l1)==sorted(l2)
+
+def get_H0(H,particles):
+    "H is string"
+    Hs=particles[particles['Parents']==H]
+    #Get doublet components
+    if Hs.shape[0]==2:
+        # extract neutral component
+        for Hf in Hs.get('Field'):
+            H0s=particles[particles.get('Parents')==Hf].reset_index(drop=True)
+            if not H0s.get('Properties').empty:
+                return H0s
+        
+def get_hh(H0,particles):
+    "H0 is a dataframe"
+    if not H0.empty:
+        return H0[H0.get('Properties').apply(lambda d: d.get('CP')=='Real')].reset_index(drop=True)
+    else:
+        return pd.DataFrame()
+    
+
+#SPHENO Definitions
+
+def get_tadpoles_and_bilinears(L,dimL,smd,exclude=None):
+    #Get tadpoles from Lagrangina excluding bilinear `exclude`
+    tadpoles=list(L[(np.logical_and(L==1,dimL==2))].index)
+    ctdpl=[] # Parameters to be calculated from tadpoles
+    cbln =[] # Bilinear input paramater
+    for t in tadpoles:
+        bln=smd.loc['Coupling',t]
+        if bln!=exclude:
+            ctdpl.append( bln )
+        else:
+            cbln.append(bln)
+    return ctdpl,cbln
+
+def get_input_parameters(L,dimL,smd):
+    #TODO: Include Yukawas
+    sci=[]
+    scalarint=list(L[(np.logical_and(L==1,dimL>2))].index)
+    for sc in scalarint:
+        sci.append( smd.loc['Coupling',sc] )
+    return sci
+
+#TODO: Incluede Input Yukawas
+def get_input_parameters_IN(sci,suffix='IN'):
+    sciIN=[]
+    BLS=[]
+    for p in sci:
+        rp=re.search('(\w+)',p)
+        if rp:
+            sciIN.append( rp.groups()[0]+suffix )
+
+    if len(sci)==len(sciIN):
+        return sciIN
+    else:
+        sys.exit('ERROR: Input parameter mismatch {}!={}'.format(sci,sciIN))
+        
+def get_BoundaryLowScaleInput(sci,sciIN):
+    BLS=[]
+    for i in range(len(sci)):
+        BLS.append([sci[i],sciIN[i]])
+    return BLS
+def get_MINPAR(sciIN):
+    MP=[]
+    for i in range(len(sciIN)):
+        MP.append([i+1,sciIN[i]])
+    return MP
+
+def get_smyukawas(smd,def_smyukawas=
+                      ['Down-Yukawa-Coupling', 'Lepton-Yukawa-Coupling', 'Up-Yukawa-Coupling']):
+    smyc=[]
+    for y in def_smyukawas:
+        smyc.append( smd.loc['Coupling',y])
+    return smyc
+
+def get_other_yukawas(smd,L,dimL,def_smyukawas=
+                      ['Down-Yukawa-Coupling', 'Lepton-Yukawa-Coupling', 'Up-Yukawa-Coupling']):
+    def_yukawas=list(L[(np.logical_and(L==2,dimL==3))].index)
+    oyc=[]
+    for y in def_yukawas:
+        if y not in def_smyukawas:
+            oyc.append( smd.loc['Coupling',y])
+    return oyc
+
+def get_gauge_couplings(smc,smcouplings=['Hypercharge-Coupling','Left-Coupling','Strong-Coupling']):
+    cs=[]
+    for c in smcouplings:
+        cs.append( smc.loc['Description'][ smc.loc['Description']==c ].index[0] )
+    
+    return cs
+
+def get_SM_MatchingConditions(smd,smc,
+                              smcouplings=['Hypercharge-Coupling','Left-Coupling','Strong-Coupling'],
+                              def_smyukawas=
+                              ['Down-Yukawa-Coupling', 'Lepton-Yukawa-Coupling', 'Up-Yukawa-Coupling']):
+    #VEV
+    smvev=smd.loc['Coupling','EW-VEV']
+    #Gauge couplings
+    cs=get_gauge_couplings(smc,smcouplings)
+    #SM Yukawas
+    smyc=get_smyukawas(smd,def_smyukawas)
+
+    lsmcpl=[]
+    smcpl =[smvev]+smyc+cs
+    for c in smcpl:
+        lsmcpl.append( [c,c+'SM'])
+    return lsmcpl
+
+def get_decay_particles(DecayParticles   = ['Fu', 'Fe', 'Fd', 'hh'],
+                    DecayParticles3B = ['Fu', 'Fe', 'Fd']):
+    LDecayParticles3B=[]
+    for p in DecayParticles3B:
+        LDecayParticles3B.append( [p,'"{}.f90"'.format(p)])
+    return DecayParticles,LDecayParticles3B
+
+
+def get_sm_DefaultInputValues(smd,sci,sciIN):
+    for i in range(len(sci)):
+        if smd.loc['Coupling','SM Higgs Selfcouplings']==sci[i]:
+            d={sciIN[i]:0.27}
+        else:
+            d={}
+        return d
+    
+def to_math_list( l ):
+    import re
+    sl=str(l).replace('[','{' ).replace(
+                      ']','}'     ).replace(
+                       "'",""   ).replace(
+                       r'\\','\\')
+    sl=re.sub(r'\\{(\w+)}',r'\\[\1]',sl)
+    return sl
+
+def to_SPheno(SP,file,dictentries=['DefaultInputValues']):
+    '''dicentries:  dictionaries to be printed directly'''
+    f=open(file,'w')
+    for i in SP.index:
+        if type(SP.loc[i,'Properties'])==bool:
+            f.write('{} = {};\n\n'.format(i,SP.loc[i,'Properties']))
+        elif type(SP.loc[i,'Properties'])==list:
+            f.write('{} = {};\n\n'.format(i,to_math_list(SP.loc[i,'Properties'])  ))
+        elif type(SP.loc[i,'Properties'])==dict:
+            d=SP.loc[i,'Properties']
+            if i in dictentries:
+                dfv='{} = {{'.format(i)
+                for k in d.keys():
+                    dfv=dfv+'{} -> {}'.format(k,0.27) 
+                dfv=dfv+'};\n\n'
+                f.write(dfv)
+            else:
+                for k in d.keys():
+                    if k  in ['MatchingConditions']:
+                        f.write('{}[{}]={};\n\n'.format(i,k,to_math_list( SP.loc[i,'Properties'][k] )    
+                              ))
     f.close()
