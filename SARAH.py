@@ -267,6 +267,94 @@ def to_math(SM,file,definitions='ParticleDefinitions',
     f=open(file,'r')
     return f.read()
     f.close()
+    
+#Particle definitions
+def rotations_to_particles(rotations,key='EWSB',lr='',sep='',DEBUG=False):
+    if not lr and not sep:
+        typekey='Diagonal'
+    elif lr=='left' and sep=='_':
+        typekey='Bidiagonal'
+    elif lr=='right' and sep=='_':
+        typekey='Bidiagonal'
+    else:
+        print('WARNING: Not yet implemented')
+    newparticles=[]
+    for k in rotations[key].keys():
+        for bd in rotations['EWSB'][k]:
+            if k==typekey:
+                interaction='{}{}intr'.format(lr,sep)
+                if type(bd.get(interaction))==list:
+                    if DEBUG: print(bd)
+                    for i in  range(len(bd.get(interaction))):
+                        if type( bd.get('{}{}mass'.format(lr,sep) ) )==list:
+                            fm=bd.get('{}{}mass'.format(lr,sep))[i]
+                        else:
+                            fm=bd.get('{}{}mass'.format(lr,sep))
+                        f=re.sub('\s*\]\s*','',re.sub('conj\s*\[\s*','',
+                                                    fm))
+                        if f not in [ d.get('Field') for d in newparticles if type(d)==dict]:
+                            #left particle
+                            particle={'Properties':{}}
+                            particle['Field']   =f
+                            particle['Parents'] =bd.get(interaction)[i]
+                            particle['rotation']=bd.get('{}{}rota'.format(lr,sep))
+                            particle['Properties']['Mass_basis']=bd.get('{}{}mass'.format(lr,sep))
+                            particle['Properties']['Interaction_basis']=bd.get(interaction)
+                            particle['Block']='MatterField'
+                            if lr:
+                                particle['Definition']='WeylFermionAndIndermediate'
+                                particle['Properties']['Chirality']=lr
+                            if bd.get('Lorentz')=='Vector':
+                                particle['Definition']='EWSB'
+                                particle['Block']='GaugeSector'
+                                particle['Properties']['Lorentz']='Vector'
+                            else:
+                                if not lr:
+                                    print('CODE for Scalar or Fermion here')
+                            newparticles.append(particle)
+                            #print('*'*50)
+                            #print(particle)
+                            #print('*'*50)
+                            if DEBUG: print(i,bd.get('{}{}mass'.format(lr,sep)),particle)
+                else:
+                    print('No list in mass basis for diagonal particle, please check:',k,p)
+    return newparticles
+
+def vev_to_particles(d,cp="Real"):
+    if cp!='Real' and cp!='Imaginary':
+        return "Error: undefined CP"
+    particle={'Properties':{}}
+    particle['Field']     =d.get(cp)
+    particle['Parents']   =d.get('Complex')
+    particle['Definition']='EWSB'
+    particle['Block']='VEVs'
+    particle['Properties']['Lorentz']='Scalar'
+    particle['Properties']['vev']=d.get('vev')
+    particle['Properties']['CP']=cp
+    particle['Properties']['Coefficient']=d.get('{}_coeff'.format(cp))
+    return particle
+
+def spinor_to_particles(dict_of_spinors,rotations,f):
+    particle={'Properties':{}}
+    particle['Field']=f
+    particle['Definition']='EWSB'
+    particle['Block']='DiracSpinors'
+    particle['Properties']['Lorentz']='DiracSpinor'
+    if type(dict_of_spinors[f])==list:
+        particle['Parents']=dict_of_spinors[f][0]
+        Majorana=False
+        if 0 in dict_of_spinors[f]:
+            Majorana=True
+        elif dict_of_spinors[f][1].find(  
+             dict_of_spinors[f][0])>-1:
+            Majorana=True
+        if not Majorana:
+            particle['Properties']['DiracSpinor']=dict_of_spinors[f]
+        else:
+            particle['Properties']['Lorentz']='MajoranaSpinor'
+            particle['Properties']['MajoranaSpinor']=rotations['EWSB']['DiracSpinors'][f]
+    
+    return particle
 
 
 #Parameter defintions
@@ -299,7 +387,7 @@ def get_higgs_vev(smdict,k,particles):
         H=''
     if H:
         H0=get_H0(H,particles)
-        hh=get_hh(H0,particles)
+        hh=get_hh(H0)
         if not hh.empty:
             v=hh.get('Properties').apply(lambda d: d.get('vev')).loc[0]
     else:
@@ -361,7 +449,7 @@ def get_H0(H,particles):
             if not H0s.get('Properties').empty:
                 return H0s
         
-def get_hh(H0,particles):
+def get_hh(H0):
     "H0 is a dataframe"
     if not H0.empty:
         return H0[H0.get('Properties').apply(lambda d: d.get('CP')=='Real')].reset_index(drop=True)
