@@ -47,7 +47,8 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                     else: 
                         if len(fp)>=6:
                             particle['Properties']['NF']=fp[1].strip()
-                            particle['Properties']['Groups']=fp[3:]
+                            particle['Properties']['Groups']=[ 
+                                x.strip().replace(';','') for x in fp[3:]]
                             particle['Definition']='WeylFermionAndIndermediate'
                             if Field=='FermionFields':
                                 particle['Properties']['Lorentz']='WeylFermion'
