@@ -56,6 +56,9 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                                 particle['Properties']['Lorentz']='Scalar'
                             print("**********")
                             sons=re.sub('conj\[(\w+)\]',r'\1', fp[2] ).split('::')
+                            if len(sons)>1:
+                                particle['Properties']['multiplet']=[s.strip() for s in sons]
+
                             print(fp[2],sons)
                             for s in sons:
                                 print(s)
@@ -305,6 +308,7 @@ def rotations_to_particles(rotations,key='EWSB',lr='',sep='',DEBUG=False):
                             if lr:
                                 particle['Definition']='WeylFermionAndIndermediate'
                                 particle['Properties']['Chirality']=lr
+                                particle['Properties']['Lorentz']='WeylFermion'
                             if bd.get('Lorentz')=='Vector':
                                 particle['Definition']='EWSB'
                                 particle['Block']='GaugeSector'
