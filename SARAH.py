@@ -3,6 +3,8 @@ import cmdlike as cmd
 from collections import OrderedDict
 import json
 import numpy as np
+import copy
+
 
 def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
     '''
@@ -381,18 +383,15 @@ def get_Lorentz(field,particles):
         Y=None
     return Y
 
-def get_higgs_vev(smdict,k,particles):
+
+def get_higgs_vev(H,particles):
     '''
     Get the vev associated to the Yukawa coupling
     in `smdict` with Description `k`
     '''
-    try:
-        H=smdict.get(k).get('Higgs')
-    except AttributeError:
-        H=''
     if H:
         H0=get_H0(H,particles)
-        hh=get_hh(H0)
+        hh=get_hh(H0,particles)
         if not hh.empty:
             v=hh.get('Properties').apply(lambda d: d.get('vev')).loc[0]
     else:
@@ -449,18 +448,17 @@ def get_H0(H,particles):
     #Get doublet components
     if Hs.shape[0]==2:
         # extract neutral component
-        for Hf in Hs.get('Field'):
-            H0s=particles[particles.get('Parents')==Hf].reset_index(drop=True)
-            if not H0s.get('Properties').empty:
-                return H0s
-        
-def get_hh(H0):
+        Hs=particles[particles['Parents']==H]
+        H0s=Hs[Hs.get('Properties').apply(lambda d: d.get('ElectricCharge'))==0].reset_index(drop=True)
+        if not H0s.get('Properties').empty:
+            return H0s
+def get_hh(H0,particles):
     "H0 is a dataframe"
-    if not H0.empty:
-        return H0[H0.get('Properties').apply(lambda d: d.get('CP')=='Real')].reset_index(drop=True)
+    hh=particles[particles.get('Parents')==H0.loc[0,'Field']]
+    if not hh.empty:
+        return hh[hh.get('Properties').apply(lambda d: d.get('CP')=='Real')].reset_index(drop=True)
     else:
-        return pd.DataFrame()
-    
+        return pd.DataFrame()            
 
 #SPHENO Definitions
 
@@ -597,3 +595,27 @@ def to_SPheno(SP,file,dictentries=['DefaultInputValues']):
                         f.write('{}[{}]={};\n\n'.format(i,k,to_math_list( SP.loc[i,'Properties'][k] )    
                               ))
     f.close()
+
+def to_defintions(dpp,symbol='Field'):
+    dppc=copy.deepcopy(dpp)
+    PPDefinitions={}
+    for k  in list(set( [d.get('Definition') for d in dppc] )):
+        if k==None:
+            PPDefinitions.update({'Properties':{}})
+            [d.update({'Definition':'Properties'}) for d in dppc]
+        else:
+            PPDefinitions.update({k:{}})
+            
+    for d in dppc:
+        #print(d.get(symbol))
+        PPDefinitions[d.get('Definition')].update(
+                                          {d.get(symbol): {}}
+                                                       )
+        if d.get('Description'):
+            PPDefinitions[d.get('Definition')][d.get(symbol)].update(
+                   {'Description':d.get('Description')})
+        ud=d.get('Properties').get('update_Description')
+        if ud:
+            PPDefinitions[d.get('Definition')][d.get(symbol)].update(
+                  ud )
+    return PPDefinitions    
