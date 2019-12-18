@@ -33,7 +33,6 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                     except 'KeyError':
                         fp=[]
                     if len(fp)>0:
-                        print(g.groups(),Field,len(fp))
                         particle['Field']=fp[0].strip()
                         particle['Parents']=None
                         particle['Properties']={}
@@ -45,7 +44,6 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                         particle['Properties']['Coupling']=fp[3]
                         particle['Properties']['SSB']=fp[3]
                         particle['Properties']['Lorentz']='Vector'
-                        print(particle)
                     else: 
                         if len(fp)>=6:
                             particle['Properties']['NF']=fp[1].strip()
@@ -56,14 +54,11 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                                 particle['Properties']['Lorentz']='WeylFermion'
                             elif Field=='ScalarFields':
                                 particle['Properties']['Lorentz']='Scalar'
-                            print("**********")
                             sons=re.sub('conj\[(\w+)\]',r'\1', fp[2] ).split('::')
                             if len(sons)>1:
                                 particle['Properties']['multiplet']=[s.strip() for s in sons]
 
-                            print(fp[2],sons)
                             for s in sons:
-                                print(s)
                                 particleson={}
                                 particleson['Properties']={}
                                 particleson['Field']=s.strip()
@@ -76,7 +71,6 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                                 particleson['Parents']=particle['Field']
                                 particleson['Properties']['NF']=particle['Properties']['NF']
                                 particlessons=particlessons+[particleson]
-                            print("**********")
 
                     particles.append(particle)
     particles=particles+particlessons
