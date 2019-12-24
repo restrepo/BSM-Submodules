@@ -722,7 +722,157 @@ def get_sm_DefaultInputValues(parameters,sci,sciIN):
         return d
 
 
+def get_WeylFermion_Descriptions(p):
+    p.get('Properties')['update_Description']={'LaTeX' : get_weylfermion_LaTeX( p.get('Field') )}
+    return p
 
+def get_4Spinor_Descriptions(particle,particles):
+    """
+    Function which that take the dictionary particle and adds: 
+    'Description' or 'Properties' -> 'updata_Description'
+    To the particle with 'Field' some 4Spinor
+    """
+    p=particle
+    gprt=particles.loc[ p.get('Parents') ]
+    if gprt[0].get('rotation'):
+        gprt=particles.loc[gprt[0].get('Parents')]
+    cmpt=gprt[0].get('Field')
+    gprt=particles.loc[gprt[0].get('Parents')]
+    if get_abs_groups( gprt[0].get('Properties').get('Groups'), u1_abs='1/6',su2='2',su3_abs='3' ):
+        if cmpt==gprt[0].get('Properties').get('multiplet')[0]:
+            p['Description']='Up-Quarks'
+        else:
+            p['Description']='Down-Quarks'
+    if get_abs_groups( gprt[0].get('Properties').get('Groups'), u1_abs='1/2',su2='2',su3_abs='1' ):
+        if cmpt==gprt[0].get('Properties').get('multiplet')[0]:
+            p['Description']='Neutrinos'
+        else:
+            p['Description']='Leptons'
+    return p
+
+def get_gauge_vectors_Descriptions(p,particles,
+                di={'U[1]' :{'Description':'B-Boson' ,'Ghost':'B-Boson Ghost' },
+                    'SU[2]':{'Description':'W-Bosons','Ghost':'W-Boson Ghost'},
+                    'SU[3]':{'Description':'Gluon'   ,'Ghost':'Gluon Ghost'}}):
+    gr=p.get('Properties').get('Group').strip()
+    if di.get( gr  ):
+        p['Description']=di.get(gr).get('Description')
+    return p
+
+def get_ghosts(p,particles,
+                di={'U[1]' :{'Description':'B-Boson' ,'Ghost':'B-Boson Ghost' },
+                    'SU[2]':{'Description':'W-Bosons','Ghost':'W-Boson Ghost'},
+                    'SU[3]':{'Description':'Gluon'   ,'Ghost':'Gluon Ghost'}}):
+    gr=p.get('Properties').get('Group').strip()
+    if di.get( gr  ):
+        p=particles.apply_filter(lambda d: d.get('Description')==di.get(gr).get('Ghost'))[0]
+        return p
+    else:
+        return {}
+    
+def get_boson_vectors_Descriptions(p,particles,
+                      di={'B-Boson':'Pothon',
+                          'W-Bosons':{1:'W+ - Boson',3:'Z-Boson'}}):
+    pP=p.get('Parents')
+    abelian=pP.split('[')
+    BV=particles.loc[abelian[0]]
+    dscr=BV[0].get('Description')
+    la=len(abelian)
+    if la==1:
+        get_dscrp=di.get(dscr)
+    else:
+        try:
+            i=eval( re.search('\[\s*([0-9]+)\s*\]',pP).groups()[0] )
+        except (IndexError,AttributeError):
+            i=-1
+            
+        get_dscrp=di.get(dscr).get(i)
+
+    if get_dscrp:
+        p['Description']=get_dscrp
+
+    return p    
+
+def get_IntermediateScalars_Definitions(p):
+    if p.get('Properties').get('Groups')[0].find('-')==-1:
+        p.get('Properties')['charge']=['Charged','Neutral']
+    else:
+        p.get('Properties')['charge']=['Neutral','Charged']
+
+    p.get('Properties')['update_Description']={
+                                               'PDG'       : [0],
+                                               'Width'     : 0,
+                                               'Mass'      : 'Automatic',
+                                               'LaTeX'     : p.get('Field'),
+                                               'OutputName': p.get('Field') }
+    return p
+
+def get_GaugeEScalars_Definitions(p,H):
+    if H.size()==1:
+        #Standard model Higgs
+        p.get('Properties')['update_Description']={'PDG'  :[0],
+                                               'Width':0,
+                                               'Mass' : 'Automatic',
+                                               'OutputName' : p.get('Field')
+                                               }
+
+        l=H[0].get('Properties').get('multiplet')
+        Hp0=l.index(p.get('Field'))
+        if H[0].get('Properties').get('charge')[Hp0]=='Charged':
+            p.get('Properties')['ElectricCharge']=1
+            p.get('Properties')['update_Description']['FeynArtsNr']=2
+            p.get('Properties')['update_Description']['LaTeX']='H^+'
+        elif H[0].get('Properties').get('charge')[Hp0]=='Neutral':
+            p.get('Properties')['ElectricCharge']=0
+            p.get('Properties')['update_Description']['FeynArtsNr']=1
+            p.get('Properties')['update_Description']['LaTeX']='H^0'
+    return p
+
+def get_EWSBScalars_Definitions(p,particles):
+    if p.get('Properties').get('CP')=='Real':
+        pp=particles.apply_filter(lambda d: d.get('Description')=='Higgs')
+        try:
+            pphh=pp[0]
+        except IndexError:
+            pphh={}
+        if pphh:
+            p['Description']=pphh.get('Description')
+            p.get('Properties')['update_Description']=pphh.get('Properties').get(
+                                                            'update_Description')
+    elif p.get('Properties').get('CP')=='Imaginary':
+        pp=particles.apply_filter(lambda d: d.get('Description')==
+                                                        'Pseudo-Scalar Higgs')
+        try:
+            ppA0=pp[0]
+        except IndexError:
+            ppA0={}
+        if ppA0:
+            p['Description']=ppA0.get('Description')
+            p.get('Properties')['update_Description']=ppA0.get('Properties').get(
+                                                            'update_Description')
+        
+    return p    
+
+def get_EWSBScalars(p,H,particles):
+    '''
+    Only Works if 
+    H=self.update_particles(get_IntermediateScalars_Definitions,
+                               Definition='WeylFermionAndIndermediate',
+                               Lorentz='Scalar').size()==1
+    '''
+    pp={}
+    if H.size()==1:
+        kk=particles.apply_filter(lambda d: d.get('Name')=='Charged Higgs')
+        pp=kk[0]
+        Hp=H[0].get('Properties').get('charge').index('Charged')
+        try:
+            Hpname=H[0].get('Properties').get('multiplet')[Hp]
+            pp['Field']  = Hpname
+            pp['Parents']= Hpname
+        except IndexError:
+            pass
+    return pp            
+    
 #================
 def _to_dict(df):
     return df.to_dict(orient='records')
