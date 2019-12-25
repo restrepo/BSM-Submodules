@@ -1051,7 +1051,8 @@ class SARAH:
                       path="./SARAH/Models/",
                       particles ='JSON/fullparticlesnames.json',
                       parameters='JSON/fullparametersnames.json',
-                      SPheno='JSON/fullSPhenonames.json'):
+                      SPheno='JSON/fullSPhenonames.json',
+                      output_dir=''):
         '''
         LOAD predefined particles
         TODO: Include singlet scalar and other multiplets
@@ -1083,10 +1084,13 @@ class SARAH:
         if not re.search('\/$',path):
             path=path+'/'
         mfile='{}.m'.format(model.split('/')[-1])
-        MODEL_PATH='{}{}/{}'.format(path,model,mfile)
-        f=open(MODEL_PATH,'r')
+        self.model_path='{}{}/{}'.format(path,model,mfile)
+        f=open(self.model_path,'r')
         self.model_file=f.read()
         f.close()
+        self.model_dir=path
+        self.model_name=model
+        self.model_file_name=mfile
         self.DEFINITION=get_EWSB(self.model_file,self.NAME,self.KEY)
         self.Lagrangian_Couplings={
             'Down-Yukawa-Coupling':{'Lorentz': ['Scalar', 'WeylFermion', 'WeylFermion'],
