@@ -7,6 +7,9 @@ import cmdlike as cmd
 from collections import OrderedDict
 import numpy as np
 
+def fC(p):
+    p['Field']=p['Field']+'C'
+    return p
 
 def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
     '''
