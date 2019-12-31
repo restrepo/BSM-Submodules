@@ -417,7 +417,10 @@ def to_SPheno(SP,file,dictentries=['DefaultInputValues']):
         if type(SP.loc[i,'Properties'])==bool:
             f.write('{} = {};\n\n'.format(i,SP.loc[i,'Properties']))
         elif type(SP.loc[i,'Properties'])==list:
-            f.write('{} = {};\n\n'.format(i,to_math_list(SP.loc[i,'Properties'])  ))
+            ll=to_math_list(SP.loc[i,'Properties'])
+            if i=='RenConditionsDecays':
+                ll=re.sub('([A-Z]\w+)\{\s*(\w+)\s*\}',r'\1[\2]',ll)
+            f.write('{} = {};\n\n'.format(i,ll ))
         elif type(SP.loc[i,'Properties'])==dict:
             d=SP.loc[i,'Properties']
             if i in dictentries:
@@ -432,7 +435,7 @@ def to_SPheno(SP,file,dictentries=['DefaultInputValues']):
                         f.write('{}[{}]={};\n\n'.format(i,k,to_math_list( SP.loc[i,'Properties'][k] )    
                               ))
     f.close()
-
+    
 def to_defintions(dpp,symbol='Field'):
     dppc=copy.deepcopy(dpp)
     PPDefinitions={}
