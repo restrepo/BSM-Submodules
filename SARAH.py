@@ -19,6 +19,11 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
     * NAME[KEY] dictionary 
     '''
     #i=1
+    list_real_scalars=cmd.grep(
+                  '^\s*RealScalars',fdotm).split(
+                  '=')[-1].strip().split(
+                  ';')[0].replace('{','').replace('}','').split(',')
+    list_real_scalars=[s.strip() for s in list_real_scalars if s]
     #Field=Fields[i]
     for Field in Fields:
         for f in cmd.grep(Field,fdotm).split('\n'):
@@ -59,6 +64,8 @@ def get_particles(fdotm,Fields,NAME,KEY,particles,particlessons):
                                 particle['Properties']['Lorentz']='WeylFermion'
                             elif Field=='ScalarFields':
                                 particle['Properties']['Lorentz']='Scalar'
+                                if particle['Field'] in list_real_scalars:
+                                    particle['Properties']['Real']=True                                
                             sons=re.sub('conj\[(\w+)\]',r'\1', fp[2] ).split('::')
                             if len(sons)>1:
                                 particle['Properties']['multiplet']=[s.strip() for s in sons]
