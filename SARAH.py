@@ -997,18 +997,22 @@ class SARAH:
             pattern_start='='
             pattern_end=';'
             only_extract=True
+            #Get Lagrangian parts from lag (typically 'AddHC': True and False)
             l=extract_code_block(fdotm,pattern,pattern_start,pattern_end,only_extract)
             fl=list(l.values())[0]
 
-            fll=re.sub('[\+\-]','::',
-                re.sub('\)*\s*\t*\;\s*\t*$','',
-                    re.sub( '^\s*\t*[\-\+\(]+','',
-                    fl))).split('::')
+
+            fll=re.sub('[\+\-]','::', # extract each term
+                re.sub('\)*\s*\t*\;\s*\t*$','', #remove final semicolon
+                    re.sub( '^\s*\t*[\-\+\(]+','', #remove operators from beginnng
+                    fl))).split('::') #creates a list with Lagrangian terms
 
             for x in fll:
-                flli=re.sub('^\s*\t*', '',x)
+                flli=re.sub('^\s*\t*', '',x) #strip initial empty spaces
                 dd=re.sub('([\w\\\/\s\[\]]+)\s+([\w\[\]\.]+)',r'\1::\2',  flli).split('::')
-                d[dd[0].strip()]=dd[1].strip()
+                #coupling cleaned at the end
+                coupling=dd[0].strip() 
+                d[coupling]=dd[1].strip()                
 
         dd={}
         for k in d.keys():
@@ -1019,16 +1023,20 @@ class SARAH:
                    'Lorentz':[ get_Lorentz(f,self.modelparticles) for f in prtcls]
                   }
 
+        #coupling cleanning
         for k in dd.keys():
+            #Clean keys
+            #Remove initial constant factor (includen fractional ones)
             ck=re.sub('^[0-9\/\s]+',r'',k)
+            #Remove fractional factors at the end like lambda/2
+            ck=ck.split('/')[0].strip()
             if ck!=k:
                 vk=dd.pop(k)
                 dd[ck]=vk
 
         self.Lagrangian=dd
         return dd    
-    
-    
+        
     def parse_vevs_particles(self):
         '''3.a)
         '''
