@@ -232,9 +232,12 @@ def to_math(SM,file,definitions='ParticleDefinitions',
     If PROPERTY=Properties, it is ignored in the output file.
     '''
     f=open(file,'w')
-    for c in SM.columns:
+    for c in SM.columns:        
         if definitions=='ParticleDefinitions':
-            f.write('{}[{}] = {{\n'.format(definitions,c))
+            if c!='WeylFermionAndIndermediate':
+                f.write('{}[{}] = {{\n'.format(definitions,c))
+            else:
+                f.write('{} = {{\n'.format(c))
         else:
             f.write('{} = {{\n'.format(definitions))
 
