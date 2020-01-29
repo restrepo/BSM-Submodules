@@ -232,7 +232,7 @@ def to_math(SM,file,definitions='ParticleDefinitions',
     If PROPERTY=Properties, it is ignored in the output file.
     '''
     f=open(file,'w')
-    for c in SM.columns:        
+    for c in SM.columns:
         if definitions=='ParticleDefinitions':
             if c!='WeylFermionAndIndermediate':
                 f.write('{}[{}] = {{\n'.format(definitions,c))
@@ -600,7 +600,7 @@ def get_weylfermion_LaTeX(s):
     if len(s)==2 and re.search('[LR]$',s):
         sini=s[0]
         if sini=='v':
-            sini=r'\nu'
+            sini=r'\\nu'
         s=sini+'_'+s[1]
     return s
 
