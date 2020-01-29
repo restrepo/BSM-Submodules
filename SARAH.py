@@ -1127,6 +1127,13 @@ class SARAH:
                 ).apply_filter(
                    lambda p: p.get('Properties').get('Lorentz').strip()==Lorentz)
         return Particles( DS.apply(f,args=args ) )
+    
+    def update_particles_new(self,f,Definition='EWSB',Lorentz='DiracSpinor',args=()):
+        DS=self.modelparticles.apply_filter(
+                   lambda p: p.get('Definition')==Definition
+                ).apply_filter(
+                   lambda p: p.get('Properties').get('Lorentz').strip()==Lorentz)
+        return DS.apply(f,args=args )
         
     def add_parameter(self,Name):
         # update predefined dataframes for particles, parameters and SPheno
