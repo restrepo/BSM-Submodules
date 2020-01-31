@@ -596,6 +596,7 @@ def get_EWSB(model,NAME='DEFINITION',KEY='EWSB'):
     DEFINITION['EWSB']['DiracSpinors']=dsbd['DiracSpinors']
     return DEFINITION
 
+#LaTeX related
 def get_weylfermion_LaTeX(s):
     if len(s)==2 and re.search('[LR]$',s):
         sini=s[0]
@@ -603,6 +604,63 @@ def get_weylfermion_LaTeX(s):
             sini=r'\\nu'
         s=sini+'_'+s[1]
     return s
+
+def symbol_to_OutputName(s):
+    '''
+    Reduce possible long symbol to OutputName with max 6 characters
+    '''
+    onm=''
+    max_length=5
+    try:
+        sl=re.search('([A-Za-z]+)([0-9]*)([a-zA-Z0-9]*)',s).groups()
+    except AttributeError:
+        sl=[]
+    if sl:
+        sl=[l for l in sl if l]
+        onm=sl[0]
+        if len(sl)>=2:
+            #Open space to include new info
+            onm=onm[:max_length-1]
+            onm=onm+sl[1]
+        if len(sl)==3:
+            #Open space to include new info
+            onm=onm[:max_length-1]
+            onm=onm+sl[2]
+    return onm[:max_length]
+
+def symbol_to_TeX(s,script='^',
+                      TeX=['mu','nu','alpha','beta','lambda',
+                                                      'Lambda']):
+    '''
+    Convert simple symbol to TeX.
+    If the symbold end up with a number it is interpreted as a superscript.
+    To interpret as a subscript set:
+       `script="_"`
+    Example: 
+      `s=mu2` is converted to `\\mu^2`
+      `s=Ye22` is converted to `Y_e^{22}`
+    '''
+    s=s.replace('\\','\\\\').replace('[','').replace(']','')
+    try:
+        sl=re.search('(^[A-Za-z]+)([0-9]*)',s).groups()
+    except AttributeError:
+        sl=[]
+    if sl:
+        #Drop None elements
+        sl=[l for l in sl if l]
+        if sl[0] in TeX:
+            ltxs='\\\\'+sl[0]
+        elif len(sl[0])==2:
+            ltxs='{}_{}'.format(sl[0][0],sl[0][1])
+        if len(sl)==2:
+            ltxs=ltxs+script
+            if len(sl[1])==1:
+                ltxs=ltxs+sl[1]
+            else:
+                ltxs=ltxs+'{%s}' %sl[1]
+    else:
+        ltxs=s
+    return ltxs
 
 def get_abs_groups(grps=['1/2','2','1'],u1_abs='1/2',su2='2',su3_abs='1'):
     sgrps=str(grps).replace(' ','')
