@@ -646,6 +646,7 @@ def symbol_to_TeX(s,script='^',
     except AttributeError:
         sl=[]
     if sl:
+        ltxs=s
         #Drop None elements
         sl=[l for l in sl if l]
         if sl[0] in TeX:
