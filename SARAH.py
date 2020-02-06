@@ -807,6 +807,21 @@ def get_sm_DefaultInputValues(parameters,sci,sciIN):
             d={}
         return d
 
+def append_Lagrangian_to_parameters(Lagrangian,parameters):
+    '''
+    Convert a based Lagragian dictionary into
+    parameters and append to `parameters` list
+    '''
+    for k in Lagrangian:
+        d={}
+        d['Description']=k
+        d['Name']=d['Description']
+        d['Properties']=Lagrangian[k]
+        d['Symbol']=d.get('Properties').get('Coupling')
+        d['Class']='Lagrangian'
+        kk=parameters.append(d)
+    return parameters
+    
 #================
 def _to_dict(df):
     return df.to_dict(orient='records')
