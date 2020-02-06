@@ -628,7 +628,7 @@ def symbol_to_OutputName(s):
             onm=onm+sl[2]
     return onm[:max_length]
 
-def symbol_to_TeX(s,script='^',
+def symbol_to_TeX(s,script='^',extra_script='_',
                       TeX=['mu','nu','alpha','beta','lambda',
                                                       'Lambda']):
     '''
@@ -637,12 +637,14 @@ def symbol_to_TeX(s,script='^',
     To interpret as a subscript set:
        `script="_"`
     Example: 
-      `s=mu2` is converted to `\\mu^2`
-      `s=Ye22` is converted to `Y_e^{22}`
+      `s=mu2`  → `\\\\mu^2`
+      `s=Ye22` → `Y_e^{22}`
+      `s=Y22e` → `Y^{22}_e`
+      `s=mu:s` → `\\\\mu_s`
     '''
     s=s.replace('\\','\\\\').replace('[','').replace(']','')
     try:
-        sl=re.search('(^[A-Za-z]+)([0-9]*)',s).groups()
+        sl=re.search('(^[A-Za-z]+)([0-9\:]*)([A-Za-z]*)',s).groups()
     except AttributeError:
         sl=[]
     if sl:
@@ -653,12 +655,21 @@ def symbol_to_TeX(s,script='^',
             ltxs='\\\\'+sl[0]
         elif len(sl[0])==2:
             ltxs='{}_{}'.format(sl[0][0],sl[0][1])
-        if len(sl)==2:
+        elif len(sl[0])>0:
+            ltxs=sl[0]
+        if len(sl)>=2 and sl[1].find(':')==-1:
             ltxs=ltxs+script
             if len(sl[1])==1:
                 ltxs=ltxs+sl[1]
             else:
                 ltxs=ltxs+'{%s}' %sl[1]
+        if len(sl)==3:
+            ltxs=ltxs+extra_script
+            if len(sl[2])==1:
+                ltxs=ltxs+sl[2]
+            else:
+                ltxs=ltxs+'{%s}' %sl[2]
+
     else:
         ltxs=s
     return ltxs
