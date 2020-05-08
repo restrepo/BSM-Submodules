@@ -1,5 +1,5 @@
 '''
-Implementation of usual commands in python way
+Implementation of usual commands in Python way
 '''
 def grep(pattern,multilinestring):
     '''Grep replacement in python
