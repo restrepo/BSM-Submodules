@@ -89,6 +89,18 @@ git commit -am 'Updated Submodules tags'
 git push origin master
 ```
 
+Fix submodule tag
+------------------------------------------------------------------------------
+See: https://devconnected.com/how-to-checkout-git-tags/
+
+After clone a clean copy of the submodule, e.g. https://github.com/restrepo/SARAH
+```bash
+git checkout tags/v4.12.3 -b v4.12.3_branch
+```
+Follow the previos steps to [update](https://github.com/restrepo/BSM-Submodules#updating-submodules) until before the commit
+```bash
+```
+
 Installation
 ------------------------------------------------------------------------------
 Everything could be installed after the git clone. To choose an specific release version,
