@@ -69,10 +69,16 @@ tar -zxvf SBM_vN.N.tar.gz -C SBM --strip-components=1
 cd SBM
 find . -type d -empty -not -path "./.git/*" -exec touch {}/.gitkeep \;
 git add .
-git commit -am 'vN.N'
+git commit -am 'vN.N.N'
 git push origin master
 ```
-In addtion a tagged release is created in the SBM repo. One specific tagged version
+In addtion a tagged release is created in the SBM repo, or locally for some commit_HASH:
+```bash
+git tag -am "SBM-N.N.N.tar.gz" vN.N.N commit_HASH
+git push origin vN.N.N
+```
+
+One specific tagged version
 can be used after [use](https://devconnected.com/how-to-checkout-git-tags/):
 ```
 git checkout tags/v4.12.3 -b v4.12.3_branch
