@@ -73,9 +73,8 @@ git commit -am 'vN.N'
 git push origin master
 ```
 In addtion a tagged release is created in the SBM repo. One specific tagged version
-can be used after use:
+can be used after [use](https://devconnected.com/how-to-checkout-git-tags/):
 ```
-#git checkout -b vN.N
 git checkout tags/v4.12.3 -b v4.12.3_branch
 ```
 inside the specific submodule.
@@ -95,15 +94,22 @@ Fix submodule tag
 Tag is just an alias to an specific commit. We need to recover that commit, fix it creating a new branch,
 deleting the old tag, and creating a new tag but pointing to a commit inside that new branch
 
-See: https://devconnected.com/how-to-checkout-git-tags/
-
-After clone a clean copy of the submodule, e.g. https://github.com/restrepo/SARAH
+After clone a clean copy of the submodule, e.g. https://github.com/restrepo/SARAH,
+checkout to the [specific tag](https://devconnected.com/how-to-checkout-git-tags/)
 ```bash
 git checkout tags/v4.12.3 -b v4.12.3_branch
 ```
-Follow the previos steps to [update](https://github.com/restrepo/BSM-Submodules#updating-submodules) until before the commit
-```bash
+Make all the necessary fixes and push the changes to the new remote `v4.12.3_branch` branch.
+
+Now, the old tag need to be deleted both locally an remotely and recreted with the last commit to that branch
 ```
+git push origin --delete v4.12.3
+git tag -d v4.12.3
+git tag -a v4.12.3 2f1e527b
+git push origin v4.12.3
+```
+
+
 
 Installation
 ------------------------------------------------------------------------------
