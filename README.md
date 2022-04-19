@@ -79,9 +79,12 @@ git push origin vN.N.N
 ```
 and saving the "Draft" in the releases of GitHub.
 
-One specific tagged version
+### Switch to an specific tag
+
+One specific tagged version, which is no necessarily a release,
 can be used after [use](https://devconnected.com/how-to-checkout-git-tags/):
 ```
+git tag -l #list tags 
 git checkout tags/v4.12.3 -b v4.12.3_branch
 ```
 inside the specific submodule.
