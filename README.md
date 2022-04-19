@@ -77,6 +77,7 @@ In addtion a tagged release is created in the SBM repo, or locally for some comm
 git tag -am "SBM-N.N.N.tar.gz" vN.N.N commit_HASH
 git push origin vN.N.N
 ```
+and saving the "Draft" in the releases of GitHub.
 
 One specific tagged version
 can be used after [use](https://devconnected.com/how-to-checkout-git-tags/):
