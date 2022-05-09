@@ -1,6 +1,6 @@
 Off[General::spell]
 
-Model`Name      = "Scotogenic";
+Model`Name      = "radinuscotogenic";
 Model`NameLaTeX = "Scotogenic Model";
 Model`Authors   = "N. Rojas, A. Vicente";
 Model`Date      = "2015-04-28";
