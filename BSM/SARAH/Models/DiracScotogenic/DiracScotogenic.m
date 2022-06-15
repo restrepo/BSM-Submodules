@@ -47,17 +47,14 @@ NameOfStates={GaugeES, EWSB};
 
 (* ----- Before EWSB ----- *)
 
-DEFINITION[GaugeES][LagrangianInput]= {
-	{LagHC, {AddHC->True}},
-	{LagNoHC,{AddHC->False}}
+DEFINITION[GaugeES][LagrangianInput]= 
+{
+  {LagFer   ,      {AddHC->True}},
+  {LagH     ,      {AddHC->False}}
 };
 
-
-LagNoHC = -mu2 conj[H].H - 1/2 \[Lambda] conj[H].H.conj[H].H;
-LagHC =  -(Yd conj[H].d.q + Ye conj[H].e.l + Yu u.q.H);
-
-
-			  		  
+LagH     = -(- mH2 conj[H].H     + 1/2 lambda1 conj[H].H.conj[H].H );
+LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q;
 
 (* Gauge Sector *)
 
