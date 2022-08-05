@@ -1,0 +1,31 @@
+{
+  "SPheno": {
+    "Command": "/home/restrepo/tmp/BSM-Submodules/SPHENO/bin/SPhenoSSDM",
+    "InputFile": "LesHouches.in.SSDM",
+    "OutputFile": "SPheno.spc.SSDM"
+  },
+
+  "MicrOmegas": {
+     "Command": "/home/restrepo/tmp/BSM-Submodules/micromegas/SSDM/CalcOmega_MOv5",
+     "OutputFile": "omg.out",
+     "DM_Candidate": 6666635
+  },
+
+  "HiggsBounds": {
+    "Command": "/home/fnstaub/Data/HEP_Software/HiggsBounds-4.3.1/HiggsBounds",
+    "Options": "LandH effC 3 1",
+    "OutputFile": "HiggsBounds_results.dat"
+  },
+
+  "HiggsSignals": {
+    "Command": "/home/fnstaub/Data/HEP_Software/HiggsSignals-1.3.2/HiggsSignals",
+    "Options":"latestresults peak 2 effC 3 1",
+    "OutputFile": "HiggsSignals_results.dat"
+  },
+
+  "Vevacious": {
+    "Path": "/home/fnstaub/Documents/Uni/Work/Vevacious/Vevacious-1.2.01/",
+    "Command": "./bin/Vevacious.exe --input=bin/VevaciousInitialization_stop.xml --should_Tunnel=False"
+  }
+
+}
