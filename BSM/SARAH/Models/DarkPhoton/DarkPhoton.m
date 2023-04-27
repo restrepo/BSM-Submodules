@@ -27,7 +27,7 @@ Global[[1]] = {Z[2], Z2};
 Gauge[[1]]={B,   U[1], hypercharge, g1,False, 1};
 Gauge[[2]]={WB, SU[2], left,        g2,True , 1};
 Gauge[[3]]={G,  SU[3], color,       g3,False, 1};
-Gauge[[4]]={Bp,  U[1], U1D,       g1p, False,1};
+Gauge[[4]]={Bp,  U[1], dark,        g1p, False,1}; (* False as in the B-L implementation *)
 
 (* Matter Fields *)
 
