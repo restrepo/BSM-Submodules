@@ -27,19 +27,24 @@ Global[[1]] = {Z[2], Z2};
 Gauge[[1]]={B,   U[1], hypercharge, g1,False, 1};
 Gauge[[2]]={WB, SU[2], left,        g2,True , 1};
 Gauge[[3]]={G,  SU[3], color,       g3,False, 1};
-Gauge[[4]]={Bp,  U[1], U1D,       g1p, False,1};
+(* name of the charge needs at least 3 characters *)
+Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L Model *)
+
+(* Charges *)
+{Xq,Xl,Xd,Xu,Xe,Xh,Xbi}={0,0,0,0,0,0,1};
+
 
 (* Matter Fields *)
 
-FermionFields[[1]] = {q, 3, {uL, dL},     1/6, 2,  3, 0, 1};  
-FermionFields[[2]] = {l, 3, {vL, eL},    -1/2, 2,  1, 0, 1};
-FermionFields[[3]] = {d, 3, conj[dR],     1/3, 1, -3, 0, 1};
-FermionFields[[4]] = {u, 3, conj[uR],    -2/3, 1, -3, 0, 1};
-FermionFields[[5]] = {e, 3, conj[eR],       1, 1,  1, 0, 1};
-
-ScalarFields[[1]] =  {H, 1, {Hp, H0},     1/2, 2,  1, 0, 1};
-ScalarFields[[2]] =  {bi,  1, BiD,          0, 1,  1, 1, 1};
-
+FermionFields[[1]] = {q, 3, {uL, dL},     1/6, 2,  3, Xq, 1};  
+FermionFields[[2]] = {l, 3, {vL, eL},	 -1/2, 2,  1, Xl, 1};
+FermionFields[[3]] = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
+FermionFields[[4]] = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
+FermionFields[[5]] = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
+						         
+ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
+ScalarFields[[2]] =  {bi,  1, BiD,	    0, 1,  1, Xbi, 1};
+						        
 
 (*----------------------------------------------*)
 (*   DEFINITION                                 *)
