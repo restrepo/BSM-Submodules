@@ -1,6 +1,6 @@
 Off[General::spell]
 
-Model`Name = "DarkPhoton";
+Model`Name = "Zprime";
 Model`NameLaTeX ="Standard Model with Z2 and Dark Symmetry";
 Model`Authors = "F.Staub";
 Model`Date = "2014-11-06";
@@ -31,17 +31,29 @@ Gauge[[3]]={G,  SU[3], color,       g3,False, 1};
 Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L Model *)
 
 (* Charges *)
-{Xq,Xl,Xd,Xu,Xe,Xh,Xbi}={0,0,0,0,0,0,1};
+(* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
+{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};
+(* anomaly solution *)
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0}
 
 
 (* Matter Fields *)
 
-FermionFields[[1]] = {q, 3, {uL, dL},     1/6, 2,  3, Xq, 1};  
-FermionFields[[2]] = {l, 3, {vL, eL},	 -1/2, 2,  1, Xl, 1};
-FermionFields[[3]] = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
-FermionFields[[4]] = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
-FermionFields[[5]] = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
-						         
+FermionFields[[1]]  = {q, 3, {uL, dL},     1/6, 2,  3, Xq, 1};  
+FermionFields[[2]]  = {l, 3, {vL, eL},	 -1/2, 2,  1, Xl, 1};
+FermionFields[[3]]  = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
+FermionFields[[4]]  = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
+FermionFields[[5]]  = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
+(* Odd left singlet fermions n,p,r,s,t,v,w,x,y,z *)
+FermionFields[[6]]  = {n, 2, nL,	    0, 1,  1, Xn, -1};
+FermionFields[[7]]  = {p, 2, conj[pR],	    0, 1,  1, Xp, -1};
+FermionFields[[8]]  = {r, 1, rL,	    0, 1,  1, Xr, -1}
+FermionFields[[9]]  = {s, 1, conj[sR],	    0, 1,  1, Xs, -1};
+FermionFields[[10]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
+FermionFields[[11]] = {w, 1, conj[wR],	    0, 1,  1, Xw, -1};
+
+
+ 						         
 ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
 ScalarFields[[2]] =  {bi,  1, BiD,	    0, 1,  1, Xbi, 1};
 						        
@@ -57,12 +69,14 @@ NameOfStates={GaugeES, EWSB};
 DEFINITION[GaugeES][LagrangianInput]= 
 {
   {LagFer   ,      {AddHC->True}},
+  {LagSingFer,     {AddHC->True}},
   {LagH     ,      {AddHC->False}},
   {LagNoHCbi,      { AddHC->False}}
 };
 
 LagH     = -(mH2 conj[H].H     - 1/2 lambda1 conj[H].H.conj[H].H );
 LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q;
+LagSingFer = Ynp n.p.bi + Yrs r.s.conj[bi] + Ytv t.w.conj[bi];
 LagNoHCbi = -(MuP conj[bi].bi - L2 conj[bi].bi.conj[bi].bi - L3 conj[bi].bi.conj[H].H );
 
 
