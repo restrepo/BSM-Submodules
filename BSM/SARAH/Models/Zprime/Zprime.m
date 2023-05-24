@@ -58,19 +58,19 @@ If[Xn != 0 && Xp != 0,
    FermionFields[[nF]] = {p, nDG, conj[pR], 0, 1,  1, Xp, -1};
  ];
 (* Single family Dirac Fermion *)
-(*If[Xr != 0 and Xs != 0,*)
+If[Xr != 0 && Xs != 0,
    nF=nF+1;
    FermionFields[[nF]] = {r, 1, rL,	    0, 1,  1, Xr, -1};
    nF=nF+1;   
    FermionFields[[nF]] = {s, 1, conj[sR],   0, 1,  1, Xs, -1};
- (*];*)
+ ];
 (* Single family Dirac Fermion *)
-(*If[Xt != 0 and Xw != 0,*)
+If[Xt != 0 && Xw != 0,
    nF=nF+1;
    FermionFields[[nF]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
    nF=nF+1;   
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
- (*];*)
+ ];
 (* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
 (*
 nF=nF+1
