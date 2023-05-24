@@ -34,8 +34,8 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 (* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
 {Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};
 (* anomaly solution *)
-{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0}
-
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};
+nDG=2;
 
 (* Matter Fields *)
 
@@ -45,10 +45,13 @@ FermionFields[[3]]  = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
 FermionFields[[4]]  = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
 FermionFields[[5]]  = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
 (* Odd left singlet fermions n,p,r,s,t,v,w,x,y,z *)
-FermionFields[[6]]  = {n, 2, nL,	    0, 1,  1, Xn, -1};
-FermionFields[[7]]  = {p, 2, conj[pR],	    0, 1,  1, Xp, -1};
+(* Multi-generation Dirac Fermions -> Fix PDG numbers in particles.m *)
+FermionFields[[6]]  = {n, nDG, nL,	    0, 1,  1, Xn, -1};
+FermionFields[[7]]  = {p, nDG, conj[pR],	    0, 1,  1, Xp, -1};
+(* Single family Dirac Fermion *)
 FermionFields[[8]]  = {r, 1, rL,	    0, 1,  1, Xr, -1}
 FermionFields[[9]]  = {s, 1, conj[sR],	    0, 1,  1, Xs, -1};
+(* Single family Dirac Fermion *)
 FermionFields[[10]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
 FermionFields[[11]] = {w, 1, conj[wR],	    0, 1,  1, Xw, -1};
 
