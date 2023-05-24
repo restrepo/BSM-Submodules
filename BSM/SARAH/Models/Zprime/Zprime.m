@@ -31,11 +31,15 @@ Gauge[[3]]={G,  SU[3], color,       g3,False, 1};
 Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L Model *)
 
 (* Charges *)
-(* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
 {Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};
-(* anomaly solution *)
+
+(* anomaly solution: {d,i,r,a,c,0,0,m,a,j,o,r,a,n,a} *)
+(* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
 {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};
-nDG=2;
+(* [1, 1, 2, 3, -4, -4, -5, 6]	 [{'S': 2, 'psi': [(3, -5), (2, -4), (-4, 6), (1, 1)]}] *)
+(* {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};*)
+(* Generations of Dirac, Weyl and Majorana fermions *)
+{nDG,nWG,nMG}={2,2,2};
 
 (* Matter Fields *)
 
@@ -44,20 +48,40 @@ FermionFields[[2]]  = {l, 3, {vL, eL},	 -1/2, 2,  1, Xl, 1};
 FermionFields[[3]]  = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
 FermionFields[[4]]  = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
 FermionFields[[5]]  = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
-nF=6;
+nF=5;
 (* Odd left singlet fermions n,p,r,s,t,v,w,x,y,z *)
 (* Multi-generation Dirac Fermions -> Fix PDG numbers in particles.m *)
-FermionFields[[nF]]  = {n, nDG, nL,	    0, 1,  1, Xn, -1};
-FermionFields[[nF+1]]  = {p, nDG, conj[pR],	    0, 1,  1, Xp, -1};
+If[Xn != 0 && Xp != 0,
+   nF=nF+1;
+   FermionFields[[nF]] = {n, nDG, nL,	    0, 1,  1, Xn, -1};
+   nF=nF+1;
+   FermionFields[[nF]] = {p, nDG, conj[pR], 0, 1,  1, Xp, -1};
+ ];
 (* Single family Dirac Fermion *)
-nF=nF+2;
-FermionFields[[nF]]  = {r, 1, rL,	    0, 1,  1, Xr, -1}
-FermionFields[[nF+1]]  = {s, 1, conj[sR],	    0, 1,  1, Xs, -1};
+(*If[Xr != 0 and Xs != 0,*)
+   nF=nF+1;
+   FermionFields[[nF]] = {r, 1, rL,	    0, 1,  1, Xr, -1};
+   nF=nF+1;   
+   FermionFields[[nF]] = {s, 1, conj[sR],   0, 1,  1, Xs, -1};
+ (*];*)
 (* Single family Dirac Fermion *)
-nF=nF+2;
-FermionFields[[nF]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
-FermionFields[[nF+1]] = {w, 1, conj[wR],	    0, 1,  1, Xw, -1};
-
+(*If[Xt != 0 and Xw != 0,*)
+   nF=nF+1;
+   FermionFields[[nF]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
+   nF=nF+1;   
+   FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
+ (*];*)
+(* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
+(*
+nF=nF+1
+FermionFields[[nF]]  = {x, nWG, xL,	    0, 1,  1, Xx, -1};
+(* Single Majorana Fermion *)
+nF=nF+1
+FermionFields[[nF]]  = {y, 1, yL,	    0, 1,  1, Xy, -1}; (* try conj[yR] if errors *)
+(* Multi-generation Majorana Fermion *)
+nF=nF+1
+FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
+*)
 
  						         
 ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
