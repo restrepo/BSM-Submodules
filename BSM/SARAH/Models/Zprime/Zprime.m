@@ -114,7 +114,11 @@ DEFINITION[EWSB][DiracSpinors]={
  Fd ->{  DL, conj[DR]},
  Fe ->{  EL, conj[ER]},
  Fu ->{  UL, conj[UR]},
- Fv ->{  vL, 0}};
+ Fv ->{  vL, 0},
+ Fn ->{  nL, pR},
+ Fr ->{  rL, sR},
+ Ft ->{  tL, wR}
+};
 
 DEFINITION[EWSB][GaugeES]={
  Fd1 ->{  FdL, 0},

@@ -98,8 +98,32 @@ ParticleDefinitions[GaugeES] = {
       {Fd,   { Description -> "Down-Quarks"}},   
       {Fu,   { Description -> "Up-Quarks"}},   
       {Fe,   { Description -> "Leptons" }},
-      {Fv,   { Description -> "Neutrinos" }}                                                              
-        };    
+      {Fv,   { Description -> "Neutrinos" }},
+      {Fn,   { Description -> "Darkinos",
+	      PDG -> {1000001,1000002},
+	      PDG.IX -> {2000001,2000002},
+	      Mass -> LesHouches,
+              FeynArtsNr -> 11,
+              LaTeX -> "{\\chi}^0_n",
+              ElectricCharge -> 0,
+              LHPC -> {3, "orange"},
+              OutputName -> "N"}
+      },
+      {Fr,   { Description -> "Darkinos",
+	      PDG -> {1000011},
+	      PDG.IX -> {2000011},
+              FeynArtsNr -> 12,
+              LaTeX -> "{\\chi}^0_r",
+              OutputName -> "R"}
+      },
+      {Ft,   { Description -> "Darkinos",
+	      PDG -> {1000021},
+	      PDG.IX -> {2000021},
+              FeynArtsNr -> 12,
+              LaTeX -> "{\\chi}^0_t",
+              OutputName -> "T"}
+       }
+       };    
         
  WeylFermionAndIndermediate = {
      
@@ -113,7 +137,7 @@ ParticleDefinitions[GaugeES] = {
    {eR,     {LaTeX -> "e_R" }},
    {lep,     {LaTeX -> "l" }},
    {uR,     {LaTeX -> "u_R" }},
-   {q,     {LaTeX -> "q" }},
+   {q,      {LaTeX -> "q" }},
    {eL,     {LaTeX -> "e_L" }},
    {dL,     {LaTeX -> "d_L" }},
    {uL,     {LaTeX -> "u_L" }},

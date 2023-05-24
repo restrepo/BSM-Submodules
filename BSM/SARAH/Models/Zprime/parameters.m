@@ -69,6 +69,18 @@ ParameterDefinitions = {
       LaTeX -> "\\mu'",
       LesHouches -> {BL,10}}},
 
+{Ynp, {OutputName -> Ynp,
+      LaTeX -> "Y_{np}",
+      LesHouches -> YNP }},
+
+{Yrs, {OutputName -> Yrs,
+      LaTeX -> "Y_{rs}",
+      LesHouches -> YRS }},
+						       
+{Ytv, {OutputName -> Ytv,
+      LaTeX -> "Y_{tv}",
+      LesHouches -> YTV }},
+						       
 {Vu,        {Description ->"Left-Up-Mixing-Matrix"}},
 {Vd,        {Description ->"Left-Down-Mixing-Matrix"}},
 {Uu,        {Description ->"Right-Up-Mixing-Matrix"}},
