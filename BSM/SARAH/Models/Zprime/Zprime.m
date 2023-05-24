@@ -44,16 +44,19 @@ FermionFields[[2]]  = {l, 3, {vL, eL},	 -1/2, 2,  1, Xl, 1};
 FermionFields[[3]]  = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
 FermionFields[[4]]  = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
 FermionFields[[5]]  = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
+nF=6;
 (* Odd left singlet fermions n,p,r,s,t,v,w,x,y,z *)
 (* Multi-generation Dirac Fermions -> Fix PDG numbers in particles.m *)
-FermionFields[[6]]  = {n, nDG, nL,	    0, 1,  1, Xn, -1};
-FermionFields[[7]]  = {p, nDG, conj[pR],	    0, 1,  1, Xp, -1};
+FermionFields[[nF]]  = {n, nDG, nL,	    0, 1,  1, Xn, -1};
+FermionFields[[nF+1]]  = {p, nDG, conj[pR],	    0, 1,  1, Xp, -1};
 (* Single family Dirac Fermion *)
-FermionFields[[8]]  = {r, 1, rL,	    0, 1,  1, Xr, -1}
-FermionFields[[9]]  = {s, 1, conj[sR],	    0, 1,  1, Xs, -1};
+nF=nF+2;
+FermionFields[[nF]]  = {r, 1, rL,	    0, 1,  1, Xr, -1}
+FermionFields[[nF+1]]  = {s, 1, conj[sR],	    0, 1,  1, Xs, -1};
 (* Single family Dirac Fermion *)
-FermionFields[[10]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
-FermionFields[[11]] = {w, 1, conj[wR],	    0, 1,  1, Xw, -1};
+nF=nF+2;
+FermionFields[[nF]] = {t, 1, tL,	    0, 1,  1, Xt, -1};
+FermionFields[[nF+1]] = {w, 1, conj[wR],	    0, 1,  1, Xw, -1};
 
 
  						         
