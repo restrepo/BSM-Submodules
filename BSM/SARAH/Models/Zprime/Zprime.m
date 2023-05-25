@@ -72,18 +72,22 @@ If[Xt != 0 && Xw != 0,
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
  ];
 (* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
-(*
-nF=nF+1
-FermionFields[[nF]]  = {x, nWG, xL,	    0, 1,  1, Xx, -1};
+If[Xx != 0,
+   nF=nF+1;
+   FermionFields[[nF]]  = {x, nWG, xL,	    0, 1,  1, Xx, -1};
+   ];
 (* Single Majorana Fermion *)
-nF=nF+1
-FermionFields[[nF]]  = {y, 1, yL,	    0, 1,  1, Xy, -1}; (* try conj[yR] if errors *)
+If[Xy != 0,
+   nF=nF+1;
+   FermionFields[[nF]]  = {y, 1, yL,	    0, 1,  1, Xy, -1}; (* try conj[yR] if errors *)
+   ];
 (* Multi-generation Majorana Fermion *)
-nF=nF+1
-FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
-*)
+If[Xz != 0,
+   nF=nF+1;
+   FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
+   ];
 
- 						         
+
 ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
 ScalarFields[[2]] =  {bi,  1, BiD,	    0, 1,  1, Xbi, 1};
 						        
