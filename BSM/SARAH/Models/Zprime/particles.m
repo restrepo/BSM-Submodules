@@ -142,13 +142,19 @@ ParticleDefinitions[GaugeES] = {
    {dL,     {LaTeX -> "d_L" }},
    {uL,     {LaTeX -> "u_L" }},
    {vL,     {LaTeX -> "\\nu_L" }},
-
+   
    {DR,     {LaTeX -> "D_R" }},
    {ER,     {LaTeX -> "E_R" }},
-   {UR,     {LaTeX -> "U_R" }},
+   {UR,     {LaTeX -> "U_R" }},   
    {EL,     {LaTeX -> "E_L" }},
    {DL,     {LaTeX -> "D_L" }},
-   {UL,     {LaTeX -> "U_L" }}
+   {UL,     {LaTeX -> "U_L" }},
+
+   {nL,     {LaTeX -> "n_L" }},
+   {pR,     {LaTeX -> "p_R" }},
+
+   {NR,     {LaTeX -> "N_R" }},
+   {NL,     {LaTeX -> "N_R" }}
         };       
 
 

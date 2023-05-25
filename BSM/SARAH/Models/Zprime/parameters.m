@@ -96,7 +96,16 @@ ParameterDefinitions = {
 {ZA,        { Description->"Pseudo-Scalar-Mixing-Matrix", 
               Dependence -> None,
               DependenceOptional -> None,
-              DependenceNum -> None   }}
+             DependenceNum -> None   }},
+
+{Vn, {LaTeX -> "V^n_R",
+      LesHouches -> VNRMIX,
+      OutputName -> ZNR }},
+
+{Un, {LaTeX -> "U^n_L",
+      LesHouches -> UNLMIX,
+      OutputName -> ZNL }}
+
 
 
 

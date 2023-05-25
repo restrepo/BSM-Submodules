@@ -144,8 +144,9 @@ DEFINITION[EWSB][MatterSector]=
      {{sigmaH,sigmaB},{Ah,ZA}},
      {{{dL}, {conj[dR]}}, {{DL,Vd}, {DR,Ud}}},
      {{{uL}, {conj[uR]}}, {{UL,Vu}, {UR,Uu}}},
-     {{{eL}, {conj[eR]}}, {{EL,Ve}, {ER,Ue}}}
-};  
+     {{{eL}, {conj[eR]}}, {{EL,Ve}, {ER,Ue}}},
+     {{{nL}, {conj[pR]}}, {{NL,Vn}, {NR,Un}}}     
+    };  
 
 
 (*------------------------------------------------------*)
@@ -157,7 +158,7 @@ DEFINITION[EWSB][DiracSpinors]={
  Fe ->{  EL, conj[ER]},
  Fu ->{  UL, conj[UR]},
  Fv ->{  vL, 0},
- Fn ->{  nL, pR},
+ Fn ->{  NL, conj[NR]},
  Fr ->{  rL, sR},
  Ft ->{  tL, wR}
 };
