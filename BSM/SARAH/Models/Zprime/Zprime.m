@@ -103,14 +103,22 @@ NameOfStates={GaugeES, EWSB};
 DEFINITION[GaugeES][LagrangianInput]= 
 {
   {LagFer   ,      {AddHC->True}},
-  {LagSingFer,     {AddHC->True}},
+  (*{LagSingFer,     {AddHC->True}},*)
   {LagH     ,      {AddHC->False}},
   {LagNoHCbi,      { AddHC->False}}
 };
 
 LagH     = -(mH2 conj[H].H     - 1/2 lambda1 conj[H].H.conj[H].H );
 LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q;
-LagSingFer = Ynp n.p.bi + Yrs r.s.conj[bi] + Ytv t.w.conj[bi];
+If[ Xn !=0 && Xn + Xp + Xbi == 0,
+    LagFer = LagFer + Ynp n.p.bi;
+    ];
+If[ Xr !=0 && Xr + Xs - Xbi == 0,
+    LagFer = LagFer + Yrs r.s.conj[bi];
+    ];
+If[ Xt !=0 && Xt + Xw - Xbi == 0,
+    LagFer = LagFer + Ytv t.w.conj[bi];
+    ];
 LagNoHCbi = -(MuP conj[bi].bi - L2 conj[bi].bi.conj[bi].bi - L3 conj[bi].bi.conj[H].H );
 
 
