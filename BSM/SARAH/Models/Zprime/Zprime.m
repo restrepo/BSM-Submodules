@@ -37,7 +37,11 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 (* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
 {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};
 (* [1, 1, 2, 3, -4, -4, -5, 6]	 [{'S': 2, 'psi': [(3, -5), (2, -4), (-4, 6), (1, 1)]}] *)
-(* {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};*)
+(* Beta version: implemented as if the two -4 were different *)
+(*
+   Xbi=-2
+   {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,3,-5,2,-4,-4,6,1};
+*)
 (* Generations of Dirac, Weyl and Majorana fermions *)
 {nDG,nWG,nMG}={2,2,2};
 
@@ -71,6 +75,18 @@ If[Xt != 0 && Xw != 0,
    nF=nF+1;   
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
  ];
+(******** Pick and copy and paste the one required, from here ******)
+(* START PICK
+(* Single family Dirac Fermion *)
+If[Xx != 0 && Xy != 0,
+   nF=nF+1;
+   FermionFields[[nF]] = {x, 1, tL,	    0, 1,  1, Xx, -1};
+   nF=nF+1;   
+   FermionFields[[nF]] = {y, 1, conj[yR],   0, 1,  1, Xy, -1};
+ ];
+ (* If[ Xx !=0 && Xx + Xy + Xbi == 0, LagFer = LagFer +  Yxy x.y.bi]; *)
+ (* Fx ->{  xL, yR} *)
+ 
 (* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
 If[Xx != 0,
    nF=nF+1;
@@ -86,7 +102,8 @@ If[Xz != 0,
    nF=nF+1;
    FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
    ];
-
+   END *)
+(******************************************************************)
 
 ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
 ScalarFields[[2]] =  {bi,  1, BiD,	    0, 1,  1, Xbi, 1};
@@ -144,11 +161,17 @@ DEFINITION[EWSB][MatterSector]=
      {{sigmaH,sigmaB},{Ah,ZA}},
      {{{dL}, {conj[dR]}}, {{DL,Vd}, {DR,Ud}}},
      {{{uL}, {conj[uR]}}, {{UL,Vu}, {UR,Uu}}},
-     {{{eL}, {conj[eR]}}, {{EL,Ve}, {ER,Ue}}},
-     {{{nL}, {conj[pR]}}, {{NL,Vn}, {NR,Un}}}     
+     {{{eL}, {conj[eR]}}, {{EL,Ve}, {ER,Ue}}}
     };  
 
-
+If[Xn != 0,
+   DEFINITION[EWSB][MatterSector]=Join[
+       DEFINITION[EWSB][MatterSector],
+       {
+	 {{{nL}, {conj[pR]}}, {{NL,Vn}, {NR,Un}}}
+       }
+				       ];
+   ];
 (*------------------------------------------------------*)
 (* Dirac-Spinors *)
 (*------------------------------------------------------*)
@@ -157,11 +180,35 @@ DEFINITION[EWSB][DiracSpinors]={
  Fd ->{  DL, conj[DR]},
  Fe ->{  EL, conj[ER]},
  Fu ->{  UL, conj[UR]},
- Fv ->{  vL, 0},
- Fn ->{  NL, conj[NR]},
- Fr ->{  rL, sR},
- Ft ->{  tL, wR}
+ Fv ->{  vL, 0}
 };
+
+If[Xn != 0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+	Fn ->{  NL, conj[NR]}
+      }
+				       ];
+   ];
+
+If[Xr != 0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Fr ->{  rL, sR}
+       }
+				       ];
+   ];
+
+If[Xt != 0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Ft ->{  tL, wR}
+      }
+				       ];
+   ];
 
 DEFINITION[EWSB][GaugeES]={
  Fd1 ->{  FdL, 0},
