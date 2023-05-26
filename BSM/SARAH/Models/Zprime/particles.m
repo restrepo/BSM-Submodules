@@ -119,10 +119,25 @@ ParticleDefinitions[GaugeES] = {
       {Ft,   { Description -> "Darkinos",
 	      PDG -> {1000021},
 	      PDG.IX -> {2000021},
-              FeynArtsNr -> 12,
+              FeynArtsNr -> 13,
               LaTeX -> "{\\chi}^0_t",
               OutputName -> "T"}
+      },
+      {Fx,   { Description -> "Darkinos",
+	      PDG -> {1000031},
+	      PDG.IX -> {2000031},
+              FeynArtsNr -> 14,
+              LaTeX -> "{\\chi}^0_x",
+              OutputName -> "X"}
+      },
+      {Fz,   { Description -> "Darkinos",
+	      PDG -> {1000051,1000052},
+	      PDG.IX -> {2000051,2000052},
+              FeynArtsNr -> 14,
+              LaTeX -> "{\\chi}^0_x",
+              OutputName -> "X"}
        }
+      
        };    
         
  WeylFermionAndIndermediate = {
