@@ -39,7 +39,7 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 (* [1, 1, 2, 3, -4, -4, -5, 6]	 [{'S': 2, 'psi': [(3, -5), (2, -4), (-4, 6), (1, 1)]}] *)
 (* Beta version: implemented as if the two -4 were different *)
 (*
-   Xbi=-2
+    Xbi=-2;
    {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,3,-5,2,-4,-4,6,1};
 *)
 (* Generations of Dirac, Weyl and Majorana fermions *)
@@ -75,6 +75,7 @@ If[Xt != 0 && Xw != 0,
    nF=nF+1;   
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
  ];
+
 (******** Pick and copy and paste the one required, from here ******)
 (* START PICK
 (* Single family Dirac Fermion *)
@@ -86,6 +87,16 @@ If[Xx != 0 && Xy != 0,
  ];
  (* If[ Xx !=0 && Xx + Xy + Xbi == 0, LagFer = LagFer +  Yxy x.y.bi]; *)
  (* Fx ->{  xL, yR} *)
+ (*
+If[Xx != 0 && Xy !=0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Fx ->{  xL, yR}
+      }
+				       ];
+   ];
+  *)
  
 (* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
 If[Xx != 0,
@@ -102,8 +113,24 @@ If[Xz != 0,
    nF=nF+1;
    FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
    ];
-   END *)
+(* If[ Xz !=0 && 2*Xz  + Xbi == 0, LagFer = LagFer +  Yz z.z.bi]; *)
+ END PICK *)
 (******************************************************************)
+
+
+
+(****** Picked ones here *****)
+(* Single family Dirac Fermion *)
+If[Xx != 0 && Xy != 0,
+   nF=nF+1;
+   FermionFields[[nF]] = {x, 1, xL,	    0, 1,  1, Xx, -1};
+   nF=nF+1;   
+   FermionFields[[nF]] = {y, 1, conj[yR],   0, 1,  1, Xy, -1};
+  ];
+If[Xz != 0,
+   nF=nF+1;
+   FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
+    ];
 
 ScalarFields[[1]] =  {H, 1, {Hp, H0},	  1/2, 2,  1, XH, 1};
 ScalarFields[[2]] =  {bi,  1, BiD,	    0, 1,  1, Xbi, 1};
@@ -136,7 +163,22 @@ If[ Xr !=0 && Xr + Xs - Xbi == 0,
 If[ Xt !=0 && Xt + Xw - Xbi == 0,
     LagFer = LagFer + Ytv t.w.conj[bi];
     ];
+
+(****** Picked ones here *****)
+If[ Xx !=0 && Xx + Xy + Xbi == 0,
+ LagFer = LagFer +  Yxy x.y.bi;
+];
+
+If[ Xz !=0 && 2*Xz  + Xbi == 0,
+ LagFer = LagFer +  Yz z.z.bi;
+];
+(*****************************)
+
+
+
+
 LagNoHCbi = -(MuP conj[bi].bi - L2 conj[bi].bi.conj[bi].bi - L3 conj[bi].bi.conj[H].H );
+
 
 
 (* Gauge Sector *)
@@ -172,6 +214,18 @@ If[Xn != 0,
        }
 				       ];
    ];
+
+
+If[Xz != 0,
+   DEFINITION[EWSB][MatterSector]=Join[
+       DEFINITION[EWSB][MatterSector],
+       {
+	 {{zL},{ZL, Uz}}	 
+       }
+				       ];
+ ];
+
+
 (*------------------------------------------------------*)
 (* Dirac-Spinors *)
 (*------------------------------------------------------*)
@@ -209,6 +263,26 @@ If[Xt != 0,
       }
 				       ];
    ];
+
+
+If[Xx != 0 && Xy != 0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+	Fx ->{  xL, yR}
+      }
+				       ];
+ ];
+
+If[Xz != 0,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Fz ->{  ZL, conj[ZL] }
+      }
+				       ];
+  ];
+
 
 DEFINITION[EWSB][GaugeES]={
  Fd1 ->{  FdL, 0},

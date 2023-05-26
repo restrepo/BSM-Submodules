@@ -80,6 +80,15 @@ ParameterDefinitions = {
 {Ytv, {OutputName -> Ytv,
       LaTeX -> "Y_{tv}",
       LesHouches -> YTV }},
+
+{Yxy, {OutputName -> Yxy,
+      LaTeX -> "Y_{xy}",
+      LesHouches -> YXY }},
+
+{Yz, {OutputName -> Yz,
+      LaTeX -> "Y_{z}",
+      LesHouches -> YZ }},
+
 						       
 {Vu,        {Description ->"Left-Up-Mixing-Matrix"}},
 {Vd,        {Description ->"Left-Down-Mixing-Matrix"}},
@@ -104,7 +113,11 @@ ParameterDefinitions = {
 
 {Un, {LaTeX -> "U^n_L",
       LesHouches -> UNLMIX,
-      OutputName -> ZNL }}
+      OutputName -> ZNL }},
+
+{Uz, {LaTeX -> "U^z_L",
+      LesHouches -> UZLMIX,
+      OutputName -> ZZL }}
 
 
 
