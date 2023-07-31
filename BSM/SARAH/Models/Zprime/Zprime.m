@@ -53,7 +53,7 @@ FermionFields[[3]]  = {d, 3, conj[dR],	  1/3, 1, -3, Xd, 1};
 FermionFields[[4]]  = {u, 3, conj[uR],	 -2/3, 1, -3, Xu, 1};
 FermionFields[[5]]  = {e, 3, conj[eR],	    1, 1,  1, Xe, 1};
 nF=5;
-(* Odd left singlet fermions n,p,r,s,t,v,w,x,y,z *)
+(* Odd left singlet fermions n,p,r,s,t,w,x,y,z *)
 (* Multi-generation Dirac Fermions -> Fix PDG numbers in particles.m *)
 If[Xn != 0 && Xp != 0,
    nF=nF+1;
@@ -76,6 +76,12 @@ If[Xt != 0 && Xw != 0,
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
  ];
 
+(* TODO: Add logical variables to automatically pick the ones required
+ -> Intialize yDirac=False; yMajorana=False
+ -> Check Xx+Xy, Xx+Xy+-Xbi -> yDirac=True
+ -> If Not yDirac -> Check 2 Xy +- Xbi -> yMajorana=True
+ -> If Not yMarona -> Is just Weyl Fermion
+ *)
 (******** Pick and copy and paste the one required, from here ******)
 (* START PICK
 (* Single family Dirac Fermion *)
