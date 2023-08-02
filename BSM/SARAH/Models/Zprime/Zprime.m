@@ -30,20 +30,33 @@ Gauge[[3]]={G,  SU[3], color,       g3,False, 1};
 (* name of the charge needs at least 3 characters *)
 Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L Model *)
 
+(* Anomaly cancellation Module *)
+
+
 (* Charges *)
-{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};
+(*{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};*)
+{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={1/3, -1, -1/3, -1/3, 1, 0, -2};
 
 (* anomaly solution: {d,i,r,a,c,0,0,m,a,j,o,r,a,n,a} *)
+(*
 (* [1, -2, -2, 4, 5, -7, -7, 8]  [{'S': 9, 'psi': [(4, 5), (1, 8), (-2, -7)]}] *)
 {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={-2,-7,1,8,4,5,0,0,0};
+*)
 (* [1, 1, 2, 3, -4, -4, -5, 6]	 [{'S': 2, 'psi': [(3, -5), (2, -4), (-4, 6), (1, 1)]}] *)
 (* Beta version: implemented as if the two -4 were different *)
 (*
     Xbi=-2;
    {Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,3,-5,2,-4,-4,6,1};
+   {nDG,nWG,nMG}={2,2,2};
+
 *)
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,0,0,0,0,0,0,1};
+
+
 (* Generations of Dirac, Weyl and Majorana fermions *)
-{nDG,nWG,nMG}={2,2,2};
+(*{nDG,nWG,nMG}={2,2,2};*)
+{nDG,nWG,nMG}={0,0,3};
+
 
 (* Matter Fields *)
 
@@ -82,57 +95,59 @@ If[Xt != 0 && Xw != 0,
  -> If Not yDirac -> Check 2 Xy +- Xbi -> yMajorana=True
  -> If Not yMarona -> Is just Weyl Fermion
  *)
-(******** Pick and copy and paste the one required, from here ******)
-(* START PICK
-(* Single family Dirac Fermion *)
-If[Xx != 0 && Xy != 0,
+
+(* (Xx,Xy) pair cases *)
+(* Initialize cases *)
+
+(* Cases: [1,-1]; [1,1] or [-1,-1] (S=2); [1,3] or [-1,-3] (S=4); [1,3] (S=6); [1,0] (S=2)   *)
+If[Xx != 0 || Xy != 0,
+   xMajorana = False;
+   yDirac = False;
+   yMajorana = False;
+
+   If [
+         Xx + Xy == 0, (*vector-like*)
+            yDirac = True;,
+         If [ (*non vector-like*)
+               Abs[Xx + Xy] == Abs[Xbi], (*Massive chiral*)
+               If[ (*chiral*)
+                  Xx != Xy,
+                     yDirac = True;,
+                     yMajorana = True;
+                  ],
+                  (*massles Dirac*)
+                  If [
+                        Abs[2 Xy] == Abs[Xbi],
+                           yMajorana = True;,
+                        If [
+                              Abs[2 Xx] == Abs[Xbi],
+                                 xMajorana = True;
+                           ]                           
+                     ]             
+            ]
+      ]
+   ]
+(* Cases implementation *)
+If[Xx != 0 && Xy != 0 && yDirac,
    nF=nF+1;
    FermionFields[[nF]] = {x, 1, tL,	    0, 1,  1, Xx, -1};
    nF=nF+1;   
    FermionFields[[nF]] = {y, 1, conj[yR],   0, 1,  1, Xy, -1};
  ];
- (* If[ Xx !=0 && Xx + Xy + Xbi == 0, LagFer = LagFer +  Yxy x.y.bi]; *)
- (* Fx ->{  xL, yR} *)
- (*
-If[Xx != 0 && Xy !=0,
-   DEFINITION[EWSB][DiracSpinors]=Join[
-      DEFINITION[EWSB][DiracSpinors],
-      {
-       Fx ->{  xL, yR}
-      }
-				       ];
-   ];
-  *)
- 
-(* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m *)
-If[Xx != 0,
+
+(* Multi-generation Weyl Fermion -> Fix PDG numbers in particles.m (Dirac neutrinos) *)
+If[Xx != 0 && (!yDirac && !yMajorana && !xMajorana),
    nF=nF+1;
    FermionFields[[nF]]  = {x, nWG, xL,	    0, 1,  1, Xx, -1};
    ];
+
 (* Single Majorana Fermion *)
-If[Xy != 0,
+If[Xy != 0 && xMajorana,
    nF=nF+1;
    FermionFields[[nF]]  = {y, 1, yL,	    0, 1,  1, Xy, -1}; (* try conj[yR] if errors *)
    ];
-(* Multi-generation Majorana Fermion *)
-If[Xz != 0,
-   nF=nF+1;
-   FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
-   ];
-(* If[ Xz !=0 && 2*Xz  + Xbi == 0, LagFer = LagFer +  Yz z.z.bi]; *)
- END PICK *)
-(******************************************************************)
+(************** END CASES *******************************)
 
-
-
-(****** Picked ones here *****)
-(* Single family Dirac Fermion *)
-If[Xx != 0 && Xy != 0,
-   nF=nF+1;
-   FermionFields[[nF]] = {x, 1, xL,	    0, 1,  1, Xx, -1};
-   nF=nF+1;   
-   FermionFields[[nF]] = {y, 1, conj[yR],   0, 1,  1, Xy, -1};
-  ];
 If[Xz != 0,
    nF=nF+1;
    FermionFields[[nF]]  = {z, nMG, zL,	    0, 1,  1, Xz, -1}; (* try conj[zR] if errors *)
@@ -170,17 +185,19 @@ If[ Xt !=0 && Xt + Xw - Xbi == 0,
     LagFer = LagFer + Ytv t.w.conj[bi];
     ];
 
-(****** Picked ones here *****)
-If[ Xx !=0 && Xx + Xy + Xbi == 0,
+If[ yDirac && Xx + Xy + Xbi == 0,
  LagFer = LagFer +  Yxy x.y.bi;
+];
+If[ yMajorana && 2 Xy + Xbi == 0,
+ LagFer = LagFer +  Yxy y.y.bi;
+];
+If[ xMajorana && 2 Xx + Xbi == 0,
+ LagFer = LagFer +  Yxy x.x.bi;
 ];
 
 If[ Xz !=0 && 2*Xz  + Xbi == 0,
  LagFer = LagFer +  Yz z.z.bi;
 ];
-(*****************************)
-
-
 
 
 LagNoHCbi = -(MuP conj[bi].bi - L2 conj[bi].bi.conj[bi].bi - L3 conj[bi].bi.conj[H].H );
@@ -270,15 +287,32 @@ If[Xt != 0,
 				       ];
    ];
 
-
-If[Xx != 0 && Xy != 0,
+If[Xx != 0 && Xy !=0 && yDirac,
    DEFINITION[EWSB][DiracSpinors]=Join[
       DEFINITION[EWSB][DiracSpinors],
       {
-	Fx ->{  xL, yR}
+       Fx ->{  xL, yR}
       }
 				       ];
- ];
+   ];
+
+If[Xx != 0 && xMajorana,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Fx ->{  xL, conj[xL]}
+      }
+				       ];
+   ];
+
+If[Xy != 0 && yMajorana,
+   DEFINITION[EWSB][DiracSpinors]=Join[
+      DEFINITION[EWSB][DiracSpinors],
+      {
+       Fx ->{  yR, conj[yL]}
+      }
+				       ];
+   ];
 
 If[Xz != 0,
    DEFINITION[EWSB][DiracSpinors]=Join[
