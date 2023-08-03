@@ -89,7 +89,10 @@ ParameterDefinitions = {
       LaTeX -> "Y_{z}",
       LesHouches -> YZ }},
 
-						       
+{Mnp, {OutputName -> Mnp,
+      LaTeX -> "M_{np}",
+      LesHouches -> MNP }},
+
 {Vu,        {Description ->"Left-Up-Mixing-Matrix"}},
 {Vd,        {Description ->"Left-Down-Mixing-Matrix"}},
 {Uu,        {Description ->"Right-Up-Mixing-Matrix"}},

@@ -55,7 +55,7 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 
 (* Generations of Dirac, Weyl and Majorana fermions *)
 (*{nDG,nWG,nMG}={2,2,2};*)
-(*{nDG,nWG,nMG}={1,0,3};*)SARAH/Models/Zprime/
+(*{nDG,nWG,nMG}={1,0,3};*)
 <<SARAH/Models/Zprime/config.m; (*reads {nDG,nWG,nMG} list values*)
 
 

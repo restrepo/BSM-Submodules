@@ -100,8 +100,8 @@ ParticleDefinitions[GaugeES] = {
       {Fe,   { Description -> "Leptons" }},
       {Fv,   { Description -> "Neutrinos" }},
       {Fn,   { Description -> "Darkinos",
-	      PDG -> {1000001,1000002},
-	      PDG.IX -> {2000001,2000002},
+	      PDG -> {1000001},
+	      PDG.IX -> {2000001},
 	      Mass -> LesHouches,
               FeynArtsNr -> 11,
               LaTeX -> "{\\chi}^0_n",
@@ -131,8 +131,8 @@ ParticleDefinitions[GaugeES] = {
               OutputName -> "X"}
       },
       {Fz,   { Description -> "Darkinos",
-	      PDG -> {1000051,1000052},
-	      PDG.IX -> {2000051,2000052},
+	      PDG -> {1000051,1000052,1000053},
+	      PDG.IX -> {2000051,2000052,2000053},
               FeynArtsNr -> 14,
               LaTeX -> "{\\chi}^0_x",
               OutputName -> "X"}
