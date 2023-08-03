@@ -35,7 +35,9 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 
 (* Charges *)
 (*{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0,0,0,0,0,0,9};*)
-{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={1/3, -1, -1/3, -1/3, 1, 0, -2};
+(*{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={1/3, -1, -1/3, -1/3, 1, 0, -2};*)
+{Xq,Xl,Xd,Xu,Xe,XH,Xbi}={0, 0, 0, 0, 0, 0, -2};
+
 
 (* anomaly solution: {d,i,r,a,c,0,0,m,a,j,o,r,a,n,a} *)
 (*
@@ -50,7 +52,8 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
    {nDG,nWG,nMG}={2,2,2};
 
 *)
-{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={1/5,-1/5,0,0,0,0,0,0,1};
+(*{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={1/5,-1/5,0,0,0,0,0,0,1};*)
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,0,0,0,0,0,0,0};
 
 
 (* Generations of Dirac, Weyl and Majorana fermions *)
