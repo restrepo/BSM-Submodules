@@ -50,12 +50,13 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
    {nDG,nWG,nMG}={2,2,2};
 
 *)
-{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,0,0,0,0,0,0,1};
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={1/5,-1/5,0,0,0,0,0,0,1};
 
 
 (* Generations of Dirac, Weyl and Majorana fermions *)
 (*{nDG,nWG,nMG}={2,2,2};*)
-{nDG,nWG,nMG}={0,0,3};
+{nDG,nWG,nMG}={1,0,3};
+(*<< config.m; (*reads {nDG,nWG,nMG} list values*)*)
 
 
 (* Matter Fields *)
@@ -89,16 +90,8 @@ If[Xt != 0 && Xw != 0,
    FermionFields[[nF]] = {w, 1, conj[wR],   0, 1,  1, Xw, -1};
  ];
 
-(* TODO: Add logical variables to automatically pick the ones required
- -> Intialize yDirac=False; yMajorana=False
- -> Check Xx+Xy, Xx+Xy+-Xbi -> yDirac=True
- -> If Not yDirac -> Check 2 Xy +- Xbi -> yMajorana=True
- -> If Not yMarona -> Is just Weyl Fermion
- *)
-
 (* (Xx,Xy) pair cases *)
-(* Initialize cases *)
-
+(************** BEGIN CASES *****************************)
 (* Cases: [1,-1]; [1,1] or [-1,-1] (S=2); [1,3] or [-1,-3] (S=4); [1,3] (S=6); [1,0] (S=2)   *)
 If[Xx != 0 || Xy != 0,
    xMajorana = False;
@@ -175,9 +168,16 @@ DEFINITION[GaugeES][LagrangianInput]=
 
 LagH     = -(mH2 conj[H].H     - 1/2 lambda1 conj[H].H.conj[H].H );
 LagFer   = Yd conj[H].d.q + Ye conj[H].e.l + Yu H.u.q;
+(* (Xn,Xp) cases*)
+(*Massive chiral Dirac fermion*)
 If[ Xn !=0 && Xn + Xp + Xbi == 0,
     LagFer = LagFer + Ynp n.p.bi;
     ];
+(*Vector like Dirac fermion*)
+If[ Xn !=0 && Xn + Xp == 0,
+    LagFer = LagFer + Mnp n.p;
+    ];
+
 If[ Xr !=0 && Xr + Xs - Xbi == 0,
     LagFer = LagFer + Yrs r.s.conj[bi];
     ];
@@ -229,7 +229,8 @@ DEFINITION[EWSB][MatterSector]=
      {{{eL}, {conj[eR]}}, {{EL,Ve}, {ER,Ue}}}
     };  
 
-If[Xn != 0,
+
+If[Xn != 0 && nDG > 1,
    DEFINITION[EWSB][MatterSector]=Join[
        DEFINITION[EWSB][MatterSector],
        {
@@ -239,7 +240,7 @@ If[Xn != 0,
    ];
 
 
-If[Xz != 0,
+If[Xz != 0 && nMG > 1,
    DEFINITION[EWSB][MatterSector]=Join[
        DEFINITION[EWSB][MatterSector],
        {
@@ -248,6 +249,13 @@ If[Xz != 0,
 				       ];
  ];
 
+
+If[Xn != 0,
+      If[nDG > 1,
+      FnList={Fn ->{  NL, conj[NR]}};,
+      FnList={Fn ->{  nL, conj[pR]}};
+      ]
+]
 
 (*------------------------------------------------------*)
 (* Dirac-Spinors *)
@@ -261,13 +269,12 @@ DEFINITION[EWSB][DiracSpinors]={
 };
 
 If[Xn != 0,
+      (*FnList={Fn ->{  nL, conj[pR]}};*)
    DEFINITION[EWSB][DiracSpinors]=Join[
-      DEFINITION[EWSB][DiracSpinors],
-      {
-	Fn ->{  NL, conj[NR]}
-      }
-				       ];
-   ];
+         DEFINITION[EWSB][DiracSpinors],
+         FnList   
+                                      ];
+   ] 
 
 If[Xr != 0,
    DEFINITION[EWSB][DiracSpinors]=Join[
@@ -314,6 +321,7 @@ If[Xy != 0 && yMajorana,
 				       ];
    ];
 
+(* Fix for nMG == 1, as before for nDG *)
 If[Xz != 0,
    DEFINITION[EWSB][DiracSpinors]=Join[
       DEFINITION[EWSB][DiracSpinors],
