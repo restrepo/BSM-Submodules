@@ -53,7 +53,7 @@ Gauge[[4]]={Bp,  U[1], XXX,       g1p, False,1}; (* False as in the official B-L
 
 *)
 (*{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={1/5,-1/5,0,0,0,0,0,0,1};*)
-{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={0,0,0,0,0,0,0,0,0};
+{Xn,Xp,Xr,Xs,Xt,Xw,Xx,Xy,Xz}={1/5,-1/5,0,0,0,0,0,0,0};
 
 
 (* Generations of Dirac, Weyl and Majorana fermions *)
