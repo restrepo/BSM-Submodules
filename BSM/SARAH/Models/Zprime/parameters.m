@@ -31,7 +31,8 @@ ParameterDefinitions = {
                                                                             
                                                                            
 {vH,          { Description -> "EW-VEV",
-               DependenceSPheno -> None }},
+                DependenceNum -> Sqrt[4*Mass[VWp]^2/(g2^2)],
+                DependenceSPheno -> None }},
 
 {vX,      {  LaTeX -> "v_x",
              Dependence ->  None, 
