@@ -16,7 +16,11 @@ This needs to be implemented in the other section of the model file.
 * The first pair `(Xn,Xp)` is reserved for `n` generations of Dirac fermions (`nDG`)
 * `(Xr,Xs)` and `(Xt,Xw)` are single generation Dirac Fermions
 * `Xx` is reserved for `n` generations of Weyk fermions (`nWG`)
-* `Xz` is reserved for `n` generations of Majorana fermions (`nMG`)a
+* `Xz` is reserved for `n` generations of Majorana fermions (`nMG`)
+
+## Conventions
+* We have difinde the charged gauge mexing in terms of positive W's. Therefore the SM vev needs to be redefined in `parameters.pm`: `DependenceNum -> Sqrt[4*Mass[VWp]^2/(g2^2)],`
+
 
  
 
